@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Banco BASE - Desempeño Comercial México 3</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            base: {
+              navy: '#0f172a',
+              dark: '#1e293b',
+              gold: '#f59e0b',
+              amber: '#d97706',
+              bronze: '#b45309',
+              light: '#f8fafc',
+              border: '#e2e8f0',
+              accent: '#ff9800'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbars and touch smoothness */
+    ::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .glass-nav {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    /* Mobile tap highlight fix */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-amber-900 pb-20 md:pb-8">
+
+  <!-- Top Executive Header -->
+  <header class="bg-base-navy text-white sticky top-0 z-40 border-b border-slate-800 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-3 sm:px-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- BASE Monogram Diamond -->
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 flex items-center justify-center shadow-lg shadow-amber-500/20 transform rotate-45 flex-shrink-0">
+          <i class="fa-solid fa-building-columns text-slate-950 text-xs -rotate-45"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-base tracking-wide text-white">BANCO BASE</span>
+            <span class="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">Divisas & FX</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium">Sucursal Comercial México 3 (41930)</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex items-center gap-2">
+        <button id="btn-fullscreen" onclick="toggleFullScreen()" title="Modo Pantalla Completa" class="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700/60 active:scale-95">
+          <i class="fa-solid fa-expand text-sm"></i>
+        </button>
+        <button onclick="shareGlobalSummary()" title="Compartir Resumen" class="w-9 h-9 flex items-center justify-center rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 transition-colors border border-amber-500/40 active:scale-95">
+          <i class="fa-solid fa-share-nodes text-sm"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- View Mode Switcher Pills (Team vs Advisor) -->
+    <div class="max-w-6xl mx-auto px-4 pb-3 flex items-center gap-2">
+      <button id="tab-btn-team" onclick="switchView('team')" class="flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/25">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Visión Sucursal</span>
+      </button>
+      <button id="tab-btn-advisor" onclick="switchView('advisor')" class="flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Análisis por Asesor</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Horizontal Stories / Advisor Pill Carousel -->
+  <section class="bg-white border-b border-slate-200 py-3 sticky top-[105px] z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">Equipo Comercial (8 Asesores)</span>
+        <span id="carousel-indicator" class="text-[11px] font-bold text-amber-600">Top 1: Mitzi Negrete</span>
+      </div>
+      <div id="advisors-pill-container" class="flex gap-2.5 overflow-x-auto hide-scrollbar scroll-smooth py-1 px-0.5">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </div>
+  </section>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 space-y-6">
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: VISION SUCURSAL (TEAM DASHBOARD)   -->
+    <!-- ========================================== -->
+    <div id="view-team" class="space-y-6">
+      
+      <!-- Top Metrics Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <!-- Metric 1: Utilidad 2026 -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex items-center justify-between text-slate-400 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider">Utilidad YTD 2026</span>
+            <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+          </div>
+          <div class="text-xl sm:text-2xl font-extrabold text-slate-900">$10,044,109<span class="text-xs sm:text-sm font-semibold text-slate-500">.12</span></div>
+          <div class="mt-2 flex items-center text-xs font-bold text-emerald-600">
+            <i class="fa-solid fa-circle-check mr-1"></i> +1,212.7% vs 2025
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+        </div>
+
+        <!-- Metric 2: Utilidad 2025 -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex items-center justify-between text-slate-400 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider">Utilidad 2025</span>
+            <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+          </div>
+          <div class="text-xl sm:text-2xl font-extrabold text-slate-700">$765,108<span class="text-xs sm:text-sm font-medium text-slate-400">.35</span></div>
+          <div class="mt-2 text-xs font-semibold text-slate-500">Base histórica Sep-Dic</div>
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-300"></div>
+        </div>
+
+        <!-- Metric 3: Promedio Asesor -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex items-center justify-between text-slate-400 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider">Ticket Promedio</span>
+            <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+          </div>
+          <div class="text-xl sm:text-2xl font-extrabold text-slate-900">$1,255,513<span class="text-xs sm:text-sm font-medium text-slate-500">.64</span></div>
+          <div class="mt-2 text-xs font-semibold text-amber-600">Promedio general sucursal</div>
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-amber-500"></div>
+        </div>
+
+        <!-- Metric 4: Cuota Empresa -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex items-center justify-between text-slate-400 mb-1">
+            <span class="text-xs font-bold uppercase tracking-wider">Part. Institucional</span>
+            <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-percent"></i>
+            </div>
+          </div>
+          <div class="text-xl sm:text-2xl font-extrabold text-slate-900">0.27%</div>
+          <div class="mt-2 text-xs font-semibold text-slate-500">De $3,743.4M nacional</div>
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-500"></div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Monthly Branch Trend (8 cols) -->
+        <div class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Evolución de Utilidad Sucursal 2026</h3>
+              <p class="text-xs text-slate-500 font-medium">Comportamiento mensual consolidado Enero - Septiembre</p>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-bold rounded-lg border border-amber-200">
+              <i class="fa-solid fa-calendar-check text-[11px]"></i> Cierre Sep: $1.81M
+            </div>
+          </div>
+          <div class="h-64 sm:h-72 w-full relative">
+            <canvas id="branchMonthlyChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Share of Branch (Donut) (5 cols) -->
+        <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <h3 class="text-base font-bold text-slate-900">Concentración de Cartera</h3>
+              <span class="text-xs font-bold text-slate-400">Total 100%</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Participación porcentual acumulada 2026</p>
+            <div class="h-52 w-full relative flex items-center justify-center">
+              <canvas id="branchShareChart"></canvas>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
+            <span><i class="fa-solid fa-circle text-amber-500 text-[9px] mr-1"></i> Top 3 generan el 77.92%</span>
+            <span class="text-slate-700 font-bold">$7.82M MXN</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Ranking & Quick Profile List -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-4 sm:p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Ranking Comercial de Asesores</h3>
+            <p class="text-xs text-slate-500">Desempeño acumulado al cierre de Septiembre 2026</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="relative flex-1 sm:w-60">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i>
+              <input type="text" id="table-search" oninput="filterLeaderboard()" placeholder="Buscar por nombre o ID..." class="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 bg-white">
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile-Friendly Cards & Desktop Table -->
+        <div class="divide-y divide-slate-100" id="leaderboard-container">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Quick BASE Products Focus Banner -->
+      <div class="bg-gradient-to-r from-base-navy via-slate-900 to-base-dark text-white p-5 sm:p-6 rounded-2xl shadow-md border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="space-y-1 text-center sm:text-left">
+          <div class="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-400 uppercase tracking-wider">
+            <i class="fa-solid fa-bullseye"></i> Estrategia Institucional de Foco
+          </div>
+          <h4 class="text-base sm:text-lg font-bold">Impulso a Cuentas Digitales y Derivados</h4>
+          <p class="text-xs text-slate-300 max-w-xl">Aprovechar los diferenciales competitivos de Banco BASE: Forwards, Swaps de tasa de interés, y tesorería multidivisa (8 divisas globales con dispersión directa).</p>
+        </div>
+        <button onclick="switchView('advisor')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm whitespace-nowrap transition-transform active:scale-95 shadow-md shadow-amber-500/20">
+          Evaluar Asesores <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: DETALLE POR ASESOR (INDIVIDUAL)    -->
+    <!-- ========================================== -->
+    <div id="view-advisor" class="space-y-6 hidden">
+
+      <!-- Advisor Header / Identity Card -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-5 relative z-10">
+          
+          <!-- Avatar + Info -->
+          <div class="flex items-center gap-4">
+            <div id="adv-avatar" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 text-white font-extrabold text-xl sm:text-2xl flex items-center justify-center shadow-lg shadow-amber-500/20 flex-shrink-0 border-2 border-white ring-4 ring-amber-100">
+              MN
+            </div>
+            <div>
+              <div class="flex items-center flex-wrap gap-2 mb-1">
+                <span id="adv-id-badge" class="px-2 py-0.5 rounded-md text-[11px] font-extrabold bg-slate-900 text-amber-400">ID: 1297</span>
+                <span id="adv-rank-badge" class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-100 text-amber-800">#1 en Sucursal</span>
+                <span id="adv-status-tag" class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 text-emerald-800">Top Performer</span>
+              </div>
+              <h2 id="adv-name" class="text-lg sm:text-2xl font-extrabold text-slate-900 leading-tight">Mitzi Estefania Negrete Bribiesca</h2>
+              <p id="adv-role" class="text-xs sm:text-sm text-slate-500 font-medium">Asesor Comercial Senior • Divisas & Derivados</p>
+            </div>
+          </div>
+
+          <!-- Quick Metrics Ribbon -->
+          <div class="flex items-center gap-2 sm:gap-3 bg-slate-50 p-2.5 sm:p-3 rounded-xl border border-slate-200">
+            <div class="px-2 sm:px-3 text-center border-r border-slate-200">
+              <p class="text-[10px] sm:text-xs text-slate-400 font-bold uppercase">Aporte 2026</p>
+              <p id="adv-share-val" class="text-base sm:text-xl font-extrabold text-amber-600">48.90%</p>
+            </div>
+            <div class="px-2 sm:px-3 text-center border-r border-slate-200">
+              <p class="text-[10px] sm:text-xs text-slate-400 font-bold uppercase">Mes Récord</p>
+              <p id="adv-best-month" class="text-xs sm:text-sm font-extrabold text-slate-800">Mar ($1.13M)</p>
+            </div>
+            <div class="px-2 sm:px-3 text-center">
+              <p class="text-[10px] sm:text-xs text-slate-400 font-bold uppercase">Cierre Sep</p>
+              <p id="adv-last-month" class="text-xs sm:text-sm font-extrabold text-emerald-600">$736.2K</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-2 text-slate-500">
+            <span class="font-bold text-slate-700">Participación en Banco BASE total:</span>
+            <span id="adv-emp-share" class="font-extrabold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">77.27% de la cuota regional</span>
+          </div>
+          <!-- Share Advisor Button -->
+          <div class="flex items-center gap-2">
+            <button onclick="shareAdvisorSummary()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors shadow-sm active:scale-95">
+              <i class="fa-brands fa-whatsapp text-sm"></i> Compartir Ficha
+            </button>
+            <button onclick="cycleAdvisor(1)" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+              Siguiente <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- 2026 YTD -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wide">Utilidad 2026 (YTD Sep)</p>
+          <p id="adv-total-2026" class="text-2xl font-extrabold text-slate-900 mt-1">$4,911,449.75</p>
+          <div class="mt-2 text-xs font-semibold text-emerald-600 flex items-center gap-1">
+            <i class="fa-solid fa-chart-line"></i> <span id="adv-growth-badge">+730.7% vs 2025</span>
+          </div>
+        </div>
+
+        <!-- 2025 Total -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wide">Utilidad Año 2025</p>
+          <p id="adv-total-2025" class="text-2xl font-extrabold text-slate-600 mt-1">$591,216.45</p>
+          <p class="text-xs text-slate-400 font-medium mt-2">Cierre histórico reportado</p>
+        </div>
+
+        <!-- Promedio Mensual Activo -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wide">Promedio Mensual (2026)</p>
+          <p id="adv-monthly-avg" class="text-2xl font-extrabold text-amber-600 mt-1">$545,716.63</p>
+          <p class="text-xs text-slate-400 font-medium mt-2">Base activa de 9 meses</p>
+        </div>
+      </div>
+
+      <!-- Individual Chart -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Desglose Mensual de Utilidad (2026)</h3>
+            <p class="text-xs text-slate-500">Comportamiento en pesos mexicanos por periodo contable</p>
+          </div>
+          <!-- Toggle 2025 Comparison -->
+          <label class="inline-flex items-center gap-2 cursor-pointer bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+            <input type="checkbox" id="compare-2025-toggle" onchange="updateAdvisorChart()" class="rounded text-amber-600 focus:ring-amber-500 w-4 h-4">
+            <span class="text-xs font-bold text-slate-700">Comparar con 2025</span>
+          </label>
+        </div>
+        <div class="h-64 sm:h-80 w-full relative">
+          <canvas id="advisorMonthlyChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Monthly Detail Progress Bars -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <h3 class="text-base font-bold text-slate-900 mb-3">Distribución Mensual Detallada (2026)</h3>
+        <div id="adv-monthly-bars" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- SECCIÓN CUALITATIVA EDITABLE ("DE MI COSECHA") -->
+      <div class="bg-white rounded-2xl border-2 border-amber-200/80 shadow-md p-5 sm:p-6 relative">
+        <div class="flex items-center justify-between pb-3 border-b border-amber-100 mb-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-sm">
+              <i class="fa-solid fa-pen-nib"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-extrabold text-slate-900">Evaluación Cualitativa & Retroalimentación</h3>
+              <p class="text-xs text-amber-700 font-semibold">"De mi cosecha" • Notas y acuerdos gerenciales directos</p>
+            </div>
+          </div>
+          <button onclick="saveCurrentAdvisorNotes()" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Notas
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-500 mb-4">
+          <i class="fa-solid fa-circle-info text-amber-500 mr-1"></i> Puedes editar directamente cualquiera de estos campos en tu teléfono. Se guardarán automáticamente en tu dispositivo.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Bloque 1: Fortalezas y Desempeño Cartera -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col">
+            <div class="flex items-center gap-2 text-slate-800 font-bold text-xs uppercase tracking-wider mb-2">
+              <i class="fa-solid fa-gem text-amber-500"></i> Desempeño de Cartera
+            </div>
+            <textarea id="note-strengths" rows="4" class="w-full text-xs text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/50 resize-none flex-1 leading-relaxed" placeholder="Fortalezas clave del asesor, manejo de clientes AAA y efectividad en FX..."></textarea>
+          </div>
+
+          <!-- Bloque 2: Calidad Operativa y Prospección -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col">
+            <div class="flex items-center gap-2 text-slate-800 font-bold text-xs uppercase tracking-wider mb-2">
+              <i class="fa-solid fa-arrows-split-up-and-left text-blue-500"></i> Gestión Operativa & Cruzada
+            </div>
+            <textarea id="note-operations" rows="4" class="w-full text-xs text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/50 resize-none flex-1 leading-relaxed" placeholder="Colocación de productos adicionales: Derivados, Cuentas Digitales multidivisa, posturas..."></textarea>
+          </div>
+
+          <!-- Bloque 3: Compromisos Q4 y Cierre -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col">
+            <div class="flex items-center gap-2 text-slate-800 font-bold text-xs uppercase tracking-wider mb-2">
+              <i class="fa-solid fa-flag-checkered text-emerald-600"></i> Objetivos Estratégicos Q4
+            </div>
+            <textarea id="note-goals" rows="4" class="w-full text-xs text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500/50 resize-none flex-1 leading-relaxed" placeholder="Meta mensual para Oct-Dic, activación de clientes inactivos o nuevo presupuesto..."></textarea>
+          </div>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between text-[11px] text-slate-400">
+          <span id="save-status-msg">Todas las notas están sincronizadas localmente.</span>
+          <button onclick="resetDefaultNotes()" class="text-slate-400 hover:text-slate-600 underline">Restablecer sugerencias predeterminadas</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Mobile Fixed Bottom Navigation Bar -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 glass-nav border-t border-slate-200 px-6 py-2.5 z-40 flex items-center justify-around shadow-lg">
+    <button onclick="switchView('team')" id="mob-nav-team" class="flex flex-col items-center gap-1 text-amber-600 font-bold">
+      <i class="fa-solid fa-chart-pie text-lg"></i>
+      <span class="text-[10px]">Sucursal</span>
+    </button>
+    <button onclick="switchView('advisor')" id="mob-nav-advisor" class="flex flex-col items-center gap-1 text-slate-400 font-medium hover:text-slate-700">
+      <i class="fa-solid fa-user-tie text-lg"></i>
+      <span class="text-[10px]">Asesores</span>
+    </button>
+    <button onclick="shareCurrentView()" class="flex flex-col items-center gap-1 text-slate-400 font-medium hover:text-slate-700">
+      <i class="fa-solid fa-arrow-up-from-bracket text-lg"></i>
+      <span class="text-[10px]">Compartir</span>
+    </button>
+  </nav>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-20 right-4 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 transform translate-y-[-150%] transition-transform duration-300 z-50 text-xs border border-slate-700">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+    <span id="toast-msg">Acción realizada correctamente</span>
+  </div>
+
+  <script>
+    /* ==========================================================
+       DATASET OFICIAL BANCO BASE - SUCURSAL COMERCIAL MEXICO 3 (41930)
+       Extraído con fidelidad de los reportes del sistema
+       ========================================================== */
+    const BRANCH_DATA = {
+      branchName: "COMERCIAL MEXICO 3 (41930)",
+      total2026: 10044109.12,
+      total2025: 765108.35,
+      participationInBase: 0.27,
+      months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre"],
+      branchMonthly2026: [
+        821428.70,   // Ene
+        335559.85,   // Feb
+        1186861.41,  // Mar
+        1473011.72,  // Abr
+        492719.94,   // May
+        1129037.41,  // Jun
+        1249026.73,  // Jul
+        1545272.88,  // Ago
+        1811190.48   // Sep
+      ],
+      advisors: [
+        {
+          id: 1297,
+          name: "Mitzi Estefania Negrete Bribiesca",
+          shortName: "Mitzi Negrete",
+          initials: "MN",
+          role: "Senior FX Advisor • Top Producer",
+          avatarColor: "from-amber-500 to-amber-700",
+          total2026: 4911449.75,
+          total2025: 591216.45,
+          shareSuc: 48.90,
+          shareEmp: 77.27,
+          activeMonths2026: 9,
+          monthly2026: [682440.27, 162901.56, 1133728.80, 876107.82, 192661.68, 260210.56, 333842.61, 533292.80, 736263.66],
+          monthly2025: [0, 0, 0, 0, 0, 0, 0, 0, 58273.34, 132222.43, 188942.05, 211778.63],
+          defaultQualitative: {
+            strengths: "Líder absoluta de la sucursal generando casi el 50% de la utilidad total. Extraordinario manejo de cuentas corporativas e institucionales con alto volumen en compra/venta de divisas spot.",
+            operations: "Gran agilidad en atención vía FX 24/7 y colocación de coberturas Forward con clientes importadores/exportadores clave.",
+            goals: "Asegurar un cierre trimestral Q4 superior a los $2.2M en utilidad y profundizar la adopción de cuentas multidivisa digitales en su cartera."
+          }
+        },
+        {
+          id: 1284,
+          name: "Mauricio Moreno Rogel",
+          shortName: "Mauricio Moreno",
+          initials: "MM",
+          role: "Asesor Comercial Senior FX",
+          avatarColor: "from-blue-600 to-slate-800",
+          total2026: 1520676.11,
+          total2025: 116747.16,
+          shareSuc: 15.14,
+          shareEmp: 15.26,
+          activeMonths2026: 9,
+          monthly2026: [110293.23, 141540.12, 14914.79, 294814.92, 75682.91, 217800.68, 236683.74, 190669.44, 238276.29],
+          monthly2025: [0, 0, 0, 0, 0, 0, 0, 0, 560.26, 6824.62, 35902.67, 73459.61],
+          defaultQualitative: {
+            strengths: "Segunda fuerza de ventas más sólida del equipo. Mantiene una consistencia destacada superando los $200k mensuales en la mayoría del segundo semestre.",
+            operations: "Excelente fidelización técnica en empresas medianas. Constante asesoría sobre fluctuaciones del tipo de cambio.",
+            goals: "Superar el piso de $250k mensuales constantes e incorporar opciones de tipo de cambio y coberturas a plazo para sus clientes más activos."
+          }
+        },
+        {
+          id: 1373,
+          name: "Maria Jose Crespo Noguez",
+          shortName: "María José Crespo",
+          initials: "MC",
+          role: "Asesora Comercial FX & Derivados",
+          avatarColor: "from-rose-500 to-pink-700",
+          total2026: 1393948.58,
+          total2025: 12244.48,
+          shareSuc: 13.88,
+          shareEmp: 1.60,
+          activeMonths2026: 9,
+          monthly2026: [14231.27, 12281.39, 20161.79, 146595.73, 54060.86, 134098.88, 352982.83, 375599.06, 310590.35],
+          monthly2025: [0, 0, 0, 0, 0, 0, 0, 0, 0, 600.60, 2070.51, 9573.37],
+          defaultQualitative: {
+            strengths: "Crecimiento explosivo y consistente en Q3 (promediando >$345k en Jul-Sep). Demuestra altísima capacidad para transformar prospectos en cuentas de alto flujo.",
+            operations: "Manejo proactivo de posturas cambiarias y seguimiento constante a los horarios clave del mercado FX.",
+            goals: "Consolidar el tercer trimestre cerrando el año con más de $2.2M totales acumulados, convirtiéndose en pilar de retención de la sucursal."
+          }
+        },
+        {
+          id: 1050,
+          name: "Alma Elena Velasco Alcoser",
+          shortName: "Alma Velasco",
+          initials: "AV",
+          role: "Asesora Comercial Especializada",
+          avatarColor: "from-teal-600 to-emerald-800",
+          total2026: 1048401.11,
+          total2025: 0.00,
+          shareSuc: 10.44,
+          shareEmp: 10.44,
+          activeMonths2026: 6,
+          monthly2026: [0, 0, 0, 146595.73, 154399.67, 220772.51, 182954.43, 188987.77, 154691.00],
+          monthly2025: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          defaultQualitative: {
+            strengths: "Desempeño sobresaliente con aceleración inmediata: ingresó en abril y en tan solo 6 meses superó el millón de pesos en utilidades para la institución.",
+            operations: "Gran disciplina comercial y regularidad en montos mensuales (alrededor de $175k de promedio constante).",
+            goals: "Desarrollar productos de crédito vinculado a tesorería (FX Loan) y aperturar al menos 4 nuevas cuentas digitales multidivisa."
+          }
+        },
+        {
+          id: 1348,
+          name: "Amarilis Gordillo Altamirano",
+          shortName: "Amarilis Gordillo",
+          initials: "AG",
+          role: "Asesora Comercial FX",
+          avatarColor: "from-indigo-600 to-violet-800",
+          total2026: 821429.92,
+          total2025: 4124.44,
+          shareSuc: 8.18,
+          shareEmp: 0.54,
+          activeMonths2026: 9,
+          monthly2026: [59.04, 12191.19, 7697.14, 8079.62, 3378.53, 281316.13, 73566.10, 168111.69, 267030.48],
+          monthly2025: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4124.44],
+          defaultQualitative: {
+            strengths: "Notable capacidad de repunte en el segundo semestre; logró su segundo mejor mes en septiembre ($267k).",
+            operations: "Buena capacidad de ejecución en operaciones spot inmediatas y atención a cuentas en momentos de volatilidad cambiaria.",
+            goals: "Estabilizar los meses de baja y mantener un umbral mínimo de $200k en el último trimestre de 2026."
+          }
+        },
+        {
+          id: 1285,
+          name: "Honney Denneb Cordero Olguin",
+          shortName: "Honney Cordero",
+          initials: "HC",
+          role: "Asesor Comercial de Divisas",
+          avatarColor: "from-sky-600 to-cyan-800",
+          total2026: 277454.74,
+          total2025: 33602.35,
+          shareSuc: 2.76,
+          shareEmp: 4.39,
+          activeMonths2026: 9,
+          monthly2026: [14404.89, 6645.59, 10358.90, 11076.49, 9085.59, 10274.05, 65307.21, 51883.32, 98418.70],
+          monthly2025: [0, 0, 0, 0, 0, 0, 0, 0, 3086.88, 6340.16, 10026.80, 14148.51],
+          defaultQualitative: {
+            strengths: "Curva ascendente continua en 2026, logrando en septiembre ($98.4k) su récord histórico en el banco (+580% vs primer semestre).",
+            operations: "Operaciones transparentes y exactas en dispersiones internacionales y liquidaciones cambiarias.",
+            goals: "Cruzar la barrera de los $100k mensuales y activar ventas cruzadas en pagarés y mercado de dinero BASE."
+          }
+        },
+        {
+          id: 1368,
+          name: "Enrique Vallejo Diaz",
+          shortName: "Enrique Vallejo",
+          initials: "EV",
+          role: "Promotor Comercial en Crecimiento",
+          avatarColor: "from-slate-600 to-slate-800",
+          total2026: 62648.91,
+          total2025: 0.00,
+          shareSuc: 0.62,
+          shareEmp: 0.62,
+          activeMonths2026: 6,
+          monthly2026: [0, 0, 0, 16395.00, 3450.70, 4564.60, 3689.81, 28628.80, 5920.00],
+          monthly2025: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          defaultQualitative: {
+            strengths: "Construcción gradual de base comercial desde abril con destellos positivos en agosto ($28.6k).",
+            operations: "Manejo correcto de herramientas de cotización y cumplimiento de políticas normativas internas.",
+            goals: "Acompañamiento gerencial en visitas a prospectos corporativos para generar al menos 2 clientes recurrentes de alto volumen."
+          }
+        },
+        {
+          id: 1453,
+          name: "Carlos Alberto Dominguez Chave",
+          shortName: "Carlos Domínguez",
+          initials: "CD",
+          role: "Asesor en Onboarding Comercial",
+          avatarColor: "from-amber-700 to-stone-900",
+          total2026: 8100.00,
+          total2025: 0.00,
+          shareSuc: 0.08,
+          shareEmp: 0.08,
+          activeMonths2026: 2,
+          monthly2026: [0, 0, 0, 0, 0, 0, 0, 8100.00, 0.00],
+          monthly2025: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          defaultQualitative: {
+            strengths: "Perfil de reciente integración al equipo comercial con primer cierre positivo registrado en agosto.",
+            operations: "Capacitándose en la gama integral de divisas, derivados y apertura ágil de cuentas digitales.",
+            goals: "Culminar la curva de aprendizaje y concretar sus primeras tres cuentas operando transacciones internacionales antes de diciembre."
+          }
+        }
+      ]
+    };
+
+    // State Variables
+    let currentAdvisorIndex = 0;
+    let branchMonthlyChartInstance = null;
+    let branchShareChartInstance = null;
+    let advisorMonthlyChartInstance = null;
+    let currentView = 'team'; // 'team' or 'advisor'
+
+    // Formatter helpers
+    const formatMoney = (amount) => {
+      return '$' + amount.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    const formatCompact = (amount) => {
+      if (amount >= 1000000) {
+        return '$' + (amount / 1000000).toFixed(2) + 'M';
+      }
+      if (amount >= 1000) {
+        return '$' + (amount / 1000).toFixed(1) + 'K';
+      }
+      return '$' + amount.toFixed(0);
+    };
+
+    window.onload = function() {
+      renderAdvisorPills();
+      renderLeaderboard();
+      initBranchCharts();
+      loadAdvisorDetails(0);
+    };
+
+    /* ==========================================================
+       VIEW MANAGEMENT
+       ========================================================== */
+    function switchView(view) {
+      currentView = view;
+      const teamView = document.getElementById('view-team');
+      const advView = document.getElementById('view-advisor');
+      const tabTeam = document.getElementById('tab-btn-team');
+      const tabAdv = document.getElementById('tab-btn-advisor');
+      const mobTeam = document.getElementById('mob-nav-team');
+      const mobAdv = document.getElementById('mob-nav-advisor');
+
+      if (view === 'team') {
+        teamView.classList.remove('hidden');
+        advView.classList.add('hidden');
+        
+        tabTeam.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/25";
+        tabAdv.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700";
+        
+        mobTeam.className = "flex flex-col items-center gap-1 text-amber-600 font-bold";
+        mobAdv.className = "flex flex-col items-center gap-1 text-slate-400 font-medium hover:text-slate-700";
+
+        // Resize branch charts if needed
+        if (branchMonthlyChartInstance) branchMonthlyChartInstance.resize();
+        if (branchShareChartInstance) branchShareChartInstance.resize();
+      } else {
+        teamView.classList.add('hidden');
+        advView.classList.remove('hidden');
+
+        tabAdv.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/25";
+        tabTeam.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700";
+
+        mobAdv.className = "flex flex-col items-center gap-1 text-amber-600 font-bold";
+        mobTeam.className = "flex flex-col items-center gap-1 text-slate-400 font-medium hover:text-slate-700";
+
+        // Trigger advisor chart resize
+        if (advisorMonthlyChartInstance) advisorMonthlyChartInstance.resize();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ==========================================================
+       ADVISOR CAROUSEL PILLS
+       ========================================================== */
+    function renderAdvisorPills() {
+      const container = document.getElementById('advisors-pill-container');
+      container.innerHTML = '';
+
+      BRANCH_DATA.advisors.forEach((adv, idx) => {
+        const isSelected = idx === currentAdvisorIndex;
+        const pill = document.createElement('button');
+        pill.onclick = () => selectAdvisor(idx);
+        pill.className = `flex-shrink-0 flex items-center gap-2.5 px-3 py-1.5 rounded-2xl border transition-all duration-200 ${
+          isSelected 
+            ? 'bg-slate-900 border-amber-500 text-white shadow-md ring-2 ring-amber-500/20' 
+            : 'bg-slate-100 hover:bg-slate-200/80 border-slate-200 text-slate-700'
+        }`;
+
+        pill.innerHTML = `
+          <div class="w-7 h-7 rounded-xl bg-gradient-to-tr ${adv.avatarColor} text-white font-extrabold text-[11px] flex items-center justify-center shadow-sm">
+            ${adv.initials}
+          </div>
+          <div class="text-left">
+            <p class="text-xs font-bold leading-tight ${isSelected ? 'text-white' : 'text-slate-800'}">${adv.shortName}</p>
+            <p class="text-[10px] font-semibold ${isSelected ? 'text-amber-400' : 'text-slate-500'}">${adv.shareSuc}% • ${formatCompact(adv.total2026)}</p>
+          </div>
+        `;
+        container.appendChild(pill);
+      });
+    }
+
+    function selectAdvisor(index) {
+      currentAdvisorIndex = index;
+      renderAdvisorPills();
+      loadAdvisorDetails(index);
+      if (currentView !== 'advisor') {
+        switchView('advisor');
+      }
+      document.getElementById('carousel-indicator').textContent = `Seleccionado: ${BRANCH_DATA.advisors[index].shortName}`;
+    }
+
+    function cycleAdvisor(direction) {
+      let newIdx = currentAdvisorIndex + direction;
+      if (newIdx >= BRANCH_DATA.advisors.length) newIdx = 0;
+      if (newIdx < 0) newIdx = BRANCH_DATA.advisors.length - 1;
+      selectAdvisor(newIdx);
+    }
+
+    /* ==========================================================
+       LOAD ADVISOR PROFILE & QUALITATIVE
+       ========================================================== */
+    function loadAdvisorDetails(index) {
+      const adv = BRANCH_DATA.advisors[index];
+
+      // Header info
+      document.getElementById('adv-avatar').textContent = adv.initials;
+      document.getElementById('adv-id-badge').textContent = `ID: ${adv.id}`;
+      document.getElementById('adv-rank-badge').textContent = `#${index + 1} en Sucursal`;
+      
+      const statusTag = document.getElementById('adv-status-tag');
+      if (index === 0) {
+        statusTag.textContent = "Top Producer";
+        statusTag.className = "px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-100 text-amber-800";
+      } else if (adv.total2026 > 1000000) {
+        statusTag.textContent = "Club Millonario";
+        statusTag.className = "px-2 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 text-emerald-800";
+      } else if (adv.total2026 > 200000) {
+        statusTag.textContent = "En Consolidación";
+        statusTag.className = "px-2 py-0.5 rounded-md text-[11px] font-bold bg-blue-100 text-blue-800";
+      } else {
+        statusTag.textContent = "En Rampa";
+        statusTag.className = "px-2 py-0.5 rounded-md text-[11px] font-bold bg-slate-200 text-slate-700";
+      }
+
+      document.getElementById('adv-name').textContent = adv.name;
+      document.getElementById('adv-role').textContent = adv.role;
+      document.getElementById('adv-share-val').textContent = `${adv.shareSuc}%`;
+      document.getElementById('adv-emp-share').textContent = `${adv.shareEmp}% de la cuota regional`;
+
+      // Find best month
+      let maxVal = -1;
+      let maxMonthIndex = 0;
+      adv.monthly2026.forEach((val, i) => {
+        if (val > maxVal) {
+          maxVal = val;
+          maxMonthIndex = i;
+        }
+      });
+      document.getElementById('adv-best-month').textContent = `${BRANCH_DATA.months[maxMonthIndex].substring(0, 3)} (${formatCompact(maxVal)})`;
+      document.getElementById('adv-last-month').textContent = formatCompact(adv.monthly2026[8]);
+
+      // Cards
+      document.getElementById('adv-total2026').textContent = formatMoney(adv.total2026);
+      document.getElementById('adv-total2025').textContent = adv.total2025 > 0 ? formatMoney(adv.total2025) : '$0.00 (Nuevo en 2026)';
+      
+      const growthEl = document.getElementById('adv-growth-badge');
+      if (adv.total2025 > 0) {
+        const growth = ((adv.total2026 - adv.total2025) / adv.total2025) * 100;
+        growthEl.textContent = `+${growth.toFixed(1)}% vs 2025`;
+        growthEl.parentElement.className = "mt-2 text-xs font-semibold text-emerald-600 flex items-center gap-1";
+      } else {
+        growthEl.textContent = "100% Cartera Nueva";
+        growthEl.parentElement.className = "mt-2 text-xs font-semibold text-blue-600 flex items-center gap-1";
+      }
+
+      const activeMonths = adv.activeMonths2026 || 9;
+      const avg = adv.total2026 / activeMonths;
+      document.getElementById('adv-monthly-avg').textContent = formatCompact(avg);
+
+      // Monthly detail bars
+      renderMonthlyProgressBars(adv, maxVal);
+
+      // Chart
+      updateAdvisorChart();
+
+      // Load Qualitative Notes from localStorage or default
+      loadAdvisorNotes(adv.id);
+    }
+
+    function renderMonthlyProgressBars(adv, maxMonthVal) {
+      const container = document.getElementById('adv-monthly-bars');
+      container.innerHTML = '';
+
+      BRANCH_DATA.months.forEach((mName, i) => {
+        const val = adv.monthly2026[i] || 0;
+        const pctOfMax = maxMonthVal > 0 ? Math.min(100, Math.round((val / maxMonthVal) * 100)) : 0;
+        
+        const card = document.createElement('div');
+        card.className = "p-3 rounded-xl bg-slate-50 border border-slate-200/70";
+        card.innerHTML = `
+          <div class="flex items-center justify-between text-xs mb-1.5">
+            <span class="font-bold text-slate-700">${mName}</span>
+            <span class="font-extrabold ${val > 0 ? 'text-slate-900' : 'text-slate-400'}">${formatMoney(val)}</span>
+          </div>
+          <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+            <div class="h-1.5 rounded-full ${val > 0 ? 'bg-amber-500' : 'bg-transparent'}" style="width: ${pctOfMax}%"></div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* ==========================================================
+       LOCALSTORAGE QUALITATIVE NOTES MANAGEMENT
+       ========================================================== */
+    function loadAdvisorNotes(advisorId) {
+      const adv = BRANCH_DATA.advisors.find(a => a.id === advisorId);
+      const storageKey = `base_notes_adv_${advisorId}`;
+      const savedData = localStorage.getItem(storageKey);
+
+      let notes = adv.defaultQualitative;
+      if (savedData) {
+        try {
+          notes = JSON.parse(savedData);
+        } catch (e) {
+          notes = adv.defaultQualitative;
+        }
+      }
+
+      document.getElementById('note-strengths').value = notes.strengths || "";
+      document.getElementById('note-operations').value = notes.operations || "";
+      document.getElementById('note-goals').value = notes.goals || "";
+      document.getElementById('save-status-msg').textContent = savedData 
+        ? "Notas personalizadas cargadas de tu teléfono." 
+        : "Notas predeterminadas listas para editar.";
+    }
+
+    function saveCurrentAdvisorNotes() {
+      const adv = BRANCH_DATA.advisors[currentAdvisorIndex];
+      const storageKey = `base_notes_adv_${adv.id}`;
+
+      const notes = {
+        strengths: document.getElementById('note-strengths').value,
+        operations: document.getElementById('note-operations').value,
+        goals: document.getElementById('note-goals').value,
+        updatedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(storageKey, JSON.stringify(notes));
+      document.getElementById('save-status-msg').textContent = `Guardado exitosamente a las ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+      showToast(`Notas de ${adv.shortName} guardadas en tu equipo`);
+    }
+
+    function resetDefaultNotes() {
+      const adv = BRANCH_DATA.advisors[currentAdvisorIndex];
+      const storageKey = `base_notes_adv_${adv.id}`;
+      localStorage.removeItem(storageKey);
+      loadAdvisorNotes(adv.id);
+      showToast("Comentarios restablecidos a valores originales");
+    }
+
+    /* ==========================================================
+       BRANCH CHARTS INITIALIZATION (Chart.js)
+       ========================================================== */
+    function initBranchCharts() {
+      // 1. Branch Monthly Chart
+      const ctxMonthly = document.getElementById('branchMonthlyChart').getContext('2d');
+      branchMonthlyChartInstance = new Chart(ctxMonthly, {
+        type: 'line',
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+          datasets: [{
+            label: 'Utilidad Sucursal 2026 (MXN)',
+            data: BRANCH_DATA.branchMonthly2026,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245, 158, 11, 0.08)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#0f172a',
+            pointBorderColor: '#f59e0b',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `Utilidad: ${formatMoney(ctx.raw)}`
+              }
+            }
+          },
+          scales: {
+            y: {
+              grid: { color: '#f1f5f9' },
+              ticks: {
+                callback: (val) => formatCompact(val),
+                font: { size: 10, family: 'Plus Jakarta Sans' }
+              }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' } }
+            }
+          }
+        }
+      });
+
+      // 2. Share Donut Chart
+      const ctxShare = document.getElementById('branchShareChart').getContext('2d');
+      const advisorNames = BRANCH_DATA.advisors.map(a => a.shortName);
+      const advisorShares = BRANCH_DATA.advisors.map(a => a.shareSuc);
+
+      branchShareChartInstance = new Chart(ctxShare, {
+        type: 'doughnut',
+        data: {
+          labels: advisorNames,
+          datasets: [{
+            data: advisorShares,
+            backgroundColor: [
+              '#f59e0b', // Mitzi
+              '#0284c7', // Mauricio
+              '#ec4899', // Maria Jose
+              '#10b981', // Alma
+              '#8b5cf6', // Amarilis
+              '#06b6d4', // Honney
+              '#64748b', // Enrique
+              '#d97706'  // Carlos
+            ],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.label}: ${ctx.raw}% (${formatCompact(BRANCH_DATA.advisors[ctx.dataIndex].total2026)})`
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+
+    /* ==========================================================
+       ADVISOR MONTHLY CHART
+       ========================================================== */
+    function updateAdvisorChart() {
+      const adv = BRANCH_DATA.advisors[currentAdvisorIndex];
+      const showCompare = document.getElementById('compare-2025-toggle').checked;
+      const ctxAdv = document.getElementById('advisorMonthlyChart').getContext('2d');
+
+      const datasets = [{
+        label: 'Utilidad 2026',
+        data: adv.monthly2026,
+        backgroundColor: '#f59e0b',
+        borderRadius: 8,
+        borderSkipped: false
+      }];
+
+      if (showCompare) {
+        // Compare with 2025 months mapped to Jan-Sep
+        const data2025Sliced = adv.monthly2025.slice(0, 9);
+        datasets.push({
+          label: 'Utilidad 2025',
+          data: data2025Sliced,
+          backgroundColor: '#94a3b8',
+          borderRadius: 8,
+          borderSkipped: false
+        });
+      }
+
+      if (advisorMonthlyChartInstance) {
+        advisorMonthlyChartInstance.destroy();
+      }
+
+      advisorMonthlyChartInstance = new Chart(ctxAdv, {
+        type: 'bar',
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: { font: { size: 11, family: 'Plus Jakarta Sans', weight: '700' } }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.dataset.label}: ${formatMoney(ctx.raw)}`
+              }
+            }
+          },
+          scales: {
+            y: {
+              grid: { color: '#f8fafc' },
+              ticks: {
+                callback: (val) => formatCompact(val),
+                font: { size: 10, family: 'Plus Jakarta Sans' }
+              }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 11, family: 'Plus Jakarta Sans', weight: '600' } }
+            }
+          }
+        }
+      });
+    }
+
+    /* ==========================================================
+       LEADERBOARD LIST
+       ========================================================== */
+    function renderLeaderboard(filterText = '') {
+      const container = document.getElementById('leaderboard-container');
+      container.innerHTML = '';
+
+      const filtered = BRANCH_DATA.advisors.filter(a => 
+        a.name.toLowerCase().includes(filterText.toLowerCase()) || 
+        a.id.toString().includes(filterText)
+      );
+
+      filtered.forEach((adv, rank) => {
+        const row = document.createElement('div');
+        row.className = "p-4 hover:bg-slate-50 transition-colors flex items-center justify-between gap-3 cursor-pointer";
+        row.onclick = () => {
+          const originalIndex = BRANCH_DATA.advisors.findIndex(item => item.id === adv.id);
+          selectAdvisor(originalIndex);
+        };
+
+        row.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="w-6 text-center font-extrabold text-xs ${rank === 0 ? 'text-amber-500' : 'text-slate-400'}">#${rank + 1}</span>
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr ${adv.avatarColor} text-white font-bold text-xs flex items-center justify-center shadow-sm flex-shrink-0">
+              ${adv.initials}
+            </div>
+            <div>
+              <p class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">${adv.name}</p>
+              <p class="text-[11px] text-slate-400 font-medium">ID: ${adv.id} • ${adv.role.split('•')[0]}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="text-xs sm:text-sm font-extrabold text-slate-900">${formatCompact(adv.total2026)}</p>
+            <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded-full ${rank === 0 ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">
+              ${adv.shareSuc}%
+            </span>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function filterLeaderboard() {
+      const query = document.getElementById('table-search').value;
+      renderLeaderboard(query);
+    }
+
+    /* ==========================================================
+       SHARING & EXPORT UTILITIES (WHATSAPP & TEXT)
+       ========================================================== */
+    function shareAdvisorSummary() {
+      const adv = BRANCH_DATA.advisors[currentAdvisorIndex];
+      const storageKey = `base_notes_adv_${adv.id}`;
+      const saved = localStorage.getItem(storageKey);
+      const notes = saved ? JSON.parse(saved) : adv.defaultQualitative;
+
+      const summaryText = 
+`*BANCO BASE - RESUMEN EJECUTIVO*
+*Asesor:* ${adv.name} (ID: ${adv.id})
+*Sucursal:* Comercial México 3 (41930)
+----------------------------------------
+*Utilidad YTD 2026:* ${formatMoney(adv.total2026)}
+*Participación Sucursal:* ${adv.shareSuc}%
+*Utilidad 2025:* ${formatMoney(adv.total2025)}
+*Cierre Septiembre 2026:* ${formatMoney(adv.monthly2026[8])}
+----------------------------------------
+*EVALUACIÓN CUALITATIVA:*
+• *Fortalezas:* ${notes.strengths}
+• *Operativa & Cruzada:* ${notes.operations}
+• *Objetivo Q4:* ${notes.goals}
+----------------------------------------
+_Generado desde la plataforma de gestión comercial BASE_`;
+
+      copyToClipboard(summaryText);
+      showToast("Resumen del asesor copiado para WhatsApp");
+    }
+
+    function shareGlobalSummary() {
+      const text = 
+`*BANCO BASE - SUCURSAL COMERCIAL MÉXICO 3 (41930)*
+*Corte Acumulado:* Enero - Septiembre 2026
+----------------------------------------
+*Utilidad Global 2026:* ${formatMoney(BRANCH_DATA.total2026)}
+*Crecimiento vs 2025:* +1,212.7%
+*Cierre Septiembre:* $1,811,190.48 MXN
+----------------------------------------
+*Top 3 Asesores:*
+1. Mitzi Negrete: $4.91M (48.9%)
+2. Mauricio Moreno: $1.52M (15.1%)
+3. María José Crespo: $1.39M (13.9%)
+----------------------------------------
+_Reporte consolidado de desempeño_`;
+
+      copyToClipboard(text);
+      showToast("Resumen global de la sucursal copiado");
+    }
+
+    function shareCurrentView() {
+      if (currentView === 'team') {
+        shareGlobalSummary();
+      } else {
+        shareAdvisorSummary();
+      }
+    }
+
+    function copyToClipboard(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        console.error('Error al copiar', err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = message;
+      toast.classList.remove('translate-y-[-150%]');
+      setTimeout(() => {
+        toast.classList.add('translate-y-[-150%]');
+      }, 3200);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn("Fullscreen no permitido", err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+  </script>
+</body>
+</html>
