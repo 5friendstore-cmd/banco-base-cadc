@@ -58,7 +58,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased min-h-screen pb-20 sm:pb-6">
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen pb-24 sm:pb-12">
 
   <!-- BARRA SUPERIOR FIJA CON BOTÓN DE MENÚ Y LOGOTIPO OFICIAL -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
@@ -141,9 +141,13 @@
       </div>
     </div>
 
-    <!-- Footer Drawer -->
-    <div class="p-3 bg-slate-50 border-t border-slate-100 text-[10px] text-slate-400 text-center">
-      Comercial México 3 • Banco BASE 2026
+    <!-- Footer Drawer con enlace a Five Friends -->
+    <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+      <p class="text-[10px] text-slate-400">Comercial México 3 • Banco BASE 2026</p>
+      <a href="https://five-friends-web.vercel.app/" target="_blank" rel="noopener noreferrer" class="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 hover:text-amber-600 transition">
+        <span>Powered by</span>
+        <span class="font-extrabold text-slate-800 hover:underline">Five Friends</span>
+      </a>
     </div>
   </aside>
 
@@ -355,6 +359,25 @@
       </div>
     </section>
 
+    <!-- PIE DE PÁGINA CON BRANDING "POWERED BY FIVE FRIENDS" -->
+    <footer class="mt-8 pt-4 pb-2 border-t border-slate-200 text-center">
+      <p class="text-xs font-medium text-slate-500">Banco BASE • Sucursal Comercial México 3 (41930)</p>
+      <div class="mt-2 inline-flex items-center gap-1.5 text-xs text-slate-500">
+        <span>Powered by</span>
+        <a 
+          href="https://five-friends-web.vercel.app/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="font-extrabold text-amber-600 hover:text-amber-700 transition inline-flex items-center gap-1 group underline decoration-amber-300 hover:decoration-amber-600"
+        >
+          <span>Five Friends</span>
+          <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        </a>
+      </div>
+    </footer>
+
   </main>
 
   <!-- BARRA DE NAVEGACIÓN INFERIOR PARA TELÉFONOS MÓVILES -->
@@ -531,12 +554,10 @@
     function navigate(viewId) {
       currentView = viewId;
 
-      // Ocultar todas las secciones
       document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
       const activeSec = document.getElementById(`page-${viewId}`);
       if (activeSec) activeSec.classList.add('active');
 
-      // Mostrar/ocultar barra selectora según vista
       const banner = document.getElementById('advisorSelectorBanner');
       if (viewId === 'dashboard') {
         banner.classList.add('hidden');
@@ -544,7 +565,6 @@
         banner.classList.remove('hidden');
       }
 
-      // Estilos pestañas escritorio
       ['dashboard', 'advisor', 'charts', 'qualitative'].forEach(tab => {
         const desktopTab = document.getElementById(`tab-${tab}`);
         const mobileTab = document.getElementById(`btnNav-${tab}`);
@@ -558,7 +578,6 @@
         }
       });
 
-      // Si entra a gráficas, actualizar canvas
       if (viewId === 'charts') {
         setTimeout(renderDetailChart, 50);
       }
@@ -569,7 +588,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // CONTROL DEL MENÚ DRAWER
+    // CONTROL DEL MENÚ LATERAL
     function toggleSidebar(open) {
       const drawer = document.getElementById('sidebarDrawer');
       const backdrop = document.getElementById('drawerBackdrop');
@@ -587,11 +606,10 @@
       currentAdvisorIndex = index;
       const adv = TEAM_DATA[index];
 
-      // Actualizar selects
       document.getElementById('mainAdvisorSelect').value = index;
       document.getElementById('currentAdvisorRankBadge').textContent = `#${adv.rank}`;
 
-      // Actualizar Ficha de Asesor
+      // Ficha
       document.getElementById('profAdvisorCode').textContent = `ID: ${adv.id}`;
       document.getElementById('profAdvisorName').textContent = adv.name;
       document.getElementById('profTotal2026').textContent = formatCurrency(adv.total2026);
@@ -600,7 +618,6 @@
       document.getElementById('profTotal2025').textContent = formatCurrency(adv.total2025);
       document.getElementById('profShare2025').textContent = `${adv.share2025Emp} en 2025`;
 
-      // Crecimiento
       const growthEl = document.getElementById('profGrowth');
       if (adv.total2025 > 0) {
         const g = ((adv.total2026 - adv.total2025) / adv.total2025) * 100;
@@ -609,7 +626,6 @@
         growthEl.textContent = 'Nuevo en 2026';
       }
 
-      // MoM Septiembre
       const ago = adv.history2026.ago;
       const sep = adv.history2026.sep;
       const momEl = document.getElementById('profSeptMoM');
@@ -621,7 +637,6 @@
         momEl.textContent = sep > 0 ? 'Activo' : 'Sin mov.';
       }
 
-      // Cargar tablas de gráfica y detalle
       renderDetailTable(adv);
       loadQualData(adv);
 
@@ -630,7 +645,6 @@
       }
     }
 
-    // TABLA COMPARATIVA
     function renderDetailTable(adv) {
       document.getElementById('chartAdvisorTitle').textContent = `Evolución 2026 - ${adv.shortName}`;
       const tbody = document.getElementById('detailTableBody');
@@ -667,7 +681,6 @@
       `;
     }
 
-    // GRÁFICA DE EVOLUCIÓN DETALLADA
     function renderDetailChart() {
       const adv = TEAM_DATA[currentAdvisorIndex];
       const ctx = document.getElementById('monthlyDetailChart').getContext('2d');
@@ -732,7 +745,6 @@
       });
     }
 
-    // GRÁFICA DE DONUT SUCURSAL
     function renderGeneralDonutChart() {
       const ctx = document.getElementById('generalDonutChart').getContext('2d');
       if (generalDonutChartInstance) generalDonutChartInstance.destroy();
@@ -768,7 +780,6 @@
       });
     }
 
-    // CUALITATIVO (LOCALSTORAGE)
     function loadQualData(adv) {
       const saved = localStorage.getItem(`qual_${adv.id}`);
       if (saved) {
@@ -799,7 +810,6 @@
       setTimeout(() => { ind.style.opacity = '0'; }, 1200);
     }
 
-    // COMPARTIR POR WHATSAPP
     function shareWhatsApp() {
       const adv = TEAM_DATA[currentAdvisorIndex];
       const s = document.getElementById('qualStrengths').innerText.trim();
@@ -831,21 +841,17 @@ _Portal Comercial Banco BASE_`;
       window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    // INICIALIZACIÓN
     window.addEventListener('DOMContentLoaded', () => {
-      // Llenar selectores y drawer
       const mainSelect = document.getElementById('mainAdvisorSelect');
       const drawerList = document.getElementById('drawerAdvisorList');
       const dashTable = document.getElementById('rankingDashboardBody');
 
       TEAM_DATA.forEach((adv, idx) => {
-        // Select
         const opt = document.createElement('option');
         opt.value = idx;
         opt.textContent = `${adv.name} (${adv.share2026Emp})`;
         mainSelect.appendChild(opt);
 
-        // Lista drawer
         const drawerBtn = document.createElement('button');
         drawerBtn.className = 'w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 flex items-center justify-between text-xs';
         drawerBtn.innerHTML = `<span>${adv.shortName}</span><span class="font-bold text-amber-600">${adv.share2026Emp}</span>`;
@@ -856,7 +862,6 @@ _Portal Comercial Banco BASE_`;
         };
         drawerList.appendChild(drawerBtn);
 
-        // Tabla Dashboard
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-amber-50/50 cursor-pointer';
         tr.onclick = () => {
