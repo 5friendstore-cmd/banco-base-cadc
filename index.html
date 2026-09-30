@@ -63,24 +63,18 @@
   <!-- BARRA SUPERIOR FIJA CON BOTÓN DE MENÚ Y LOGOTIPO OFICIAL -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
     <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
-      
-      <!-- BOTÓN MENÚ + LOGO SVG -->
       <div class="flex items-center gap-3">
         <button onclick="toggleSidebar(true)" class="p-2 -ml-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none" aria-label="Abrir Menú">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
-
-        <!-- LOGOTIPO OFICIAL SVG BANCO BASE -->
         <img 
           src="https://www.bancobase.com/assets/img/logo/BANCOBASE_full.svg" 
           alt="Banco BASE" 
           class="h-7 sm:h-8 w-auto object-contain"
         />
       </div>
-
-      <!-- ETIQUETA CÉLULA -->
       <div class="text-right">
         <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 block">Célula Operativa</span>
         <span class="text-xs font-bold text-slate-800">Célula 3 CDM1 (41930)</span>
@@ -109,7 +103,6 @@
         </button>
       </div>
 
-      <!-- Menú de Vistas -->
       <div class="p-3">
         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-2">Vistas Principales</span>
         <div class="space-y-1">
@@ -215,6 +208,7 @@
               <tr>
                 <th class="p-2">#</th>
                 <th class="p-2">Asesor</th>
+                <th class="p-2">Ingreso</th>
                 <th class="p-2 text-right">Septiembre</th>
                 <th class="p-2 text-right">2026 YTD</th>
                 <th class="p-2 text-right">% Célula</th>
@@ -239,18 +233,18 @@
           <p class="text-xs text-slate-300 mt-0.5">Asesor Comercial • Célula 3 CDM1 (41930)</p>
         </div>
 
-        <!-- DATOS OPERATIVOS: INGRESO & CLIENTES ACTIVOS -->
+        <!-- DATOS OPERATIVOS CON ANTIGÜEDAD CALCULADA Y CLIENTES ACTIVOS -->
         <div class="grid grid-cols-2 divide-x divide-slate-200 bg-amber-50/50 border-b border-slate-200 p-2.5 text-center">
           <div>
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Fecha de Ingreso / Antigüedad</span>
-            <span id="profJoinDate" contenteditable="true" oninput="saveExtraData()" class="editable-box text-xs font-bold text-amber-900 px-1 py-0.5 rounded cursor-pointer">
-              Pendiente de asignar
+            <span class="text-[10px] uppercase font-bold text-slate-500 block">Ingreso / Antigüedad</span>
+            <span id="profJoinDate" class="text-xs font-bold text-amber-900 px-1 py-0.5 block">
+              Septiembre 2025 (13 meses)
             </span>
           </div>
           <div>
             <span class="text-[10px] uppercase font-bold text-slate-500 block">Clientes Activos</span>
-            <span id="profActiveClients" contenteditable="true" oninput="saveExtraData()" class="editable-box text-xs font-bold text-amber-900 px-1 py-0.5 rounded cursor-pointer">
-              Pendiente de asignar
+            <span id="profActiveClients" contenteditable="true" oninput="saveExtraData()" class="editable-box text-xs font-bold text-amber-900 px-1 py-0.5 rounded cursor-pointer underline decoration-dotted">
+              Por definir (toca aquí)
             </span>
           </div>
         </div>
@@ -321,7 +315,7 @@
               <th class="p-1.5 text-right">Jun</th>
               <th class="p-1.5 text-right">Jul</th>
               <th class="p-1.5 text-right">Ago</th>
-              <th class="p-1.5 text-right">Sep</th>
+              <th class="p-1.5 text-right font-medium text-slate-900">Sep</th>
               <th class="p-1.5 text-right bg-amber-50 text-amber-900 font-extrabold">Total YTD</th>
             </tr>
           </thead>
@@ -416,7 +410,7 @@
     </button>
   </nav>
 
-  <!-- JAVASCRIPT CON DATA ACTUALIZADA -->
+  <!-- JAVASCRIPT CON DATA Y ANTIGÜEDADES CALCULADAS -->
   <script>
     const TEAM_DATA = [
       {
@@ -424,6 +418,8 @@
         name: "Mitzi Estefanía Negrete Bribiesca",
         shortName: "Mitzi Negrete",
         rank: 1,
+        joinInfo: "Septiembre 2025 (13 meses)",
+        joinDateShort: "Sep 2025",
         total2025: 591216.45,
         share2025Emp: "77.27%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 58273.34, oct: 132222.43, nov: 188942.05, dic: 211778.63, total: 591216.45 },
@@ -441,6 +437,8 @@
         name: "Mauricio Moreno Rogel",
         shortName: "Mauricio Moreno",
         rank: 2,
+        joinInfo: "Septiembre 2025 (13 meses)",
+        joinDateShort: "Sep 2025",
         total2025: 116747.16,
         share2025Emp: "15.26%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 560.26, oct: 6824.62, nov: 35902.67, dic: 73459.61, total: 116747.16 },
@@ -458,6 +456,8 @@
         name: "María José Crespo Noguez",
         shortName: "María José Crespo",
         rank: 3,
+        joinInfo: "Octubre 2025 (12 meses)",
+        joinDateShort: "Oct 2025",
         total2025: 12244.48,
         share2025Emp: "1.60%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 600.60, nov: 2070.51, dic: 9573.37, total: 12244.48 },
@@ -475,6 +475,8 @@
         name: "Alma Elena Velasco Alcoser",
         shortName: "Alma Velasco",
         rank: 4,
+        joinInfo: "Abril 2026 (6 meses)",
+        joinDateShort: "Abr 2026",
         total2025: 0.00,
         share2025Emp: "0.00%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, total: 0 },
@@ -492,6 +494,8 @@
         name: "Amarilis Gordillo Altamirano",
         shortName: "Amarilis Gordillo",
         rank: 5,
+        joinInfo: "Diciembre 2025 (10 meses)",
+        joinDateShort: "Dic 2025",
         total2025: 4124.44,
         share2025Emp: "0.54%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 4124.44, total: 4124.44 },
@@ -509,6 +513,8 @@
         name: "Honney Denneb Cordero Olguin",
         shortName: "Honney Cordero",
         rank: 6,
+        joinInfo: "Septiembre 2025 (13 meses)",
+        joinDateShort: "Sep 2025",
         total2025: 33602.35,
         share2025Emp: "4.39%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 3086.88, oct: 6340.16, nov: 10026.80, dic: 14148.51, total: 33602.35 },
@@ -526,6 +532,8 @@
         name: "Enrique Vallejo Diaz",
         shortName: "Enrique Vallejo",
         rank: 7,
+        joinInfo: "Abril 2026 (6 meses)",
+        joinDateShort: "Abr 2026",
         total2025: 0.00,
         share2025Emp: "0.00%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, total: 0 },
@@ -611,6 +619,7 @@
       // Ficha
       document.getElementById('profAdvisorCode').textContent = `ID: ${adv.id}`;
       document.getElementById('profAdvisorName').textContent = adv.name;
+      document.getElementById('profJoinDate').textContent = adv.joinInfo;
       document.getElementById('profTotal2026').textContent = formatCurrency(adv.total2026);
       document.getElementById('profShare2026').textContent = adv.share2026Emp;
       document.getElementById('profSept').textContent = formatCurrency(adv.history2026.sep);
@@ -780,25 +789,22 @@
       });
     }
 
-    // CAMPOS EXTRA: FECHA DE INGRESO Y CLIENTES
+    // CAMPOS EXTRA: CLIENTES ACTIVOS (PERSISTENTE)
     function loadExtraData(adv) {
       const saved = localStorage.getItem(`extra_${adv.id}`);
       if (saved) {
         try {
           const d = JSON.parse(saved);
-          document.getElementById('profJoinDate').innerText = d.joinDate || "Por asignar";
-          document.getElementById('profActiveClients').innerText = d.activeClients || "Por asignar";
+          document.getElementById('profActiveClients').innerText = d.activeClients || "Por definir (toca aquí)";
           return;
         } catch(e){}
       }
-      document.getElementById('profJoinDate').innerText = "Por asignar";
-      document.getElementById('profActiveClients').innerText = "Por asignar";
+      document.getElementById('profActiveClients').innerText = "Por definir (toca aquí)";
     }
 
     function saveExtraData() {
       const adv = TEAM_DATA[currentAdvisorIndex];
       const data = {
-        joinDate: document.getElementById('profJoinDate').innerText.trim(),
         activeClients: document.getElementById('profActiveClients').innerText.trim()
       };
       localStorage.setItem(`extra_${adv.id}`, JSON.stringify(data));
@@ -845,7 +851,6 @@
       const s = document.getElementById('qualStrengths').innerText.trim();
       const o = document.getElementById('qualOpportunities').innerText.trim();
       const p = document.getElementById('qualPlan').innerText.trim();
-      const joinDate = document.getElementById('profJoinDate').innerText.trim();
       const clients = document.getElementById('profActiveClients').innerText.trim();
 
       const msg = 
@@ -853,7 +858,7 @@
 📍 *Célula:* Célula 3 CDM1 (41930)
 👤 *Asesor:* ${adv.name}
 🏆 *Posición:* #${adv.rank} de la Célula
-📅 *Ingreso / Antigüedad:* ${joinDate}
+📅 *Ingreso:* ${adv.joinInfo}
 👥 *Clientes Activos:* ${clients}
 
 📊 *Métricas 2026 YTD:*
@@ -906,6 +911,7 @@ _Portal Célula 3 CDM1 - Banco BASE_`;
         tr.innerHTML = `
           <td class="p-2 font-bold text-slate-400">#${adv.rank}</td>
           <td class="p-2 font-sans font-semibold text-slate-800">${adv.name}</td>
+          <td class="p-2 text-slate-500 font-sans text-[10px]">${adv.joinDateShort}</td>
           <td class="p-2 text-right font-medium text-slate-700">${formatCurrency(adv.history2026.sep)}</td>
           <td class="p-2 text-right font-black text-amber-700">${formatCurrency(adv.total2026)}</td>
           <td class="p-2 text-right font-bold text-slate-700">${adv.share2026Emp}</td>
