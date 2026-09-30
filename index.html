@@ -186,7 +186,7 @@
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] font-bold text-slate-400 uppercase">Fuerza Comercial</span>
           <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">7 Asesores</span>
-          <span class="text-[10px] text-amber-600 font-semibold">Líder excluido de cartera</span>
+          <span class="text-[10px] text-amber-600 font-semibold">Equipo activo</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] font-bold text-slate-400 uppercase">Top 1 Participación</span>
@@ -239,7 +239,7 @@
           <p class="text-xs text-slate-300 mt-0.5">Asesor Comercial • Célula 3 CDM1 (41930)</p>
         </div>
 
-        <!-- DATOS OPERATIVOS NUEVOS: INGRESO & CLIENTES ACTIVOS -->
+        <!-- DATOS OPERATIVOS: INGRESO & CLIENTES ACTIVOS -->
         <div class="grid grid-cols-2 divide-x divide-slate-200 bg-amber-50/50 border-b border-slate-200 p-2.5 text-center">
           <div>
             <span class="text-[10px] uppercase font-bold text-slate-500 block">Fecha de Ingreso / Antigüedad</span>
@@ -321,7 +321,7 @@
               <th class="p-1.5 text-right">Jun</th>
               <th class="p-1.5 text-right">Jul</th>
               <th class="p-1.5 text-right">Ago</th>
-              <th class="p-1.5 text-right font-black text-amber-900 bg-amber-100/60">Sep Actualizado</th>
+              <th class="p-1.5 text-right">Sep</th>
               <th class="p-1.5 text-right bg-amber-50 text-amber-900 font-extrabold">Total YTD</th>
             </tr>
           </thead>
@@ -416,9 +416,8 @@
     </button>
   </nav>
 
-  <!-- JAVASCRIPT CON DATA ACTUALIZADA A SEPTIEMBRE (LÍDER EXCLUIDO) -->
+  <!-- JAVASCRIPT CON DATA ACTUALIZADA -->
   <script>
-    // DATA ACTUALIZADA CON SALDOS DE SEPTIEMBRE (EXCLUYENDO A CARLOS DOMÍNGUEZ)
     const TEAM_DATA = [
       {
         id: "1297",
@@ -663,7 +662,7 @@
           <td class="p-1.5 text-right">${formatCurrency(h26.jun)}</td>
           <td class="p-1.5 text-right">${formatCurrency(h26.jul)}</td>
           <td class="p-1.5 text-right">${formatCurrency(h26.ago)}</td>
-          <td class="p-1.5 text-right font-black text-amber-900 bg-amber-100/60">${formatCurrency(h26.sep)}</td>
+          <td class="p-1.5 text-right font-medium text-slate-900">${formatCurrency(h26.sep)}</td>
           <td class="p-1.5 text-right bg-amber-50 font-black text-amber-700">${formatCurrency(h26.total)}</td>
         </tr>
         <tr class="text-slate-400">
