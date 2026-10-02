@@ -60,7 +60,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased min-h-screen pb-24 sm:pb-12">
 
-  <!-- BARRA SUPERIOR FIJA CON BOTÓN DE MENÚ Y LOGOTIPO OFICIAL -->
+  <!-- BARRA SUPERIOR FIJA CON LOGO OFICIAL Y BOTÓN DE MENÚ -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
     <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -173,34 +173,36 @@
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] font-bold text-slate-400 uppercase">Utilidad Célula</span>
-          <span class="text-sm sm:text-base font-extrabold text-amber-600 block mt-0.5">$10,078,045.30</span>
+          <span class="text-sm sm:text-base font-extrabold text-amber-600 block mt-0.5">$10,371,920.39</span>
           <span class="text-[10px] text-emerald-600 font-semibold">2026 Ene-Sep</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Total Célula 2025</span>
-          <span class="text-sm sm:text-base font-extrabold text-slate-700 block mt-0.5">$765,108.35</span>
-          <span class="text-[10px] text-slate-400">Cierre 2025</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase">Cierre Septiembre</span>
+          <span class="text-sm sm:text-base font-extrabold text-emerald-600 block mt-0.5">$2,139,201.75</span>
+          <span class="text-[10px] text-slate-400">Récord mensual</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Fuerza Comercial</span>
-          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">7 Asesores</span>
-          <span class="text-[10px] text-amber-600 font-semibold">Equipo activo</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase">Clientes Activos</span>
+          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">87 Clientes</span>
+          <span class="text-[10px] text-amber-600 font-semibold">En 7 asesores</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Top 1 Participación</span>
-          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">48.77%</span>
-          <span class="text-[10px] text-slate-400 truncate block">Mitzi Negrete</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase">Líder Generación</span>
+          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">47.39%</span>
+          <span class="text-[10px] text-slate-400 truncate block">Mitzi Negrete ($4.91M)</span>
         </div>
       </div>
 
       <!-- Acceso Directo Destacado a la Evolución de Célula -->
-      <div onclick="navigate('cell-analytics')" class="bg-gradient-to-r from-slate-900 to-amber-950 rounded-xl p-4 text-white shadow-xs cursor-pointer flex items-center justify-between hover:opacity-95 transition">
+      <div onclick="navigate('cell-analytics')" class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-xl p-4 text-white shadow-xs cursor-pointer flex items-center justify-between hover:opacity-95 transition">
         <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Nueva Sección</span>
-          <h3 class="text-sm sm:text-base font-bold">Ver Análisis y Evolución Mensual de la Célula</h3>
-          <p class="text-xs text-slate-300">Gráfica consolidada de barras, promedios y comportamiento histórico 2026.</p>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Visualización Estratégica</span>
+          <h3 class="text-sm sm:text-base font-bold">Ver Gráfica y Evolución Completa de la Célula 3</h3>
+          <p class="text-xs text-slate-300">Comportamiento mensual de comisiones ($2.13M en septiembre), concentración y promedios.</p>
         </div>
-        <span class="bg-amber-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shrink-0">Ver Gráfica ➔</span>
+        <span class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shrink-0 transition">
+          Ver Análisis ➔
+        </span>
       </div>
 
       <!-- Gráfica de distribución de la célula -->
@@ -224,6 +226,7 @@
                 <th class="p-2">#</th>
                 <th class="p-2">Asesor</th>
                 <th class="p-2">Ingreso</th>
+                <th class="p-2 text-center">Clientes</th>
                 <th class="p-2 text-right">Septiembre</th>
                 <th class="p-2 text-right">2026 YTD</th>
                 <th class="p-2 text-right">% Célula</th>
@@ -238,34 +241,34 @@
       </div>
     </section>
 
-    <!-- ==================== PÁGINA NUEVA: ANÁLISIS COMPLETO DE CÉLULA ==================== -->
+    <!-- ==================== PÁGINA: ANÁLISIS COMPLETO DE CÉLULA ==================== -->
     <section id="page-cell-analytics" class="page-section space-y-4">
       
       <!-- KPIs Consolidados de la Célula -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] uppercase font-bold text-slate-400 block">Récord Mensual</span>
-          <span class="text-sm sm:text-base font-black text-amber-600 block mt-0.5">$1,845,326.66</span>
+          <span class="text-sm sm:text-base font-black text-amber-600 block mt-0.5">$2,139,201.75</span>
           <span class="text-[10px] font-semibold text-emerald-600">Septiembre 2026 (Pico)</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] uppercase font-bold text-slate-400 block">Ritmo vs Agosto</span>
-          <span class="text-sm sm:text-base font-black text-emerald-600 block mt-0.5">▲ +19.4%</span>
-          <span class="text-[10px] text-slate-400">+$300k vs mes previo</span>
+          <span class="text-sm sm:text-base font-black text-emerald-600 block mt-0.5">▲ +38.4%</span>
+          <span class="text-[10px] text-slate-400">+$593.9k vs mes previo</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] uppercase font-bold text-slate-400 block">Promedio Mensual Célula</span>
-          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">$1,119,782.81</span>
+          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">$1,152,435.60</span>
           <span class="text-[10px] text-slate-400">Media 9 meses (Ene-Sep)</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] uppercase font-bold text-slate-400 block">Media por Asesor</span>
-          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">$159,968.97</span>
-          <span class="text-[10px] text-slate-400">Por promotor / mes</span>
+          <span class="text-[10px] uppercase font-bold text-slate-400 block">Cartera Total</span>
+          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">87 Clientes</span>
+          <span class="text-[10px] text-slate-400">Promedio 12.4 por asesor</span>
         </div>
       </div>
 
-      <!-- Gráfica de Barritas y Tendencia de la Célula (Como la del asesor) -->
+      <!-- Gráfica de Barritas y Tendencia de la Célula -->
       <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
         <div class="flex items-center justify-between mb-2">
           <div>
@@ -276,7 +279,7 @@
             <span class="text-[10px] text-slate-400">Utilidad consolidada mes a mes en pesos (Ene - Sep)</span>
           </div>
           <span class="text-[11px] font-extrabold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-            Total: $10.07M
+            Total: $10.37M
           </span>
         </div>
         <div class="h-64 sm:h-72 relative">
@@ -314,8 +317,8 @@
               <td class="p-2 text-right">$1,129,037.41</td>
               <td class="p-2 text-right">$1,249,026.73</td>
               <td class="p-2 text-right">$1,545,272.88</td>
-              <td class="p-2 text-right font-black text-amber-900 bg-amber-50">$1,845,326.66</td>
-              <td class="p-2 text-right bg-amber-50 font-black text-amber-700">$10,078,045.30</td>
+              <td class="p-2 text-right font-black text-amber-900 bg-amber-50">$2,139,201.75</td>
+              <td class="p-2 text-right bg-amber-50 font-black text-amber-700">$10,371,920.39</td>
             </tr>
           </tbody>
         </table>
@@ -325,18 +328,18 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
           <span class="text-xs font-bold text-slate-800 uppercase block mb-1 flex items-center gap-1.5">
-            <span>📊</span> Concentración de Cartera
+            <span>📊</span> Concentración y Rendimiento
           </span>
           <p class="text-xs text-slate-600 leading-relaxed">
-            El <strong>77.7%</strong> de la utilidad de la célula está generada por el Top 3 (Mitzi Negrete, Mauricio Moreno y María José Crespo)[cite: 12]. El objetivo prioritario para Q4 es elevar la cuota media del resto del equipo para balancear la productividad global.
+            La célula superó por primera vez los <strong>$2.13 millones de pesos mensuales en septiembre</strong>[cite: 18]. El Top 3 (Mitzi, Mauricio y María José) aporta el 75.6% del acumulado, mientras que Alma Velasco tuvo una explosión en septiembre con $413.5k superando ya los $1.3M YTD[cite: 18].
           </p>
         </div>
         <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
           <span class="text-xs font-bold text-slate-800 uppercase block mb-1 flex items-center gap-1.5">
-            <span>⏱️</span> Maduración del Equipo
+            <span>⏱️</span> Maduración de la Fuerza Comercial
           </span>
           <p class="text-xs text-slate-600 leading-relaxed">
-            5 de los 7 asesores cuentan con 10 o más meses en la célula[cite: 14, 15]. Los asesores incorporados en abril (Alma Velasco y Enrique Vallejo) ya registran tracción sostenida, superando Alma el millón de pesos acumulado en solo 6 meses[cite: 12, 14].
+            La célula inició operaciones el <strong>01 de Junio de 2025</strong>[cite: 17]. El equipo cuenta con 4 asesores fundadores de 2025 (Mauricio, Honney, Mitzi y Amarilis)[cite: 17] y dos ingresos clave en abril 2026 (Alma y Enrique) con alta efectividad de captación[cite: 17].
           </p>
         </div>
       </div>
@@ -353,18 +356,18 @@
           <p class="text-xs text-slate-300 mt-0.5">Asesor Comercial • Célula 3 CDM1 (41930)</p>
         </div>
 
-        <!-- DATOS OPERATIVOS CON ANTIGÜEDAD CALCULADA Y CLIENTES ACTIVOS -->
+        <!-- DATOS OPERATIVOS CON ANTIGÜEDAD Y CLIENTES ACTIVOS FIJOS -->
         <div class="grid grid-cols-2 divide-x divide-slate-200 bg-amber-50/50 border-b border-slate-200 p-2.5 text-center">
           <div>
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Ingreso / Antigüedad</span>
+            <span class="text-[10px] uppercase font-bold text-slate-500 block">Ingreso a Célula / Antigüedad</span>
             <span id="profJoinDate" class="text-xs font-bold text-amber-900 px-1 py-0.5 block">
-              Septiembre 2025 (13 meses)
+              01 de Agosto de 2025 (14 meses)
             </span>
           </div>
           <div>
             <span class="text-[10px] uppercase font-bold text-slate-500 block">Clientes Activos</span>
-            <span id="profActiveClients" contenteditable="true" oninput="saveExtraData()" class="editable-box text-xs font-bold text-amber-900 px-1 py-0.5 rounded cursor-pointer underline decoration-dotted">
-              Por definir (toca aquí)
+            <span id="profActiveClients" class="text-xs font-black text-amber-900 px-1 py-0.5 block">
+              14 Clientes
             </span>
           </div>
         </div>
@@ -372,18 +375,18 @@
         <div class="grid grid-cols-2 divide-x divide-y divide-slate-100 bg-slate-50 text-center">
           <div class="p-3">
             <span class="text-[10px] uppercase font-bold text-slate-400 block">Total 2026 YTD</span>
-            <span id="profTotal2026" class="text-base font-black text-amber-600 block mt-0.5">$4,914,815.83</span>
+            <span id="profTotal2026" class="text-base font-black text-amber-600 block mt-0.5">$4,915,178.19</span>
             <span id="profGrowth" class="text-[10px] font-semibold text-emerald-600">+731% vs 2025</span>
           </div>
           <div class="p-3">
             <span class="text-[10px] uppercase font-bold text-slate-400 block">% Cuota Célula</span>
-            <span id="profShare2026" class="text-base font-black text-slate-800 block mt-0.5">48.77%</span>
-            <span class="text-[10px] text-slate-400">De $10.07M total</span>
+            <span id="profShare2026" class="text-base font-black text-slate-800 block mt-0.5">47.39%</span>
+            <span class="text-[10px] text-slate-400">De $10.37M total</span>
           </div>
           <div class="p-3">
             <span class="text-[10px] uppercase font-bold text-slate-400 block">Generación Septiembre</span>
-            <span id="profSept" class="text-base font-black text-slate-800 block mt-0.5">$739,629.74</span>
-            <span id="profSeptMoM" class="text-[10px] font-semibold text-emerald-600">▲ +38.7% vs Ago</span>
+            <span id="profSept" class="text-base font-black text-slate-800 block mt-0.5">$739,992.10</span>
+            <span id="profSeptMoM" class="text-[10px] font-semibold text-emerald-600">▲ +38.8% vs Ago</span>
           </div>
           <div class="p-3">
             <span class="text-[10px] uppercase font-bold text-slate-400 block">Total Célula 2025</span>
@@ -534,23 +537,23 @@
     </button>
   </nav>
 
-  <!-- JAVASCRIPT CON DATA Y CONTROLADORES -->
+  <!-- JAVASCRIPT CON DATA OFICIAL COMPLETA -->
   <script>
-    // DATA HISTÓRICA CONSOLIDADA DE LA CÉLULA 2026 (ENERO A SEPTIEMBRE)
+    // HISTÓRICO DE CÉLULA CONSOLIDADO (ENERO A SEPTIEMBRE 2026 ACTUALIZADO)
     const CELL_HISTORY_2026 = {
       labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
       values: [
-        821428.70,   // Enero
-        335559.85,   // Febrero
-        1186861.41,  // Marzo
-        1473011.72,  // Abril
-        492719.94,   // Mayo
-        1129037.41,  // Junio
-        1249026.73,  // Julio
-        1545272.88,  // Agosto
-        1845326.66   // Septiembre Actualizado
+        821428.70,   // Ene
+        335559.85,   // Feb
+        1186861.41,  // Mar
+        1473011.72,  // Abr
+        492719.94,   // May
+        1129037.41,  // Jun
+        1249026.73,  // Jul
+        1545272.88,  // Ago
+        2139201.75   // Sep Final Oficial
       ],
-      totalYTD: 10078045.30
+      totalYTD: 10371920.39
     };
 
     const TEAM_DATA = [
@@ -559,16 +562,17 @@
         name: "Mitzi Estefanía Negrete Bribiesca",
         shortName: "Mitzi Negrete",
         rank: 1,
-        joinInfo: "Septiembre 2025 (13 meses)",
-        joinDateShort: "Sep 2025",
+        joinInfo: "01 de Agosto de 2025 (14 meses)",
+        joinDateShort: "01 Ago 2025",
+        activeClients: 14,
         total2025: 591216.45,
         share2025Emp: "77.27%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 58273.34, oct: 132222.43, nov: 188942.05, dic: 211778.63, total: 591216.45 },
-        total2026: 4914815.83,
-        share2026Emp: "48.77%",
-        history2026: { ene: 682440.27, feb: 162901.56, mar: 1133728.80, abr: 876107.82, may: 192661.68, jun: 260210.56, jul: 333842.61, ago: 533292.80, sep: 739629.74, total: 4914815.83 },
+        total2026: 4915178.19,
+        share2026Emp: "47.39%",
+        history2026: { ene: 682440.27, feb: 162901.56, mar: 1133728.80, abr: 876107.82, may: 192661.68, jun: 260210.56, jul: 333842.61, ago: 533292.80, sep: 739992.10, total: 4915178.19 },
         defaultQual: {
-          strengths: "Líder de generación en la célula (48.77% de cuota). Excelente cierre de septiembre superando los $739k.",
+          strengths: "Líder de generación en la célula (47.39% de cuota) con 14 clientes activos. Excelente cierre de septiembre ($739.9k).",
           opportunities: "Asegurar esquemas estructurados de forward y derivados para blindar margen en Q4.",
           plan: "Superar la meta anual de $6.5M YTD reforzando empresas medianas y corporativas."
         }
@@ -578,16 +582,17 @@
         name: "Mauricio Moreno Rogel",
         shortName: "Mauricio Moreno",
         rank: 2,
-        joinInfo: "Septiembre 2025 (13 meses)",
-        joinDateShort: "Sep 2025",
+        joinInfo: "01 de Julio de 2025 (15 meses)",
+        joinDateShort: "01 Jul 2025",
+        activeClients: 15,
         total2025: 116747.16,
         share2025Emp: "15.26%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 560.26, oct: 6824.62, nov: 35902.67, dic: 73459.61, total: 116747.16 },
-        total2026: 1520965.63,
-        share2026Emp: "15.09%",
-        history2026: { ene: 110293.23, feb: 141540.12, mar: 14914.79, abr: 294814.92, may: 75682.91, jun: 217800.68, jul: 236683.74, ago: 190669.44, sep: 238565.81, total: 1520965.63 },
+        total2026: 1523337.49,
+        share2026Emp: "14.69%",
+        history2026: { ene: 110293.23, feb: 141540.12, mar: 14914.79, abr: 294814.92, may: 75682.91, jun: 217800.68, jul: 236683.74, ago: 190669.44, sep: 240937.67, total: 1523337.49 },
         defaultQual: {
-          strengths: "Segundo promotor con mayor contribución sostenida, cerrando septiembre en $238.5k.",
+          strengths: "Segundo promotor en volumen con 15 clientes activos. Cierra septiembre en $240.9k con gran regularidad.",
           opportunities: "Incrementar contratos de cobertura cambiaria y swap de tasas con pasivos de largo plazo.",
           plan: "Alcanzar $2.0M YTD al cierre de diciembre consolidando cartera importadora."
         }
@@ -597,16 +602,17 @@
         name: "María José Crespo Noguez",
         shortName: "María José Crespo",
         rank: 3,
-        joinInfo: "Octubre 2025 (12 meses)",
+        joinInfo: "Octubre de 2025 (12 meses)",
         joinDateShort: "Oct 2025",
+        activeClients: 12,
         total2025: 12244.48,
         share2025Emp: "1.60%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 600.60, nov: 2070.51, dic: 9573.37, total: 12244.48 },
-        total2026: 1399202.76,
-        share2026Emp: "13.88%",
-        history2026: { ene: 14231.27, feb: 12281.39, mar: 20161.79, abr: 119942.15, may: 54060.86, jun: 134098.88, jul: 352982.83, ago: 375599.06, sep: 315844.53, total: 1399202.76 },
+        total2026: 1407735.26,
+        share2026Emp: "13.57%",
+        history2026: { ene: 14231.27, feb: 12281.39, mar: 20161.79, abr: 119942.15, may: 54060.86, jun: 134098.88, jul: 352982.83, ago: 375599.06, sep: 324377.03, total: 1407735.26 },
         defaultQual: {
-          strengths: "Excelente tercer trimestre arriba de los $315k mensuales consecutivamente.",
+          strengths: "Extraordinario tercer trimestre sostenido arriba de $320k mensuales con 12 clientes activos.",
           opportunities: "Estandarizar prospección en los arranques de mes para sostener volumen sin picos.",
           plan: "Mantener piso mensual de $300k en el cuarto trimestre y asegurar el top 3 de la célula."
         }
@@ -616,18 +622,19 @@
         name: "Alma Elena Velasco Alcoser",
         shortName: "Alma Velasco",
         rank: 4,
-        joinInfo: "Abril 2026 (6 meses)",
-        joinDateShort: "Abr 2026",
+        joinInfo: "01 de Abril de 2026 (6 meses)",
+        joinDateShort: "01 Abr 2026",
+        activeClients: 17,
         total2025: 0.00,
         share2025Emp: "0.00%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, total: 0 },
-        total2026: 1054729.17,
-        share2026Emp: "10.47%",
-        history2026: { ene: 0, feb: 0, mar: 0, abr: 146595.73, may: 154399.67, jun: 220772.51, jul: 182954.43, ago: 188987.77, sep: 161019.06, total: 1054729.17 },
+        total2026: 1307241.32,
+        share2026Emp: "12.60%",
+        history2026: { ene: 0, feb: 0, mar: 0, abr: 146595.73, may: 154399.67, jun: 220772.51, jul: 182954.43, ago: 188987.77, sep: 413531.21, total: 1307241.32 },
         defaultQual: {
-          strengths: "Sólida productividad superando el millón de pesos acumulado desde su inicio en abril.",
+          strengths: "Líder en número de clientes (17 cuentas activas). Récord histórico en septiembre alcanzando $413.5k en solo 6 meses de gestión.",
           opportunities: "Captar más tesorerías de empresas y colocación de cuentas digitales multidivisa.",
-          plan: "Cerrar su primer ciclo anual superando los $1.5M consolidando operaciones recurrentes."
+          plan: "Superar los $1.8M YTD consolidando su cartera de clientes en crecimiento."
         }
       },
       {
@@ -635,16 +642,17 @@
         name: "Amarilis Gordillo Altamirano",
         shortName: "Amarilis Gordillo",
         rank: 5,
-        joinInfo: "Diciembre 2025 (10 meses)",
-        joinDateShort: "Dic 2025",
+        joinInfo: "16 de Octubre de 2025 (11.5 meses)",
+        joinDateShort: "16 Oct 2025",
+        activeClients: 14,
         total2025: 4124.44,
         share2025Emp: "0.54%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 4124.44, total: 4124.44 },
-        total2026: 830974.98,
-        share2026Emp: "8.25%",
-        history2026: { ene: 59.04, feb: 12191.19, mar: 7697.14, abr: 8079.62, may: 3378.53, jun: 281316.13, jul: 73566.10, ago: 168111.69, sep: 276575.54, total: 830974.98 },
+        total2026: 838848.54,
+        share2026Emp: "8.09%",
+        history2026: { ene: 59.04, feb: 12191.19, mar: 7697.14, abr: 8079.62, may: 3378.53, jun: 281316.13, jul: 73566.10, ago: 168111.69, sep: 284449.10, total: 838848.54 },
         defaultQual: {
-          strengths: "Fuerte aceleración en septiembre cerrando en $276.5k. Alto margen transaccional.",
+          strengths: "Excelente reactivación en septiembre cerrando en $284.4k con 14 clientes activos.",
           opportunities: "Disminuir fluctuaciones bimestrales asegurando contratos mensuales recurrentes.",
           plan: "Superar el millón de pesos en utilidades antes del cierre de octubre."
         }
@@ -654,16 +662,17 @@
         name: "Honney Denneb Cordero Olguin",
         shortName: "Honney Cordero",
         rank: 6,
-        joinInfo: "Septiembre 2025 (13 meses)",
-        joinDateShort: "Sep 2025",
+        joinInfo: "16 de Julio de 2025 (14.5 meses)",
+        joinDateShort: "16 Jul 2025",
+        activeClients: 12,
         total2025: 33602.35,
         share2025Emp: "4.39%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 3086.88, oct: 6340.16, nov: 10026.80, dic: 14148.51, total: 33602.35 },
-        total2026: 284862.02,
-        share2026Emp: "2.83%",
-        history2026: { ene: 14404.89, feb: 6645.59, mar: 10358.90, abr: 11076.49, may: 9085.59, jun: 10274.05, jul: 65307.21, ago: 51883.32, sep: 105825.98, total: 284862.02 },
+        total2026: 301820.68,
+        share2026Emp: "2.91%",
+        history2026: { ene: 14404.89, feb: 6645.59, mar: 10358.90, abr: 11076.49, may: 9085.59, jun: 10274.05, jul: 65307.21, ago: 51883.32, sep: 122784.64, total: 301820.68 },
         defaultQual: {
-          strengths: "Rompe récord personal mensual alcanzando $105.8k en septiembre con clara tendencia positiva.",
+          strengths: "Máximo mensual en septiembre con $122.7k y 12 clientes activos. Clara tendencia ascendente.",
           opportunities: "Incrementar el ticket por transacción mediante herramientas FX Loan y posturas cambiarias.",
           plan: "Consolidar el ritmo superior a $100k mensuales para superar los $450k acumulados en 2026."
         }
@@ -673,17 +682,18 @@
         name: "Enrique Vallejo Diaz",
         shortName: "Enrique Vallejo",
         rank: 7,
-        joinInfo: "Abril 2026 (6 meses)",
-        joinDateShort: "Abr 2026",
+        joinInfo: "16 de Abril de 2026 (5.5 meses)",
+        joinDateShort: "16 Abr 2026",
+        activeClients: 3,
         total2025: 0.00,
         share2025Emp: "0.00%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, total: 0 },
-        total2026: 64594.91,
-        share2026Emp: "0.64%",
-        history2026: { ene: 0, feb: 0, mar: 0, abr: 16395.00, may: 3450.70, jun: 4564.60, jul: 3689.81, ago: 28628.80, sep: 7866.00, total: 64594.91 },
+        total2026: 69858.91,
+        share2026Emp: "0.67%",
+        history2026: { ene: 0, feb: 0, mar: 0, abr: 16395.00, may: 3450.70, jun: 4564.60, jul: 3689.81, ago: 28628.80, sep: 13130.00, total: 69858.91 },
         defaultQual: {
-          strengths: "Cierre activo en septiembre ($7.8k) y base de clientes en expansión en comercio internacional.",
-          opportunities: "Acelerar los tiempos de cierre de prospectos de empresas medianas.",
+          strengths: "Cierre activo en septiembre ($13.1k) con 3 clientes activos en comercio internacional.",
+          opportunities: "Acelerar los tiempos de cierre y prospección en empresas medianas.",
           plan: "Superar los $100k de utilidad en Q4 mediante prospección dirigida y asesoría personalizada."
         }
       }
@@ -699,7 +709,7 @@
       return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(val);
     }
 
-    // NAVEGACIÓN ENTRE SECCIONES
+    // NAVEGACIÓN
     function navigate(viewId) {
       currentView = viewId;
 
@@ -707,7 +717,6 @@
       const activeSec = document.getElementById(`page-${viewId}`);
       if (activeSec) activeSec.classList.add('active');
 
-      // El banner selector de asesor solo se muestra en las páginas de asesor
       const banner = document.getElementById('advisorSelectorBanner');
       if (viewId === 'dashboard' || viewId === 'cell-analytics') {
         banner.classList.add('hidden');
@@ -715,7 +724,6 @@
         banner.classList.remove('hidden');
       }
 
-      // Estilos de pestañas (Escritorio y Móvil)
       ['dashboard', 'cell-analytics', 'advisor', 'charts', 'qualitative'].forEach(tab => {
         const desktopTab = document.getElementById(`tab-${tab}`);
         const mobileTab = document.getElementById(`btnNav-${tab}`);
@@ -729,7 +737,6 @@
         }
       });
 
-      // Renderizar gráficas cuando se active su pestaña
       if (viewId === 'charts') {
         setTimeout(renderDetailChart, 50);
       }
@@ -768,6 +775,7 @@
       document.getElementById('profAdvisorCode').textContent = `ID: ${adv.id}`;
       document.getElementById('profAdvisorName').textContent = adv.name;
       document.getElementById('profJoinDate').textContent = adv.joinInfo;
+      document.getElementById('profActiveClients').textContent = `${adv.activeClients} Clientes`;
       document.getElementById('profTotal2026').textContent = formatCurrency(adv.total2026);
       document.getElementById('profShare2026').textContent = adv.share2026Emp;
       document.getElementById('profSept').textContent = formatCurrency(adv.history2026.sep);
@@ -795,7 +803,6 @@
 
       renderDetailTable(adv);
       loadQualData(adv);
-      loadExtraData(adv);
 
       if (currentView === 'charts') {
         renderDetailChart();
@@ -838,7 +845,7 @@
       `;
     }
 
-    // 1. GRÁFICA DE EVOLUCIÓN DE LA CÉLULA COMPLETA (BARRITAS Y LÍNEA)
+    // GRÁFICA DE EVOLUCIÓN DE CÉLULA (BARRAS Y LÍNEA)
     function renderCellMonthlyChart() {
       const ctx = document.getElementById('cellMonthlyChart').getContext('2d');
       if (cellMonthlyChartInstance) cellMonthlyChartInstance.destroy();
@@ -897,7 +904,7 @@
       });
     }
 
-    // 2. GRÁFICA DE EVOLUCIÓN MENSUAL DEL ASESOR
+    // GRÁFICA DE ASESOR
     function renderDetailChart() {
       const adv = TEAM_DATA[currentAdvisorIndex];
       const ctx = document.getElementById('monthlyDetailChart').getContext('2d');
@@ -949,7 +956,7 @@
               beginAtZero: true,
               ticks: {
                 font: { size: 10 },
-                callback: (val) => val >= 1000000 ? `$${(val/1000000).toFixed(1)}M` : (val >= 1000 ? `$${(val/1000).toFixed(0)}k` : `$${val}`)
+                callback: (val) => val >= 1000000 ? `$${(val/1000000).toFixed(1)}M` : `$${(val/1000).toFixed(0)}k`
               },
               grid: { color: '#F1F5F9' }
             },
@@ -962,7 +969,7 @@
       });
     }
 
-    // 3. GRÁFICA DE DONUT GENERAL
+    // DONUT
     function renderGeneralDonutChart() {
       const ctx = document.getElementById('generalDonutChart').getContext('2d');
       if (generalDonutChartInstance) generalDonutChartInstance.destroy();
@@ -996,28 +1003,6 @@
           }
         }
       });
-    }
-
-    // CAMPOS EXTRA: CLIENTES ACTIVOS
-    function loadExtraData(adv) {
-      const saved = localStorage.getItem(`extra_${adv.id}`);
-      if (saved) {
-        try {
-          const d = JSON.parse(saved);
-          document.getElementById('profActiveClients').innerText = d.activeClients || "Por definir (toca aquí)";
-          return;
-        } catch(e){}
-      }
-      document.getElementById('profActiveClients').innerText = "Por definir (toca aquí)";
-    }
-
-    function saveExtraData() {
-      const adv = TEAM_DATA[currentAdvisorIndex];
-      const data = {
-        activeClients: document.getElementById('profActiveClients').innerText.trim()
-      };
-      localStorage.setItem(`extra_${adv.id}`, JSON.stringify(data));
-      showSavedIndicator();
     }
 
     // CUALITATIVO
@@ -1054,13 +1039,12 @@
       setTimeout(() => { ind.style.opacity = '0'; }, 1200);
     }
 
-    // COMPARTIR POR WHATSAPP
+    // WHATSAPP
     function shareWhatsApp() {
       const adv = TEAM_DATA[currentAdvisorIndex];
       const s = document.getElementById('qualStrengths').innerText.trim();
       const o = document.getElementById('qualOpportunities').innerText.trim();
       const p = document.getElementById('qualPlan').innerText.trim();
-      const clients = document.getElementById('profActiveClients').innerText.trim();
 
       const msg = 
 `🏦 *BANCO BASE - RESUMEN DE ASESOR*
@@ -1068,7 +1052,7 @@
 👤 *Asesor:* ${adv.name}
 🏆 *Posición:* #${adv.rank} de la Célula
 📅 *Ingreso:* ${adv.joinInfo}
-👥 *Clientes Activos:* ${clients}
+👥 *Clientes Activos:* ${adv.activeClients}
 
 📊 *Métricas 2026 YTD:*
 • Utilidad Célula YTD: ${formatCurrency(adv.total2026)}
@@ -1121,6 +1105,7 @@ _Portal Célula 3 CDM1 - Banco BASE_`;
           <td class="p-2 font-bold text-slate-400">#${adv.rank}</td>
           <td class="p-2 font-sans font-semibold text-slate-800">${adv.name}</td>
           <td class="p-2 text-slate-500 font-sans text-[10px]">${adv.joinDateShort}</td>
+          <td class="p-2 text-center font-bold text-slate-700">${adv.activeClients}</td>
           <td class="p-2 text-right font-medium text-slate-700">${formatCurrency(adv.history2026.sep)}</td>
           <td class="p-2 text-right font-black text-amber-700">${formatCurrency(adv.total2026)}</td>
           <td class="p-2 text-right font-bold text-slate-700">${adv.share2026Emp}</td>
