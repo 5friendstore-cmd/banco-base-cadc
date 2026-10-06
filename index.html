@@ -131,9 +131,7 @@
 
         <div class="mt-4 pt-3 border-t border-slate-100">
           <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-2">Equipo Comercial (7 Asesores)</span>
-          <div id="drawerAdvisorList" class="space-y-0.5 max-h-56 overflow-y-auto pr-1 text-xs">
-            <!-- Dinámico -->
-          </div>
+          <div id="drawerAdvisorList" class="space-y-0.5 max-h-56 overflow-y-auto pr-1 text-xs"></div>
         </div>
       </div>
     </div>
@@ -157,9 +155,7 @@
         <div class="w-8 h-8 rounded-lg bg-amber-500 text-white font-black flex items-center justify-center text-xs shrink-0" id="currentAdvisorRankBadge">#1</div>
         <div class="truncate">
           <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Asesor Activo</span>
-          <select id="mainAdvisorSelect" onchange="selectAdvisor(parseInt(this.value))" class="text-xs sm:text-sm font-bold text-slate-800 bg-transparent outline-none cursor-pointer">
-            <!-- Opciones -->
-          </select>
+          <select id="mainAdvisorSelect" onchange="selectAdvisor(parseInt(this.value))" class="text-xs sm:text-sm font-bold text-slate-800 bg-transparent outline-none cursor-pointer"></select>
         </div>
       </div>
       <button onclick="shareWhatsApp()" class="shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1 shadow-xs transition">
@@ -183,13 +179,13 @@
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] font-bold text-slate-400 uppercase">Clientes Activos</span>
-          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">92 Clientes</span>
-          <span class="text-[10px] text-amber-600 font-semibold">Alma lidera con 22</span>
+          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">95 Clientes</span>
+          <span class="text-[10px] text-amber-600 font-semibold">Cifra oficial Salesforce</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Líder Generación</span>
-          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">47.39%</span>
-          <span class="text-[10px] text-slate-400 truncate block">Mitzi Negrete ($4.91M)</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase">Promedio Mensual</span>
+          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">$1,152,435.60</span>
+          <span class="text-[10px] text-slate-400">Generación célula / mes</span>
         </div>
       </div>
 
@@ -198,7 +194,7 @@
         <div>
           <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Visualización Estratégica</span>
           <h3 class="text-sm sm:text-base font-bold">Ver Gráfica y Captación de Clientes Nuevos</h3>
-          <p class="text-xs text-slate-300">Generación mensual ($2.13M en sep) y matriz de clientes nuevos mes por mes.</p>
+          <p class="text-xs text-slate-300">Generación mensual ($2.13M en sep), 57 aperturas y semáforo de prospección.</p>
         </div>
         <span class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shrink-0 transition">
           Ver Análisis ➔
@@ -227,15 +223,15 @@
                 <th class="p-2">Asesor</th>
                 <th class="p-2">Ingreso</th>
                 <th class="p-2 text-center">Clientes</th>
+                <th class="p-2 text-center">Nuevos</th>
+                <th class="p-2 text-right">Prom. Mes 26</th>
                 <th class="p-2 text-right">Septiembre</th>
                 <th class="p-2 text-right">2026 YTD</th>
                 <th class="p-2 text-right">% Célula</th>
                 <th class="p-2 text-center">Ver</th>
               </tr>
             </thead>
-            <tbody id="rankingDashboardBody" class="divide-y divide-slate-100 text-[11px] font-mono">
-              <!-- Dinámico -->
-            </tbody>
+            <tbody id="rankingDashboardBody" class="divide-y divide-slate-100 text-[11px] font-mono"></tbody>
           </table>
         </div>
       </div>
@@ -259,12 +255,12 @@
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] uppercase font-bold text-slate-400 block">Clientes Nuevos 2026</span>
           <span class="text-sm sm:text-base font-black text-emerald-600 block mt-0.5">57 Cuentas</span>
-          <span class="text-[10px] text-slate-400">Aperturas acumuladas</span>
+          <span class="text-[10px] text-slate-400">Meta célula: 168 (24 c/u)</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] uppercase font-bold text-slate-400 block">Cartera Total</span>
-          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">92 Clientes</span>
-          <span class="text-[10px] text-slate-400">Activos en Célula 3</span>
+          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">95 Clientes</span>
+          <span class="text-[10px] text-slate-400">Activos en Cambios</span>
         </div>
       </div>
 
@@ -287,7 +283,7 @@
         </div>
       </div>
 
-      <!-- NUEVA TABLA: RESULTADO POR MES DE CLIENTES NUEVOS EN CÉLULA (SEMÁFORO) -->
+      <!-- TABLA: RESULTADO POR MES DE CLIENTES NUEVOS EN CÉLULA (SEMÁFORO) -->
       <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
         <div class="flex items-center justify-between mb-2">
           <div>
@@ -298,7 +294,7 @@
             <span class="text-[10px] text-slate-400">Semáforo de prospección: Verde = Nuevas cuentas | Rojo = 0 captaciones</span>
           </div>
           <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-            Total Aperturas: 57
+            Meta anual: 24 nuevos por asesor
           </span>
         </div>
         <table class="w-full text-xs text-left border border-slate-200">
@@ -314,12 +310,11 @@
               <th class="p-2 text-center border-r border-slate-200">Jul</th>
               <th class="p-2 text-center border-r border-slate-200">Ago</th>
               <th class="p-2 text-center border-r border-slate-200">Sep</th>
-              <th class="p-2 text-center bg-amber-50 font-black text-amber-900">Total Nuevos</th>
+              <th class="p-2 text-center border-r border-slate-200 bg-amber-50 font-black text-amber-900">Total Nuevos</th>
+              <th class="p-2 text-center bg-slate-100 font-bold text-slate-700">% Avance Meta (24)</th>
             </tr>
           </thead>
-          <tbody id="cellNewClientsTableBody" class="font-mono text-[11px] divide-y divide-slate-200">
-            <!-- Dinámico desde JS con colores del semáforo -->
-          </tbody>
+          <tbody id="cellNewClientsTableBody" class="font-mono text-[11px] divide-y divide-slate-200"></tbody>
           <tfoot class="bg-slate-100 font-mono text-[11px] font-bold border-t-2 border-slate-300">
             <tr>
               <td class="p-2 font-sans font-bold text-slate-800 border-r border-slate-200">Total Célula Mes</td>
@@ -332,7 +327,8 @@
               <td class="p-2 text-center text-emerald-700 border-r border-slate-200">10</td>
               <td class="p-2 text-center text-emerald-700 border-r border-slate-200">7</td>
               <td class="p-2 text-center text-emerald-700 border-r border-slate-200">7</td>
-              <td class="p-2 text-center bg-amber-100/70 font-black text-amber-900">57</td>
+              <td class="p-2 text-center border-r border-slate-200 bg-amber-100/70 font-black text-amber-900">57</td>
+              <td class="p-2 text-center bg-slate-200 text-slate-800">33.9%</td>
             </tr>
           </tfoot>
         </table>
@@ -391,28 +387,25 @@
         <div class="grid grid-cols-2 divide-x divide-slate-200 bg-amber-50/50 border-b border-slate-200 p-2.5 text-center">
           <div>
             <span class="text-[10px] uppercase font-bold text-slate-500 block">Ingreso a Célula / Antigüedad</span>
-            <span id="profJoinDate" class="text-xs font-bold text-amber-900 px-1 py-0.5 block">
-              01 de Agosto de 2025 (14 meses)
-            </span>
+            <span id="profJoinDate" class="text-xs font-bold text-amber-900 px-1 py-0.5 block">01 de Agosto de 2025 (14 meses)</span>
           </div>
           <div>
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Clientes Activos</span>
-            <span id="profActiveClients" class="text-xs font-black text-amber-900 px-1 py-0.5 block">
-              14 Clientes
-            </span>
+            <span class="text-[10px] uppercase font-bold text-slate-500 block">Clientes Activos en Cambios</span>
+            <span id="profActiveClients" class="text-xs font-black text-amber-900 px-1 py-0.5 block">14 Clientes</span>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 divide-x divide-y divide-slate-100 bg-slate-50 text-center">
+        <!-- MÉTRICAS CUANTITATIVAS EXPANDIDAS CON PROMEDIOS MENSUALES Y CUMPLIMIENTO -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-slate-100 bg-slate-50 text-center">
           <div class="p-3">
             <span class="text-[10px] uppercase font-bold text-slate-400 block">Total 2026 YTD</span>
             <span id="profTotal2026" class="text-base font-black text-amber-600 block mt-0.5">$4,915,178.19</span>
-            <span id="profGrowth" class="text-[10px] font-semibold text-emerald-600">+731% vs 2025</span>
+            <span id="profShare2026" class="text-[10px] text-slate-500 font-semibold block">47.39% de Célula</span>
           </div>
           <div class="p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block">% Cuota Célula</span>
-            <span id="profShare2026" class="text-base font-black text-slate-800 block mt-0.5">47.39%</span>
-            <span class="text-[10px] text-slate-400">De $10.37M total</span>
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Prom. Mensual 2026</span>
+            <span id="profAvg2026" class="text-base font-black text-slate-800 block mt-0.5">$546,130.91</span>
+            <span class="text-[10px] text-emerald-600 font-semibold">Media 9 meses</span>
           </div>
           <div class="p-3">
             <span class="text-[10px] uppercase font-bold text-slate-400 block">Generación Septiembre</span>
@@ -420,23 +413,31 @@
             <span id="profSeptMoM" class="text-[10px] font-semibold text-emerald-600">▲ +38.8% vs Ago</span>
           </div>
           <div class="p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block">Total Célula 2025</span>
-            <span id="profTotal2025" class="text-base font-black text-slate-700 block mt-0.5">$591,216.45</span>
-            <span id="profShare2025" class="text-[10px] text-slate-400">77.27% en 2025</span>
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Prom. Mes 2025 (Cierre)</span>
+            <span id="profAvg2025" class="text-base font-black text-slate-700 block mt-0.5">$147,804.11</span>
+            <span id="profTotal2025" class="text-[10px] text-slate-400 block">$591,216.45 total</span>
           </div>
         </div>
       </div>
 
-      <!-- DESGLOSE DE CLIENTES NUEVOS DEL ASESOR (MENSUAL) -->
+      <!-- DESGLOSE DE CLIENTES NUEVOS DEL ASESOR (MENSUAL + CUMPLIMIENTO) -->
       <div class="bg-white rounded-xl border border-slate-200 p-3 shadow-xs overflow-x-auto">
         <div class="flex items-center justify-between mb-2">
-          <h4 class="text-[11px] font-bold uppercase text-slate-700 flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            Captación de Clientes Nuevos 2026
-          </h4>
-          <span id="profNewClientsTotalBadge" class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-            Total: 7 nuevos
-          </span>
+          <div>
+            <h4 class="text-[11px] font-bold uppercase text-slate-700 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Captación de Clientes Nuevos 2026
+            </h4>
+            <span class="text-[10px] text-slate-400">Objetivo institucional: 24 clientes nuevos / año (2 al mes)</span>
+          </div>
+          <div class="text-right">
+            <span id="profNewClientsTotalBadge" class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              Total: 7 nuevos
+            </span>
+            <span id="profNewClientsGoalBadge" class="text-[10px] font-bold text-slate-600 ml-1 bg-slate-100 px-2 py-0.5 rounded">
+              29.2% de meta
+            </span>
+          </div>
         </div>
         <table class="w-full text-xs text-center border border-slate-200">
           <thead class="bg-slate-50 text-[10px] font-bold text-slate-600 uppercase border-b border-slate-200">
@@ -450,12 +451,11 @@
               <th class="p-1.5 border-r border-slate-200">Jul</th>
               <th class="p-1.5 border-r border-slate-200">Ago</th>
               <th class="p-1.5 border-r border-slate-200">Sep</th>
-              <th class="p-1.5 bg-amber-50 font-black text-amber-900">Total</th>
+              <th class="p-1.5 bg-amber-50 font-black text-amber-900 border-r border-slate-200">Total</th>
+              <th class="p-1.5 bg-slate-100 font-bold text-slate-700">Faltante Anual</th>
             </tr>
           </thead>
-          <tbody id="profNewClientsRow" class="font-mono text-[11px] font-bold">
-            <!-- Dinámico -->
-          </tbody>
+          <tbody id="profNewClientsRow" class="font-mono text-[11px] font-bold"></tbody>
         </table>
       </div>
 
@@ -505,9 +505,7 @@
               <th class="p-1.5 text-right bg-amber-50 text-amber-900 font-extrabold">Total YTD</th>
             </tr>
           </thead>
-          <tbody id="detailTableBody" class="font-mono text-[11px] divide-y divide-slate-100">
-            <!-- Dinámico -->
-          </tbody>
+          <tbody id="detailTableBody" class="font-mono text-[11px] divide-y divide-slate-100"></tbody>
         </table>
       </div>
     </section>
@@ -516,8 +514,8 @@
     <section id="page-qualitative" class="page-section space-y-3">
       <div class="flex items-center justify-between">
         <div>
-          <h3 class="text-xs font-bold uppercase text-slate-800">Evaluación Cualitativa</h3>
-          <span class="text-[10px] text-slate-400">Edita directamente cualquier recuadro; se autoguarda.</span>
+          <h3 class="text-xs font-bold uppercase text-slate-800">Evaluación Cualitativa Directiva</h3>
+          <span class="text-[10px] text-slate-400">Compromisos exigentes y realistas sin conformismo. Se autoguarda al editar.</span>
         </div>
         <span id="savedIndicator" class="text-[10px] text-emerald-600 font-bold opacity-0 transition-opacity">✓ Guardado</span>
       </div>
@@ -600,25 +598,17 @@
     </button>
   </nav>
 
-  <!-- JAVASCRIPT CON DATA COMPLETA Y SEMÁFORO DE CLIENTES -->
+  <!-- JAVASCRIPT CON DATA COMPLETA Y AJUSTES CUALITATIVOS DE ALTO RENDIMIENTO -->
   <script>
     const CELL_HISTORY_2026 = {
       labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
       values: [
-        821428.70,   // Ene
-        335559.85,   // Feb
-        1186861.41,  // Mar
-        1473011.72,  // Abr
-        492719.94,   // May
-        1129037.41,  // Jun
-        1249026.73,  // Jul
-        1545272.88,  // Ago
-        2139201.75   // Sep
+        821428.70, 335559.85, 1186861.41, 1473011.72, 492719.94,
+        1129037.41, 1249026.73, 1545272.88, 2139201.75
       ],
       totalYTD: 10371920.39
     };
 
-    // DATA OFICIAL CON REGISTRO DE CLIENTES NUEVOS MES A MES
     const TEAM_DATA = [
       {
         id: "1297",
@@ -628,18 +618,20 @@
         joinInfo: "01 de Agosto de 2025 (14 meses)",
         joinDateShort: "01 Ago 2025",
         activeClients: 14,
-        newClients2026: [1, 1, 0, 0, 1, 1, 0, 2, 1], // Ene a Sep
+        newClients2026: [1, 1, 0, 0, 1, 1, 0, 2, 1],
         totalNewClients: 7,
         total2025: 591216.45,
+        avgMonthly2025: 147804.11, // sep-dic 2025 (4 meses)
         share2025Emp: "77.27%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 58273.34, oct: 132222.43, nov: 188942.05, dic: 211778.63, total: 591216.45 },
         total2026: 4915178.19,
+        avgMonthly2026: 546130.91, // 9 meses 2026
         share2026Emp: "47.39%",
         history2026: { ene: 682440.27, feb: 162901.56, mar: 1133728.80, abr: 876107.82, may: 192661.68, jun: 260210.56, jul: 333842.61, ago: 533292.80, sep: 739992.10, total: 4915178.19 },
         defaultQual: {
           strengths: "Líder de generación (47.39% de cuota) con 14 clientes activos y 7 aperturas en 2026. Récord en septiembre ($739.9k).",
-          opportunities: "Asegurar esquemas estructurados de forward y derivados para blindar margen en Q4.",
-          plan: "Superar la meta anual de $6.5M YTD reforzando empresas medianas y corporativas."
+          opportunities: "Asegurar esquemas estructurados de forward y derivados para blindar margen en Q4.\nCuidar el Cross Sell en temas de financiamiento y vinculación de captación.\nTrabajar constantemente en ser receptiva en la generación de clientes nuevos y poder alcanzar los 24 clientes promedio en su primer año de gestión (14 meses activos en la célula).",
+          plan: "Superar la meta anual de $6.5M YTD reforzando empresas medianas y corporativas.\nAcompañamiento por parte del líder a citas de referidos.\nVisitas a expos vigentes del 4T 26 de CDMX."
         }
       },
       {
@@ -649,19 +641,21 @@
         rank: 2,
         joinInfo: "01 de Julio de 2025 (15 meses)",
         joinDateShort: "01 Jul 2025",
-        activeClients: 15,
+        activeClients: 17,
         newClients2026: [1, 1, 2, 0, 1, 0, 2, 1, 2],
         totalNewClients: 10,
         total2025: 116747.16,
+        avgMonthly2025: 29186.79,
         share2025Emp: "15.26%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 560.26, oct: 6824.62, nov: 35902.67, dic: 73459.61, total: 116747.16 },
         total2026: 1523337.49,
+        avgMonthly2026: 169259.72,
         share2026Emp: "14.69%",
         history2026: { ene: 110293.23, feb: 141540.12, mar: 14914.79, abr: 294814.92, may: 75682.91, jun: 217800.68, jul: 236683.74, ago: 190669.44, sep: 240937.67, total: 1523337.49 },
         defaultQual: {
-          strengths: "Gran dinamismo comercial: 10 nuevos clientes captados en 2026 y 15 clientes activos. Cierra septiembre en $240.9k.",
-          opportunities: "Incrementar contratos de cobertura cambiaria y swap de tasas con pasivos de largo plazo.",
-          plan: "Alcanzar $2.0M YTD al cierre de diciembre consolidando cartera importadora."
+          strengths: "Buen dinamismo comercial: 10 nuevos clientes captados en 2026 y 17 clientes activos. Cierra septiembre en $240.9k.",
+          opportunities: "Incrementar su generación en divisas vs septiembre 26 al menos un 30%.\nIncremento de clientes nuevos al menos 4 clientes nuevos al mes.\nOfrecimiento a su cartera vigente del producto de derivados, detectando la necesidad de los mismos.",
+          plan: "Alcanzar $2.5M YTD al cierre de diciembre consolidando cartera importadora."
         }
       },
       {
@@ -675,15 +669,17 @@
         newClients2026: [1, 0, 1, 1, 1, 1, 2, 2, 0],
         totalNewClients: 9,
         total2025: 12244.48,
+        avgMonthly2025: 4081.49, // oct-dic 2025 (3 meses)
         share2025Emp: "1.60%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 600.60, nov: 2070.51, dic: 9573.37, total: 12244.48 },
         total2026: 1407735.26,
+        avgMonthly2026: 156415.03,
         share2026Emp: "13.57%",
         history2026: { ene: 14231.27, feb: 12281.39, mar: 20161.79, abr: 119942.15, may: 54060.86, jun: 134098.88, jul: 352982.83, ago: 375599.06, sep: 324377.03, total: 1407735.26 },
         defaultQual: {
-          strengths: "Excelente prospección con 9 clientes nuevos en el año y 12 activos. Tercer trimestre consistente sobre los $320k mensuales.",
-          opportunities: "Estandarizar prospección en los arranques de mes para sostener volumen sin picos.",
-          plan: "Mantener piso mensual de $300k en el cuarto trimestre y asegurar el top 3 de la célula."
+          strengths: "Excelente consolidación en el tercer trimestre superando los $320k mensuales con 12 clientes activos y 9 aperturas YTD.",
+          opportunities: "Evitar meses en cero de captación (como septiembre); reactivar prospección semanal obligatoria.\nIntensificar la venta cruzada de cuentas digitales en dólares para captar remanentes de tesorería.\nExigirse cerrar el año con al menos 15 aperturas acumuladas para compensar el rezago respecto a la meta anual de 24.",
+          plan: "Cerrar Q4 por encima de los $2.3M YTD manteniendo un piso mensual no menor a $300k.\nRevisión quincenal de pipeline con el líder para empujar 2 aperturas por mes en octubre, noviembre y diciembre."
         }
       },
       {
@@ -697,15 +693,17 @@
         newClients2026: [0, 0, 0, 2, 1, 1, 1, 2, 0],
         totalNewClients: 7,
         total2025: 0.00,
+        avgMonthly2025: 0.00,
         share2025Emp: "0.00%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, total: 0 },
         total2026: 1307241.32,
+        avgMonthly2026: 217873.55, // 6 meses activa (abr-sep)
         share2026Emp: "12.60%",
         history2026: { ene: 0, feb: 0, mar: 0, abr: 146595.73, may: 154399.67, jun: 220772.51, jul: 182954.43, ago: 188987.77, sep: 413531.21, total: 1307241.32 },
         defaultQual: {
-          strengths: "Líder máxima en cartera con 22 clientes activos y 7 aperturas desde abril. Impresionante cierre de septiembre con $413.5k.",
-          opportunities: "Captar más tesorerías de empresas y colocación de cuentas digitales multidivisa.",
-          plan: "Superar los $1.8M YTD consolidando su amplia base de 22 clientes."
+          strengths: "Líder indiscutible en cartera con 22 clientes activos en cambios. Despegue sobresaliente en septiembre con $413.5k y promedio de $217k/mes.",
+          opportunities: "Alinear el ritmo de clientes nuevos al tamaño de su cartera: con 6 meses activa debe mantener 2 o más aperturas por mes sin excepciones (cero en septiembre).\nMonetizar de forma más agresiva las 22 cuentas vinculándolas a coberturas y crédito cambiario (FX Loan).",
+          plan: "Superar los $2.2M YTD al cierre de 2026.\nCompromiso estricto de captar mínimo 6 clientes nuevos en Q4 para cerrar su año de arranque con 13 aperturas y más de 25 clientes activos."
         }
       },
       {
@@ -719,15 +717,17 @@
         newClients2026: [1, 2, 1, 0, 1, 2, 3, 2, 2],
         totalNewClients: 14,
         total2025: 4124.44,
+        avgMonthly2025: 1374.81,
         share2025Emp: "0.54%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 4124.44, total: 4124.44 },
         total2026: 838848.54,
+        avgMonthly2026: 93205.39,
         share2026Emp: "8.09%",
         history2026: { ene: 59.04, feb: 12191.19, mar: 7697.14, abr: 8079.62, may: 3378.53, jun: 281316.13, jul: 73566.10, ago: 168111.69, sep: 284449.10, total: 838848.54 },
         defaultQual: {
-          strengths: "Máxima captadora de nuevos clientes en la célula: 14 aperturas en 2026 y 14 clientes activos. Cierra septiembre en $284.4k.",
-          opportunities: "Disminuir fluctuaciones bimestrales asegurando contratos mensuales recurrentes.",
-          plan: "Superar el millón de pesos en utilidades antes del cierre de octubre."
+          strengths: "Máxima captadora de nuevos clientes de la célula con 14 aperturas en 2026. Excelente repunte en septiembre alcanzando $284.4k.",
+          opportunities: "Erradicar la alta volatilidad en facturación (meses de $3k-$8k frente a meses de $280k); su cartera debe generar ingresos recurrentes estables.\nAumentar el ticket promedio transaccional por cliente activo exigiendo volumen diario de divisas.\nAlcanzar 20 aperturas en el año (le faltan 6 para la meta de 24; objetivo realista para Q4: 6 nuevos).",
+          plan: "Superar el piso de $1.5M YTD al cierre de diciembre estabilizando la generación mensual sobre los $220k fijos.\nEstructurar plan de retención y recurrencia con los 14 clientes captados."
         }
       },
       {
@@ -737,19 +737,21 @@
         rank: 6,
         joinInfo: "16 de Julio de 2025 (14.5 meses)",
         joinDateShort: "16 Jul 2025",
-        activeClients: 12,
+        activeClients: 13,
         newClients2026: [0, 0, 1, 1, 1, 3, 1, 0, 2],
         totalNewClients: 9,
         total2025: 33602.35,
+        avgMonthly2025: 8400.59,
         share2025Emp: "4.39%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 3086.88, oct: 6340.16, nov: 10026.80, dic: 14148.51, total: 33602.35 },
         total2026: 301820.68,
+        avgMonthly2026: 33535.63,
         share2026Emp: "2.91%",
         history2026: { ene: 14404.89, feb: 6645.59, mar: 10358.90, abr: 11076.49, may: 9085.59, jun: 10274.05, jul: 65307.21, ago: 51883.32, sep: 122784.64, total: 301820.68 },
         defaultQual: {
-          strengths: "9 aperturas en 2026 con 12 clientes activos. Récord personal en septiembre ($122.7k) con fuerte aceleración.",
-          opportunities: "Incrementar el ticket por transacción mediante herramientas FX Loan y posturas cambiarias.",
-          plan: "Consolidar el ritmo superior a $100k mensuales para superar los $450k acumulados en 2026."
+          strengths: "Crecimiento marcado en el último trimestre, marcando récord personal en septiembre con $122.7k, 13 clientes activos y 9 aperturas en 2026.",
+          opportunities: "Superar la dependencia de operaciones esporádicas y elevar la cuota de la célula por encima del 5%.\nCon 14.5 meses en la célula, debe acelerar el paso para acercarse a la cota de 24 clientes (meta Q4: sumar mínimo 4 clientes nuevos).\nPromover activamente forwards y posturas con horario extendido FX 24/7.",
+          plan: "Alcanzar $650k YTD al cierre de 2026 manteniendo un piso de generación de $110k mensuales en Q4.\nEnfoque prioritario en empresas importadoras con flujos semanales."
         }
       },
       {
@@ -763,15 +765,17 @@
         newClients2026: [0, 0, 0, 2, 0, 0, 1, 0, 0],
         totalNewClients: 3,
         total2025: 0.00,
+        avgMonthly2025: 0.00,
         share2025Emp: "0.00%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, total: 0 },
         total2026: 69858.91,
+        avgMonthly2026: 12701.62, // 5.5 meses activo
         share2026Emp: "0.67%",
         history2026: { ene: 0, feb: 0, mar: 0, abr: 16395.00, may: 3450.70, jun: 4564.60, jul: 3689.81, ago: 28628.80, sep: 13130.00, total: 69858.91 },
         defaultQual: {
-          strengths: "3 aperturas en su arranque desde abril y 3 clientes activos en comercio internacional. Cierre activo en septiembre ($13.1k).",
-          opportunities: "Acelerar los tiempos de cierre y prospección en empresas medianas.",
-          plan: "Superar los $100k de utilidad en Q4 mediante prospección dirigida y asesoría personalizada."
+          strengths: "Asesor en periodo de aceleración con base inicial de 3 clientes activos en comercio exterior y generación positiva en septiembre ($13.1k).",
+          opportunities: "Urgencia en elevar el embudo de prospección: solo 3 aperturas en casi 6 meses está muy por debajo de la exigencia institucional.\nReestructurar agenda comercial dedicando el 70% del tiempo a llamadas en frío, citas y prospección calificada.\nSuperar el conformismo de ingresos menores a $30k mensuales.",
+          plan: "Meta estricta para Q4: Captar mínimo 4 clientes nuevos antes de fin de año (al menos 1 o 2 por mes) para cerrar su año de inducción con 7 clientes.\nAlcanzar $150k YTD al cierre de diciembre con acompañamiento semanal del líder en citas de cierre."
         }
       }
     ];
@@ -814,15 +818,9 @@
         }
       });
 
-      if (viewId === 'charts') {
-        setTimeout(renderDetailChart, 50);
-      }
-      if (viewId === 'dashboard') {
-        setTimeout(renderGeneralDonutChart, 50);
-      }
-      if (viewId === 'cell-analytics') {
-        setTimeout(renderCellMonthlyChart, 50);
-      }
+      if (viewId === 'charts') setTimeout(renderDetailChart, 50);
+      if (viewId === 'dashboard') setTimeout(renderGeneralDonutChart, 50);
+      if (viewId === 'cell-analytics') setTimeout(renderCellMonthlyChart, 50);
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -852,20 +850,13 @@
       document.getElementById('profAdvisorCode').textContent = `ID: ${adv.id}`;
       document.getElementById('profAdvisorName').textContent = adv.name;
       document.getElementById('profJoinDate').textContent = adv.joinInfo;
-      document.getElementById('profActiveClients').textContent = `${adv.activeClients} Clientes`;
+      document.getElementById('profActiveClients').textContent = `${adv.activeClients} Clientes Activos`;
       document.getElementById('profTotal2026').textContent = formatCurrency(adv.total2026);
-      document.getElementById('profShare2026').textContent = adv.share2026Emp;
+      document.getElementById('profShare2026').textContent = `${adv.share2026Emp} de Célula`;
+      document.getElementById('profAvg2026').textContent = formatCurrency(adv.avgMonthly2026);
       document.getElementById('profSept').textContent = formatCurrency(adv.history2026.sep);
-      document.getElementById('profTotal2025').textContent = formatCurrency(adv.total2025);
-      document.getElementById('profShare2025').textContent = `${adv.share2025Emp} en 2025`;
-
-      const growthEl = document.getElementById('profGrowth');
-      if (adv.total2025 > 0) {
-        const g = ((adv.total2026 - adv.total2025) / adv.total2025) * 100;
-        growthEl.textContent = `+${g.toFixed(0)}% vs 2025`;
-      } else {
-        growthEl.textContent = 'Nuevo en 2026';
-      }
+      document.getElementById('profAvg2025').textContent = formatCurrency(adv.avgMonthly2025);
+      document.getElementById('profTotal2025').textContent = `${formatCurrency(adv.total2025)} total 2025`;
 
       const ago = adv.history2026.ago;
       const sep = adv.history2026.sep;
@@ -878,7 +869,7 @@
         momEl.textContent = sep > 0 ? 'Activo' : 'Sin mov.';
       }
 
-      // Render fila de clientes nuevos en la ficha
+      // Fila de clientes nuevos
       renderAdvisorNewClientsRow(adv);
       renderDetailTable(adv);
       loadQualData(adv);
@@ -888,9 +879,11 @@
       }
     }
 
-    // RENDER SEMÁFORO INDIVIDUAL DE CLIENTES NUEVOS DEL ASESOR
     function renderAdvisorNewClientsRow(adv) {
       document.getElementById('profNewClientsTotalBadge').textContent = `Total: ${adv.totalNewClients} nuevos`;
+      const pctGoal = ((adv.totalNewClients / 24) * 100).toFixed(1);
+      document.getElementById('profNewClientsGoalBadge').textContent = `${pctGoal}% de meta anual (24)`;
+
       const row = document.getElementById('profNewClientsRow');
       let html = '<tr>';
       adv.newClients2026.forEach(val => {
@@ -900,7 +893,9 @@
           html += `<td class="p-1.5 bg-red-600 text-white border-r border-slate-200">0</td>`;
         }
       });
-      html += `<td class="p-1.5 bg-amber-100 text-amber-900">${adv.totalNewClients}</td></tr>`;
+      const missing = Math.max(0, 24 - adv.totalNewClients);
+      html += `<td class="p-1.5 bg-amber-100 text-amber-900 border-r border-slate-200">${adv.totalNewClients}</td>`;
+      html += `<td class="p-1.5 bg-slate-100 text-slate-700 font-sans font-bold">${missing} restantes</td></tr>`;
       row.innerHTML = html;
     }
 
@@ -940,7 +935,6 @@
       `;
     }
 
-    // GRÁFICA DE EVOLUCIÓN DE CÉLULA (BARRAS Y LÍNEA)
     function renderCellMonthlyChart() {
       const ctx = document.getElementById('cellMonthlyChart').getContext('2d');
       if (cellMonthlyChartInstance) cellMonthlyChartInstance.destroy();
@@ -999,7 +993,6 @@
       });
     }
 
-    // GRÁFICA DE ASESOR
     function renderDetailChart() {
       const adv = TEAM_DATA[currentAdvisorIndex];
       const ctx = document.getElementById('monthlyDetailChart').getContext('2d');
@@ -1064,7 +1057,6 @@
       });
     }
 
-    // DONUT
     function renderGeneralDonutChart() {
       const ctx = document.getElementById('generalDonutChart').getContext('2d');
       if (generalDonutChartInstance) generalDonutChartInstance.destroy();
@@ -1100,7 +1092,6 @@
       });
     }
 
-    // RENDER DE LA TABLA COMPLETA DE CLIENTES NUEVOS EN ANÁLISIS DE CÉLULA (SEMÁFORO)
     function renderCellNewClientsTable() {
       const tbody = document.getElementById('cellNewClientsTableBody');
       tbody.innerHTML = '';
@@ -1118,13 +1109,14 @@
           }
         });
 
-        rowHtml += `<td class="p-2 text-center bg-amber-50 font-black text-amber-900">${adv.totalNewClients}</td>`;
+        const pct = ((adv.totalNewClients / 24) * 100).toFixed(1);
+        rowHtml += `<td class="p-2 text-center border-r border-slate-200 bg-amber-50 font-black text-amber-900">${adv.totalNewClients}</td>`;
+        rowHtml += `<td class="p-2 text-center font-sans font-semibold text-slate-700 bg-slate-50">${pct}%</td>`;
         tr.innerHTML = rowHtml;
         tbody.appendChild(tr);
       });
     }
 
-    // CUALITATIVO
     function loadQualData(adv) {
       const saved = localStorage.getItem(`qual_${adv.id}`);
       if (saved) {
@@ -1158,7 +1150,6 @@
       setTimeout(() => { ind.style.opacity = '0'; }, 1200);
     }
 
-    // WHATSAPP
     function shareWhatsApp() {
       const adv = TEAM_DATA[currentAdvisorIndex];
       const s = document.getElementById('qualStrengths').innerText.trim();
@@ -1171,20 +1162,23 @@
 👤 *Asesor:* ${adv.name}
 🏆 *Posición:* #${adv.rank} de la Célula
 📅 *Ingreso:* ${adv.joinInfo}
-👥 *Clientes Activos:* ${adv.activeClients} (Nuevos 2026: ${adv.totalNewClients})
+👥 *Clientes Activos:* ${adv.activeClients}
+🎯 *Nuevos 2026:* ${adv.totalNewClients} / 24 meta anual
 
-📊 *Métricas 2026 YTD:*
+📊 *Métricas Financieras:*
 • Utilidad Célula YTD: ${formatCurrency(adv.total2026)}
 • Cuota Célula: ${adv.share2026Emp}
-• Generación Septiembre: ${formatCurrency(adv.history2026.sep)}
+• Promedio Mensual 2026: ${formatCurrency(adv.avgMonthly2026)}
+• Cierre Septiembre: ${formatCurrency(adv.history2026.sep)}
+• Promedio Mensual 2025: ${formatCurrency(adv.avgMonthly2025)}
 
-⭐ *Fortalezas:*
+⭐ *Fortalezas Comerciales:*
 ${s}
 
-🎯 *Oportunidades:*
+🎯 *Áreas de Oportunidad y Mejora:*
 ${o}
 
-🚀 *Meta Q4:*
+🚀 *Plan de Acción & Metas Q4:*
 ${p}
 
 _Portal Célula 3 CDM1 - Banco BASE_`;
@@ -1192,7 +1186,6 @@ _Portal Célula 3 CDM1 - Banco BASE_`;
       window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    // INICIALIZACIÓN
     window.addEventListener('DOMContentLoaded', () => {
       const mainSelect = document.getElementById('mainAdvisorSelect');
       const drawerList = document.getElementById('drawerAdvisorList');
@@ -1225,6 +1218,8 @@ _Portal Célula 3 CDM1 - Banco BASE_`;
           <td class="p-2 font-sans font-semibold text-slate-800">${adv.name}</td>
           <td class="p-2 text-slate-500 font-sans text-[10px]">${adv.joinDateShort}</td>
           <td class="p-2 text-center font-bold text-slate-700">${adv.activeClients}</td>
+          <td class="p-2 text-center font-bold text-emerald-700">${adv.totalNewClients}</td>
+          <td class="p-2 text-right font-medium text-slate-600">${formatCurrency(adv.avgMonthly2026)}</td>
           <td class="p-2 text-right font-medium text-slate-700">${formatCurrency(adv.history2026.sep)}</td>
           <td class="p-2 text-right font-black text-amber-700">${formatCurrency(adv.total2026)}</td>
           <td class="p-2 text-right font-bold text-slate-700">${adv.share2026Emp}</td>
