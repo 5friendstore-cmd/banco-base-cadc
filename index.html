@@ -180,7 +180,7 @@
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] font-bold text-slate-400 uppercase">Clientes Activos</span>
           <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">95 Clientes</span>
-          <span class="text-[10px] text-amber-600 font-semibold">Cifra oficial Salesforce</span>
+          <span class="text-[10px] text-amber-600 font-semibold">Reporte oficial Salesforce</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] font-bold text-slate-400 uppercase">Promedio Mensual</span>
@@ -193,8 +193,8 @@
       <div onclick="navigate('cell-analytics')" class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-xl p-4 text-white shadow-xs cursor-pointer flex items-center justify-between hover:opacity-95 transition">
         <div>
           <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Visualización Estratégica</span>
-          <h3 class="text-sm sm:text-base font-bold">Ver Gráfica y Captación de Clientes Nuevos</h3>
-          <p class="text-xs text-slate-300">Generación mensual ($2.13M en sep), 57 aperturas y semáforo de prospección.</p>
+          <h3 class="text-sm sm:text-base font-bold">Ver Gráfica, Captación y Exigencia de Clientes Nuevos</h3>
+          <p class="text-xs text-slate-300">Generación ($2.13M en sep), semáforo mensual y metas de recuperación para Q4.</p>
         </div>
         <span class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shrink-0 transition">
           Ver Análisis ➔
@@ -255,7 +255,7 @@
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] uppercase font-bold text-slate-400 block">Clientes Nuevos 2026</span>
           <span class="text-sm sm:text-base font-black text-emerald-600 block mt-0.5">57 Cuentas</span>
-          <span class="text-[10px] text-slate-400">Meta célula: 168 (24 c/u)</span>
+          <span class="text-[10px] text-slate-400">33.9% de meta anual (168)</span>
         </div>
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] uppercase font-bold text-slate-400 block">Cartera Total</span>
@@ -283,13 +283,13 @@
         </div>
       </div>
 
-      <!-- TABLA: RESULTADO POR MES DE CLIENTES NUEVOS EN CÉLULA (SEMÁFORO) -->
+      <!-- TABLA: RESULTADO POR MES DE CLIENTES NUEVOS EN CÉLULA (SEMÁFORO) CON META DE EXIGENCIA -->
       <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
         <div class="flex items-center justify-between mb-2">
           <div>
             <h3 class="text-xs font-bold uppercase text-slate-800 flex items-center gap-1.5">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              Clientes Nuevos por Mes en Célula (2026)
+              Clientes Nuevos por Mes en Célula (2026) y Exigencia Q4
             </h3>
             <span class="text-[10px] text-slate-400">Semáforo de prospección: Verde = Nuevas cuentas | Rojo = 0 captaciones</span>
           </div>
@@ -310,8 +310,9 @@
               <th class="p-2 text-center border-r border-slate-200">Jul</th>
               <th class="p-2 text-center border-r border-slate-200">Ago</th>
               <th class="p-2 text-center border-r border-slate-200">Sep</th>
-              <th class="p-2 text-center border-r border-slate-200 bg-amber-50 font-black text-amber-900">Total Nuevos</th>
-              <th class="p-2 text-center bg-slate-100 font-bold text-slate-700">% Avance Meta (24)</th>
+              <th class="p-2 text-center border-r border-slate-200 bg-amber-50 font-black text-amber-900">Total YTD</th>
+              <th class="p-2 text-center border-r border-slate-200 bg-slate-100 font-bold text-slate-700">% Avance (24)</th>
+              <th class="p-2 text-center bg-amber-100/70 font-extrabold text-amber-900">Exigencia Mensual Q4</th>
             </tr>
           </thead>
           <tbody id="cellNewClientsTableBody" class="font-mono text-[11px] divide-y divide-slate-200"></tbody>
@@ -328,7 +329,8 @@
               <td class="p-2 text-center text-emerald-700 border-r border-slate-200">7</td>
               <td class="p-2 text-center text-emerald-700 border-r border-slate-200">7</td>
               <td class="p-2 text-center border-r border-slate-200 bg-amber-100/70 font-black text-amber-900">57</td>
-              <td class="p-2 text-center bg-slate-200 text-slate-800">33.9%</td>
+              <td class="p-2 text-center border-r border-slate-200 bg-slate-200 text-slate-800">33.9%</td>
+              <td class="p-2 text-center bg-amber-200/60 font-sans font-black text-amber-950">Mínimo 15 al mes (Célula)</td>
             </tr>
           </tfoot>
         </table>
@@ -457,6 +459,15 @@
           </thead>
           <tbody id="profNewClientsRow" class="font-mono text-[11px] font-bold"></tbody>
         </table>
+        <!-- Indicador de exigencia directa en el asesor -->
+        <div class="mt-2 p-2 bg-amber-50 rounded-lg border border-amber-200 flex items-center justify-between text-xs">
+          <span class="font-bold text-amber-900" id="profNewClientsPacingNote">
+            Exigencia Q4: Generar al menos 4 clientes por mes para recuperar ritmo.
+          </span>
+          <span class="text-[10px] font-semibold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-200">
+            Compromiso Directivo
+          </span>
+        </div>
       </div>
 
       <!-- Accesos Rápidos -->
@@ -466,8 +477,8 @@
           <span class="text-[10px] text-slate-400">Evolución mes con mes</span>
         </button>
         <button onclick="navigate('qualitative')" class="bg-white p-3 rounded-xl border border-slate-200 text-left hover:border-amber-400 transition shadow-xs">
-          <span class="text-amber-500 font-bold block text-sm">📝 Ver Evaluación</span>
-          <span class="text-[10px] text-slate-400">Fortalezas y metas Q4</span>
+          <span class="text-amber-500 font-bold block text-sm">📝 Ver Evaluación Directiva</span>
+          <span class="text-[10px] text-slate-400">Estrategia y metas Q4</span>
         </button>
       </div>
     </section>
@@ -510,43 +521,43 @@
       </div>
     </section>
 
-    <!-- ==================== PÁGINA 4: EVALUACIÓN CUALITATIVA ==================== -->
+    <!-- ==================== PÁGINA 4: EVALUACIÓN CUALITATIVA DIRECTIVA ==================== -->
     <section id="page-qualitative" class="page-section space-y-3">
       <div class="flex items-center justify-between">
         <div>
           <h3 class="text-xs font-bold uppercase text-slate-800">Evaluación Cualitativa Directiva</h3>
-          <span class="text-[10px] text-slate-400">Compromisos exigentes y realistas sin conformismo. Se autoguarda al editar.</span>
+          <span class="text-[10px] text-slate-400">Análisis profundo, cero conformismo y plan táctico de ejecución. Editable.</span>
         </div>
         <span id="savedIndicator" class="text-[10px] text-emerald-600 font-bold opacity-0 transition-opacity">✓ Guardado</span>
       </div>
 
       <div class="space-y-3">
         <!-- Fortalezas -->
-        <div class="bg-white rounded-xl border border-amber-200 p-3 shadow-xs">
-          <span class="text-xs font-bold text-amber-800 flex items-center gap-1.5 mb-1.5">
+        <div class="bg-white rounded-xl border border-amber-200 p-3.5 shadow-xs">
+          <span class="text-xs font-bold text-amber-800 flex items-center gap-1.5 mb-2">
             <span>⭐</span> Fortalezas Comerciales
           </span>
-          <div id="qualStrengths" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 p-2.5 rounded-lg bg-amber-50/40 min-h-[75px] outline-none">
+          <div id="qualStrengths" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 leading-relaxed p-2.5 rounded-lg bg-amber-50/40 min-h-[85px] outline-none whitespace-pre-line">
             Cargando...
           </div>
         </div>
 
         <!-- Áreas de oportunidad -->
-        <div class="bg-white rounded-xl border border-sky-200 p-3 shadow-xs">
-          <span class="text-xs font-bold text-sky-800 flex items-center gap-1.5 mb-1.5">
+        <div class="bg-white rounded-xl border border-sky-200 p-3.5 shadow-xs">
+          <span class="text-xs font-bold text-sky-800 flex items-center gap-1.5 mb-2">
             <span>🎯</span> Áreas de Oportunidad y Mejora
           </span>
-          <div id="qualOpportunities" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 p-2.5 rounded-lg bg-sky-50/40 min-h-[75px] outline-none">
+          <div id="qualOpportunities" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 leading-relaxed p-2.5 rounded-lg bg-sky-50/40 min-h-[110px] outline-none whitespace-pre-line">
             Cargando...
           </div>
         </div>
 
         <!-- Metas Q4 -->
-        <div class="bg-white rounded-xl border border-emerald-200 p-3 shadow-xs">
-          <span class="text-xs font-bold text-emerald-800 flex items-center gap-1.5 mb-1.5">
+        <div class="bg-white rounded-xl border border-emerald-200 p-3.5 shadow-xs">
+          <span class="text-xs font-bold text-emerald-800 flex items-center gap-1.5 mb-2">
             <span>🚀</span> Plan de Acción & Meta de Cierre Q4
           </span>
-          <div id="qualPlan" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 p-2.5 rounded-lg bg-emerald-50/40 min-h-[75px] outline-none">
+          <div id="qualPlan" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 leading-relaxed p-2.5 rounded-lg bg-emerald-50/40 min-h-[110px] outline-none whitespace-pre-line">
             Cargando...
           </div>
         </div>
@@ -598,7 +609,7 @@
     </button>
   </nav>
 
-  <!-- JAVASCRIPT CON DATA COMPLETA Y AJUSTES CUALITATIVOS DE ALTO RENDIMIENTO -->
+  <!-- JAVASCRIPT CON DATA Y ANÁLISIS CUALITATIVO PROFUNDO -->
   <script>
     const CELL_HISTORY_2026 = {
       labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
@@ -620,18 +631,19 @@
         activeClients: 14,
         newClients2026: [1, 1, 0, 0, 1, 1, 0, 2, 1],
         totalNewClients: 7,
+        pacingRequirement: "Generar al menos 4 clientes nuevos por mes en Q4 para acercarse a la meta anual.",
         total2025: 591216.45,
-        avgMonthly2025: 147804.11, // sep-dic 2025 (4 meses)
+        avgMonthly2025: 147804.11,
         share2025Emp: "77.27%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 58273.34, oct: 132222.43, nov: 188942.05, dic: 211778.63, total: 591216.45 },
         total2026: 4915178.19,
-        avgMonthly2026: 546130.91, // 9 meses 2026
+        avgMonthly2026: 546130.91,
         share2026Emp: "47.39%",
         history2026: { ene: 682440.27, feb: 162901.56, mar: 1133728.80, abr: 876107.82, may: 192661.68, jun: 260210.56, jul: 333842.61, ago: 533292.80, sep: 739992.10, total: 4915178.19 },
         defaultQual: {
-          strengths: "Líder de generación (47.39% de cuota) con 14 clientes activos y 7 aperturas en 2026. Récord en septiembre ($739.9k).",
-          opportunities: "Asegurar esquemas estructurados de forward y derivados para blindar margen en Q4.\nCuidar el Cross Sell en temas de financiamiento y vinculación de captación.\nTrabajar constantemente en ser receptiva en la generación de clientes nuevos y poder alcanzar los 24 clientes promedio en su primer año de gestión (14 meses activos en la célula).",
-          plan: "Superar la meta anual de $6.5M YTD reforzando empresas medianas y corporativas.\nAcompañamiento por parte del líder a citas de referidos.\nVisitas a expos vigentes del 4T 26 de CDMX."
+          strengths: "Líder de generación (47.39% de cuota) con 14 clientes activos y 7 aperturas en 2026. Récord en septiembre ($739.9k). Extraordinario dominio transaccional en divisas.",
+          opportunities: "Asegurar esquemas estructurados de forward y derivados para blindar margen en Q4.\nCuidar el Cross Sell en temas de financiamiento y vinculación de captación.\nTrabajar constantemente en ser receptiva en la generación de clientes nuevos y poder alcanzar los 24 clientes promedio en su primer año de gestión (lleva 14 meses activos en la célula y solo tiene 14 clientes activos; no puede conformarse con depender de pocas cuentas de gran volumen).",
+          plan: "Superar la meta anual de $6.5M YTD reforzando empresas medianas y corporativas.\nAcompañamiento por parte del líder a citas de referidos de alta gama.\nVisitas a expos vigentes del 4T 26 de CDMX enfocadas en manufactura, logística y comercio exterior para captar mínimo 4 clientes nuevos por mes en lo que resta del año."
         }
       },
       {
@@ -644,6 +656,7 @@
         activeClients: 17,
         newClients2026: [1, 1, 2, 0, 1, 0, 2, 1, 2],
         totalNewClients: 10,
+        pacingRequirement: "Captar mínimo 4 clientes nuevos al mes en Q4 para compensar el rezago respecto a 24.",
         total2025: 116747.16,
         avgMonthly2025: 29186.79,
         share2025Emp: "15.26%",
@@ -653,9 +666,9 @@
         share2026Emp: "14.69%",
         history2026: { ene: 110293.23, feb: 141540.12, mar: 14914.79, abr: 294814.92, may: 75682.91, jun: 217800.68, jul: 236683.74, ago: 190669.44, sep: 240937.67, total: 1523337.49 },
         defaultQual: {
-          strengths: "Buen dinamismo comercial: 10 nuevos clientes captados en 2026 y 17 clientes activos. Cierra septiembre en $240.9k.",
-          opportunities: "Incrementar su generación en divisas vs septiembre 26 al menos un 30%.\nIncremento de clientes nuevos al menos 4 clientes nuevos al mes.\nOfrecimiento a su cartera vigente del producto de derivados, detectando la necesidad de los mismos.",
-          plan: "Alcanzar $2.5M YTD al cierre de diciembre consolidando cartera importadora."
+          strengths: "Buen dinamismo comercial: 10 nuevos clientes captados en 2026 y 17 clientes activos. Cierra septiembre en $240.9k con gran estabilidad en el segundo semestre.",
+          opportunities: "Incrementar su generación en divisas vs septiembre 26 al menos un 30%.\nIncremento de clientes nuevos al menos 4 clientes nuevos al mes (con 15 meses en la célula debe buscar cerrar 2026 con al menos 22 clientes activos).\nOfrecimiento a su cartera vigente del producto de derivados, detectando la necesidad de coberturas tipo Window Forward y swaps para asegurar recurrencia.",
+          plan: "Alcanzar $2.5M YTD al cierre de diciembre consolidando cartera importadora.\nEstablecer un barrido semanal con el líder a sus 17 clientes para ofrecerles líneas de crédito y derivados cambiarios."
         }
       },
       {
@@ -668,8 +681,9 @@
         activeClients: 12,
         newClients2026: [1, 0, 1, 1, 1, 1, 2, 2, 0],
         totalNewClients: 9,
+        pacingRequirement: "Exigencia Q4: Generar al menos 3 clientes nuevos por mes para cerrar el año con 18 aperturas.",
         total2025: 12244.48,
-        avgMonthly2025: 4081.49, // oct-dic 2025 (3 meses)
+        avgMonthly2025: 4081.49,
         share2025Emp: "1.60%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 600.60, nov: 2070.51, dic: 9573.37, total: 12244.48 },
         total2026: 1407735.26,
@@ -677,9 +691,9 @@
         share2026Emp: "13.57%",
         history2026: { ene: 14231.27, feb: 12281.39, mar: 20161.79, abr: 119942.15, may: 54060.86, jun: 134098.88, jul: 352982.83, ago: 375599.06, sep: 324377.03, total: 1407735.26 },
         defaultQual: {
-          strengths: "Excelente consolidación en el tercer trimestre superando los $320k mensuales con 12 clientes activos y 9 aperturas YTD.",
-          opportunities: "Evitar meses en cero de captación (como septiembre); reactivar prospección semanal obligatoria.\nIntensificar la venta cruzada de cuentas digitales en dólares para captar remanentes de tesorería.\nExigirse cerrar el año con al menos 15 aperturas acumuladas para compensar el rezago respecto a la meta anual de 24.",
-          plan: "Cerrar Q4 por encima de los $2.3M YTD manteniendo un piso mensual no menor a $300k.\nRevisión quincenal de pipeline con el líder para empujar 2 aperturas por mes en octubre, noviembre y diciembre."
+          strengths: "Extraordinario tercer trimestre con promedio superior a $350k mensuales, 12 clientes activos y 9 aperturas en el año. Gran agresividad de cierre en clientes corporativos.",
+          opportunities: "Cero conformismo en prospección: registró cero aperturas en septiembre; no puede descuidar el embudo mientras opera cuentas activas.\nCumplió un año en la célula (12 meses) y está en 9 aperturas vs la meta de 24; debe ajustar su disciplina diaria de prospección para sumar al menos 3 clientes al mes en Q4.\nAmpliar la penetración de cuentas de tesorería y dispersión de pagos internacionales.",
+          plan: "Romper la barrera de los $2.3M YTD al cierre de 2026 manteniendo una generación mensual no menor a $300k.\nRevisión semanal con el líder de su embudo de 15 prospectos calificados en el sector químico y farmacéutico para forzar cierres antes de fin de mes."
         }
       },
       {
@@ -692,18 +706,19 @@
         activeClients: 22,
         newClients2026: [0, 0, 0, 2, 1, 1, 1, 2, 0],
         totalNewClients: 7,
+        pacingRequirement: "Exigencia Q4: Captar mínimo 3 clientes nuevos al mes para cerrar su primer año con 16 aperturas.",
         total2025: 0.00,
         avgMonthly2025: 0.00,
         share2025Emp: "0.00%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, total: 0 },
         total2026: 1307241.32,
-        avgMonthly2026: 217873.55, // 6 meses activa (abr-sep)
+        avgMonthly2026: 217873.55,
         share2026Emp: "12.60%",
         history2026: { ene: 0, feb: 0, mar: 0, abr: 146595.73, may: 154399.67, jun: 220772.51, jul: 182954.43, ago: 188987.77, sep: 413531.21, total: 1307241.32 },
         defaultQual: {
-          strengths: "Líder indiscutible en cartera con 22 clientes activos en cambios. Despegue sobresaliente en septiembre con $413.5k y promedio de $217k/mes.",
-          opportunities: "Alinear el ritmo de clientes nuevos al tamaño de su cartera: con 6 meses activa debe mantener 2 o más aperturas por mes sin excepciones (cero en septiembre).\nMonetizar de forma más agresiva las 22 cuentas vinculándolas a coberturas y crédito cambiario (FX Loan).",
-          plan: "Superar los $2.2M YTD al cierre de 2026.\nCompromiso estricto de captar mínimo 6 clientes nuevos en Q4 para cerrar su año de arranque con 13 aperturas y más de 25 clientes activos."
+          strengths: "Líder indiscutible de la célula en clientes con 22 cuentas activas en cambios. Cierre histórico en septiembre alcanzando $413.5k y superando $1.3M en solo 6 meses de gestión.",
+          opportunities: "Monetizar profundamente su cartera: tener 22 clientes exige que la facturación mensual se mantenga por encima de los $350k constantes mediante FX Loan y financiamiento de operaciones cambiarias.\nNo relajar la captación (septiembre en cero aperturas); al tener solo 6 meses en la posición debe sostener un ritmo mínimo de 3 clientes nuevos al mes para consolidar el objetivo de 24 en su año debut.",
+          plan: "Alcanzar $2.4M YTD al cierre de 2026 disputando el segundo lugar de la célula.\nAgendar revisiones técnicas de tesorería con sus 10 principales clientes de los 22 activos, acompañada por la mesa de derivados para cerrar coberturas de cierre de año fiscal."
         }
       },
       {
@@ -716,6 +731,7 @@
         activeClients: 14,
         newClients2026: [1, 2, 1, 0, 1, 2, 3, 2, 2],
         totalNewClients: 14,
+        pacingRequirement: "Exigencia Q4: Mantener 3 clientes nuevos por mes para cerrar con 23 aperturas (muy cerca de 24).",
         total2025: 4124.44,
         avgMonthly2025: 1374.81,
         share2025Emp: "0.54%",
@@ -725,9 +741,9 @@
         share2026Emp: "8.09%",
         history2026: { ene: 59.04, feb: 12191.19, mar: 7697.14, abr: 8079.62, may: 3378.53, jun: 281316.13, jul: 73566.10, ago: 168111.69, sep: 284449.10, total: 838848.54 },
         defaultQual: {
-          strengths: "Máxima captadora de nuevos clientes de la célula con 14 aperturas en 2026. Excelente repunte en septiembre alcanzando $284.4k.",
-          opportunities: "Erradicar la alta volatilidad en facturación (meses de $3k-$8k frente a meses de $280k); su cartera debe generar ingresos recurrentes estables.\nAumentar el ticket promedio transaccional por cliente activo exigiendo volumen diario de divisas.\nAlcanzar 20 aperturas en el año (le faltan 6 para la meta de 24; objetivo realista para Q4: 6 nuevos).",
-          plan: "Superar el piso de $1.5M YTD al cierre de diciembre estabilizando la generación mensual sobre los $220k fijos.\nEstructurar plan de retención y recurrencia con los 14 clientes captados."
+          strengths: "Máxima generadora de clientes nuevos en la célula con 14 aperturas en 2026 y 14 clientes activos. Potente cierre en septiembre con $284.4k demostrando gran instinto de prospección.",
+          opportunities: "Eliminar de raíz la volatilidad bimestral (meses de $3k-$8k que destruyen su promedio mensual); la cartera abierta debe tener recurrencia obligatoria de operaciones semanales.\nCon 11.5 meses en la célula, es la que está mejor perfilada para rozar la meta de 24 clientes si sostiene 3 aperturas por mes en Q4.\nElevar el margen por cliente vendiendo coberturas y cuentas en multidivisas (EUR, CAD, CNY).",
+          plan: "Superar el piso de $1.5M YTD al cierre de diciembre garantizando un piso mensual no menor a $220k.\nReuniones de seguimiento mensual con sus 14 clientes para pactar operaciones recurrentes y blindar el flujo de fin de año."
         }
       },
       {
@@ -740,6 +756,7 @@
         activeClients: 13,
         newClients2026: [0, 0, 1, 1, 1, 3, 1, 0, 2],
         totalNewClients: 9,
+        pacingRequirement: "Exigencia Q4: Generar al menos 3 clientes nuevos por mes para llegar a 18 aperturas anuales.",
         total2025: 33602.35,
         avgMonthly2025: 8400.59,
         share2025Emp: "4.39%",
@@ -749,9 +766,9 @@
         share2026Emp: "2.91%",
         history2026: { ene: 14404.89, feb: 6645.59, mar: 10358.90, abr: 11076.49, may: 9085.59, jun: 10274.05, jul: 65307.21, ago: 51883.32, sep: 122784.64, total: 301820.68 },
         defaultQual: {
-          strengths: "Crecimiento marcado en el último trimestre, marcando récord personal en septiembre con $122.7k, 13 clientes activos y 9 aperturas en 2026.",
-          opportunities: "Superar la dependencia de operaciones esporádicas y elevar la cuota de la célula por encima del 5%.\nCon 14.5 meses en la célula, debe acelerar el paso para acercarse a la cota de 24 clientes (meta Q4: sumar mínimo 4 clientes nuevos).\nPromover activamente forwards y posturas con horario extendido FX 24/7.",
-          plan: "Alcanzar $650k YTD al cierre de 2026 manteniendo un piso de generación de $110k mensuales en Q4.\nEnfoque prioritario en empresas importadoras con flujos semanales."
+          strengths: "Tendencia de aceleración evidente en el último trimestre, marcando su mejor mes del año en septiembre con $122.7k, 13 clientes activos y 9 aperturas en 2026.",
+          opportunities: "Lleva 14.5 meses en la célula y su cuota representa solo el 2.91% del total; es urgente que deje atrás el escalón de los $30k-$50k mensuales.\nDebe acelerar el ritmo a 3 aperturas por mes en Q4 para rescatar la meta de prospección y cerrar el año con al menos 18 cuentas.\nDetectar necesidades de crédito y líneas FX Loan para multiplicar el volumen con sus clientes actuales.",
+          plan: "Consolidar un piso de generación de al menos $120k mensuales en Q4 para cerrar 2026 por encima de los $650k YTD.\nVisitas conjuntas con el líder a 8 empresas medianas del sector retail e importación para asegurar transaccionalidad recurrente."
         }
       },
       {
@@ -764,18 +781,19 @@
         activeClients: 3,
         newClients2026: [0, 0, 0, 2, 0, 0, 1, 0, 0],
         totalNewClients: 3,
+        pacingRequirement: "Exigencia Q4: Generar al menos 2 a 3 clientes por mes de forma obligatoria para salir de zona crítica.",
         total2025: 0.00,
         avgMonthly2025: 0.00,
         share2025Emp: "0.00%",
         history2025: { ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0, ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, total: 0 },
         total2026: 69858.91,
-        avgMonthly2026: 12701.62, // 5.5 meses activo
+        avgMonthly2026: 12701.62,
         share2026Emp: "0.67%",
         history2026: { ene: 0, feb: 0, mar: 0, abr: 16395.00, may: 3450.70, jun: 4564.60, jul: 3689.81, ago: 28628.80, sep: 13130.00, total: 69858.91 },
         defaultQual: {
-          strengths: "Asesor en periodo de aceleración con base inicial de 3 clientes activos en comercio exterior y generación positiva en septiembre ($13.1k).",
-          opportunities: "Urgencia en elevar el embudo de prospección: solo 3 aperturas en casi 6 meses está muy por debajo de la exigencia institucional.\nReestructurar agenda comercial dedicando el 70% del tiempo a llamadas en frío, citas y prospección calificada.\nSuperar el conformismo de ingresos menores a $30k mensuales.",
-          plan: "Meta estricta para Q4: Captar mínimo 4 clientes nuevos antes de fin de año (al menos 1 o 2 por mes) para cerrar su año de inducción con 7 clientes.\nAlcanzar $150k YTD al cierre de diciembre con acompañamiento semanal del líder en citas de cierre."
+          strengths: "Cierre activo en septiembre con $13.1k y primeros 3 clientes activos vinculados en operaciones de comercio exterior.",
+          opportunities: "Nivel de captación en zona crítica: solo 3 aperturas en 5.5 meses está completamente fuera de los estándares de Banco BASE (la meta institucional exige 2 por mes; debería llevar al menos 11).\nCero conformismo: no es aceptable tener 5 meses en cero en la tabla de clientes nuevos.\nReestructuración obligatoria de la jornada laboral: destinar al menos 4 horas diarias a prospección en frío, bases de datos empresariales y llamadas efectivas.",
+          plan: "Compromiso irrenunciable para Q4: Captar al menos 2 clientes nuevos por mes en octubre, noviembre y diciembre para cerrar su año de inducción con 9 aperturas.\nMeta financiera: Alcanzar los $150k YTD duplicando la facturación mensual con acompañamiento del líder en todas sus citas comerciales de prospección."
         }
       }
     ];
@@ -883,6 +901,7 @@
       document.getElementById('profNewClientsTotalBadge').textContent = `Total: ${adv.totalNewClients} nuevos`;
       const pctGoal = ((adv.totalNewClients / 24) * 100).toFixed(1);
       document.getElementById('profNewClientsGoalBadge').textContent = `${pctGoal}% de meta anual (24)`;
+      document.getElementById('profNewClientsPacingNote').textContent = adv.pacingRequirement;
 
       const row = document.getElementById('profNewClientsRow');
       let html = '<tr>';
@@ -1111,7 +1130,8 @@
 
         const pct = ((adv.totalNewClients / 24) * 100).toFixed(1);
         rowHtml += `<td class="p-2 text-center border-r border-slate-200 bg-amber-50 font-black text-amber-900">${adv.totalNewClients}</td>`;
-        rowHtml += `<td class="p-2 text-center font-sans font-semibold text-slate-700 bg-slate-50">${pct}%</td>`;
+        rowHtml += `<td class="p-2 text-center font-sans font-semibold text-slate-700 bg-slate-50 border-r border-slate-200">${pct}%</td>`;
+        rowHtml += `<td class="p-2 text-center font-sans text-[10px] font-bold text-amber-900 bg-amber-50">${adv.pacingRequirement}</td>`;
         tr.innerHTML = rowHtml;
         tbody.appendChild(tr);
       });
@@ -1157,20 +1177,21 @@
       const p = document.getElementById('qualPlan').innerText.trim();
 
       const msg = 
-`🏦 *BANCO BASE - RESUMEN DE ASESOR*
+`🏦 *BANCO BASE - RESUMEN EJECUTIVO Y DIRECTIVO*
 📍 *Célula:* Célula 3 CDM1 (41930)
 👤 *Asesor:* ${adv.name}
 🏆 *Posición:* #${adv.rank} de la Célula
-📅 *Ingreso:* ${adv.joinInfo}
+📅 *Antigüedad:* ${adv.joinInfo}
 👥 *Clientes Activos:* ${adv.activeClients}
-🎯 *Nuevos 2026:* ${adv.totalNewClients} / 24 meta anual
+🎯 *Nuevos 2026:* ${adv.totalNewClients} de 24 meta anual
+⚡ *Exigencia Q4:* ${adv.pacingRequirement}
 
 📊 *Métricas Financieras:*
 • Utilidad Célula YTD: ${formatCurrency(adv.total2026)}
-• Cuota Célula: ${adv.share2026Emp}
+• Cuota de Célula: ${adv.share2026Emp}
 • Promedio Mensual 2026: ${formatCurrency(adv.avgMonthly2026)}
 • Cierre Septiembre: ${formatCurrency(adv.history2026.sep)}
-• Promedio Mensual 2025: ${formatCurrency(adv.avgMonthly2025)}
+• Promedio Cierre 2025: ${formatCurrency(adv.avgMonthly2025)}
 
 ⭐ *Fortalezas Comerciales:*
 ${s}
