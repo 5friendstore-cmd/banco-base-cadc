@@ -33,10 +33,6 @@
     }
   </script>
   <style>
-    .editable-box:focus {
-      outline: 2px solid #F59E0B;
-      background-color: #FFFBEB;
-    }
     .nav-tab-active {
       color: #D97706;
       font-weight: 700;
@@ -330,7 +326,7 @@
               <td class="p-2 text-center text-emerald-700 border-r border-slate-200">8</td>
               <td class="p-2 text-center border-r border-slate-200 bg-amber-100/70 font-black text-amber-900">60</td>
               <td class="p-2 text-center border-r border-slate-200 bg-slate-200 text-slate-800">35.7%</td>
-              <td class="p-2 text-center bg-amber-200/60 font-sans font-black text-amber-950">Mínimo 15 al mes (Célula)</td>
+              <td class="p-2 text-center bg-amber-200/60 font-sans font-black text-amber-950">Cumplir todos sus objetivos</td>
             </tr>
           </tfoot>
         </table>
@@ -462,7 +458,7 @@
         <!-- Indicador de compromiso directo en el asesor -->
         <div class="mt-2 p-2 bg-amber-50 rounded-lg border border-amber-200 flex items-center justify-between text-xs">
           <span class="font-bold text-amber-900" id="profNewClientsPacingNote">
-            Compromiso Q4: Generar al menos 4 clientes por mes para recuperar ritmo.
+            Compromiso de clientes nuevos: al menos 4 CN al mes en Q4 para acercarse a la meta anual.
           </span>
           <span class="text-[10px] font-semibold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-200">
             Compromiso Célula
@@ -513,7 +509,7 @@
               <th class="p-1.5 text-right">Jul</th>
               <th class="p-1.5 text-right">Ago</th>
               <th class="p-1.5 text-right font-medium text-slate-900">Sep</th>
-              <th class="p-1.5 text-right bg-amber-50 font-black text-amber-700">Total YTD</th>
+              <th class="p-1.5 text-right bg-amber-50 text-amber-900 font-extrabold">Total YTD</th>
             </tr>
           </thead>
           <tbody id="detailTableBody" class="font-mono text-[11px] divide-y divide-slate-100"></tbody>
@@ -521,14 +517,13 @@
       </div>
     </section>
 
-    <!-- ==================== PÁGINA 4: EVALUACIÓN CUALITATIVA DIRECTIVA ==================== -->
+    <!-- ==================== PÁGINA 4: EVALUACIÓN CUALITATIVA DIRECTIVA (BLOQUEADA / NO EDITABLE) ==================== -->
     <section id="page-qualitative" class="page-section space-y-3">
       <div class="flex items-center justify-between">
         <div>
           <h3 class="text-xs font-bold uppercase text-slate-800">Evaluación Cualitativa Directiva</h3>
-          <span class="text-[10px] text-slate-400">Análisis profundo, cero conformismo y plan táctico de ejecución. Editable.</span>
+          <span class="text-[10px] text-slate-400">Análisis oficial, compromisos de desempeño y plan táctico de ejecución institucional.</span>
         </div>
-        <span id="savedIndicator" class="text-[10px] text-emerald-600 font-bold opacity-0 transition-opacity">✓ Guardado</span>
       </div>
 
       <div class="space-y-3">
@@ -537,7 +532,7 @@
           <span class="text-xs font-bold text-amber-800 flex items-center gap-1.5 mb-2">
             <span>⭐</span> Fortalezas Comerciales
           </span>
-          <div id="qualStrengths" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 leading-relaxed p-2.5 rounded-lg bg-amber-50/40 min-h-[85px] outline-none whitespace-pre-line">
+          <div id="qualStrengths" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-amber-50/50 border border-amber-100/80 min-h-[85px] whitespace-pre-line select-text">
             Cargando...
           </div>
         </div>
@@ -547,7 +542,7 @@
           <span class="text-xs font-bold text-sky-800 flex items-center gap-1.5 mb-2">
             <span>🎯</span> Áreas de Oportunidad y Mejora
           </span>
-          <div id="qualOpportunities" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 leading-relaxed p-2.5 rounded-lg bg-sky-50/40 min-h-[110px] outline-none whitespace-pre-line">
+          <div id="qualOpportunities" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-sky-50/50 border border-sky-100/80 min-h-[110px] whitespace-pre-line select-text">
             Cargando...
           </div>
         </div>
@@ -557,7 +552,7 @@
           <span class="text-xs font-bold text-emerald-800 flex items-center gap-1.5 mb-2">
             <span>🚀</span> Plan de Acción & Meta de Cierre Q4
           </span>
-          <div id="qualPlan" contenteditable="true" oninput="saveQualData()" class="editable-box text-xs text-slate-700 leading-relaxed p-2.5 rounded-lg bg-emerald-50/40 min-h-[110px] outline-none whitespace-pre-line">
+          <div id="qualPlan" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-emerald-50/50 border border-emerald-100/80 min-h-[110px] whitespace-pre-line select-text">
             Cargando...
           </div>
         </div>
@@ -641,7 +636,7 @@
         share2026Emp: "47.39%",
         history2026: { ene: 682440.27, feb: 162901.56, mar: 1133728.80, abr: 876107.82, may: 192661.68, jun: 260210.56, jul: 333842.61, ago: 533292.80, sep: 739992.10, total: 4915178.19 },
         defaultQual: {
-          strengths: "Líder de generación (47.39% de cuota) con 14 clientes activos y 7 aperturas en 2026. Top generación en septiembre ($739.9k). Extraordinario dominio transaccional en divisas.",
+          strengths: "Líder de generación (47.39% de cuota) con 14 clientes activos y 7 aperturas en 2026. Top Performance de septiembre ($739.9k). Extraordinario dominio transaccional en divisas.",
           opportunities: "Asegurar esquemas estructurados de forward y derivados para blindar margen en Q4.\nCuidar el Cross Sell en temas de financiamiento y vinculación de captación.\nTrabajar constantemente en ser receptiva en la generación de clientes nuevos y poder alcanzar los 24 clientes promedio en su primer año de gestión (14 meses activos en la célula).",
           plan: "Superar la meta anual de $7.0M YTD reforzando empresas medianas y corporativas.\nAcompañamiento por parte del líder a citas de referidos importantes así como de prospectos ATLAS.\nVisitas a expos vigentes del 4T 26 de CDMX."
         }
@@ -676,8 +671,8 @@
         name: "María José Crespo Noguez",
         shortName: "María José Crespo",
         rank: 3,
-        joinInfo: "Octubre de 2025 (12 meses)",
-        joinDateShort: "Oct 2025",
+        joinInfo: "01 de Octubre de 2025 (12 meses)",
+        joinDateShort: "01 Oct 2025",
         activeClients: 12,
         newClients2026: [1, 0, 1, 1, 1, 1, 2, 2, 0],
         totalNewClients: 9,
@@ -792,7 +787,7 @@
         history2026: { ene: 0, feb: 0, mar: 0, abr: 16395.00, may: 3450.70, jun: 4564.60, jul: 3689.81, ago: 28628.80, sep: 13130.00, total: 69858.91 },
         defaultQual: {
           strengths: "Cierre activo en septiembre con $13.1k y primeros 3 clientes activos vinculados en operaciones de comercio exterior.",
-          opportunities: "Nivel de captación en zona crítica: solo 3 aperturas en 5.5 meses está completamente fuera de los estándares de Banco BASE (la meta institucional exige 2 por mes; debería llevar al menos 11).\nAcompañamiento junto con el líder de la célula a las visitas de los asesores generadas en la semana, para afianzar dudas y generar seguridad para sus visitas con sus prospectos y clientes.\nReestructuración obligatoria de la jornada laboral: destinar al menos 4 horas diarias a prospección en frío, bases de datos empresariales y llamadas efectivas.",
+          opportunities: "Nivel de captación en zona crítica: solo 3 aperturas en 5.5 meses está completamente fuera de los estándares de Banco BASE (la meta institucional exige 2 por mes; debería llevar al menos 11).\nAcompañamiento junto con el lider de la celula a las visitas de los asesores generadas en la semana, para afianzar dudas y generar seguridad para sus visitas con sus prospectos y clientes.\nReestructuración obligatoria de la jornada laboral: destinar al menos 4 horas diarias a prospección en frío, bases de datos empresariales y llamadas efectivas.",
           plan: "Compromiso irrenunciable para Q4: Captar al menos 2 clientes nuevos por mes en octubre, noviembre y diciembre para cerrar su año de inducción con 9 aperturas.\nMeta financiera: Alcanzar los $150k YTD duplicando la facturación mensual con acompañamiento del líder en todas sus citas comerciales de prospección."
         }
       }
@@ -1142,43 +1137,16 @@
     }
 
     function loadQualData(adv) {
-      const saved = localStorage.getItem(`qual_${adv.id}`);
-      if (saved) {
-        try {
-          const data = JSON.parse(saved);
-          document.getElementById('qualStrengths').innerText = data.s || adv.defaultQual.strengths;
-          document.getElementById('qualOpportunities').innerText = data.o || adv.defaultQual.opportunities;
-          document.getElementById('qualPlan').innerText = data.p || adv.defaultQual.plan;
-          return;
-        } catch(e){}
-      }
       document.getElementById('qualStrengths').innerText = adv.defaultQual.strengths;
       document.getElementById('qualOpportunities').innerText = adv.defaultQual.opportunities;
       document.getElementById('qualPlan').innerText = adv.defaultQual.plan;
     }
 
-    function saveQualData() {
-      const adv = TEAM_DATA[currentAdvisorIndex];
-      const data = {
-        s: document.getElementById('qualStrengths').innerText,
-        o: document.getElementById('qualOpportunities').innerText,
-        p: document.getElementById('qualPlan').innerText
-      };
-      localStorage.setItem(`qual_${adv.id}`, JSON.stringify(data));
-      showSavedIndicator();
-    }
-
-    function showSavedIndicator() {
-      const ind = document.getElementById('savedIndicator');
-      ind.style.opacity = '1';
-      setTimeout(() => { ind.style.opacity = '0'; }, 1200);
-    }
-
     function shareWhatsApp() {
       const adv = TEAM_DATA[currentAdvisorIndex];
-      const s = document.getElementById('qualStrengths').innerText.trim();
-      const o = document.getElementById('qualOpportunities').innerText.trim();
-      const p = document.getElementById('qualPlan').innerText.trim();
+      const s = adv.defaultQual.strengths;
+      const o = adv.defaultQual.opportunities;
+      const p = adv.defaultQual.plan;
 
       const msg = 
 `🏦 *BANCO BASE - RESUMEN EJECUTIVO Y DIRECTIVO*
