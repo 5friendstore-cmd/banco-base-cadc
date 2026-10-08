@@ -56,9 +56,9 @@
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased min-h-screen pb-24 sm:pb-12">
 
-  <!-- BARRA SUPERIOR FIJA CON LOGO OFICIAL Y BOTÓN DE MENÚ -->
+  <!-- BARRA SUPERIOR FIJA CON LOGO OFICIAL, LÍDER Y MENÚ -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-    <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
+    <div class="max-w-5xl mx-auto px-4 py-2 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <button onclick="toggleSidebar(true)" class="p-2 -ml-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none" aria-label="Abrir Menú">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,8 +72,11 @@
         />
       </div>
       <div class="text-right">
-        <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 block">Célula Operativa</span>
-        <span class="text-xs font-bold text-slate-800">Célula 3 CDMX 1 (41930)</span>
+        <div class="flex items-center justify-end gap-1.5">
+          <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400">Líder:</span>
+          <span class="text-[10px] sm:text-xs font-black text-slate-800">Carlos Alberto Domínguez Chavez</span>
+        </div>
+        <span class="text-[10px] sm:text-[11px] font-extrabold text-amber-600 block leading-tight">Célula 3 CDMX 1 (41930)</span>
       </div>
     </div>
 
@@ -98,6 +101,13 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
+      </div>
+
+      <!-- Tarjeta de Liderazgo en el Menú -->
+      <div class="mx-3 mt-3 p-3 bg-gradient-to-r from-slate-900 to-amber-950 text-white rounded-xl shadow-xs">
+        <span class="text-[9px] uppercase tracking-widest text-amber-400 font-bold block">Dirección de Célula</span>
+        <h4 class="text-xs font-extrabold text-white mt-0.5">Carlos Alberto Domínguez Chavez</h4>
+        <span class="text-[10px] text-slate-300 block">Líder • Célula 3 CDMX 1 (41930)</span>
       </div>
 
       <div class="p-3">
@@ -134,6 +144,7 @@
 
     <!-- Footer Drawer -->
     <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
+      <p class="text-[10px] font-bold text-slate-700">Líder: Carlos Alberto Domínguez Chavez</p>
       <p class="text-[10px] text-slate-400">Célula 3 CDMX 1 (41930) • Banco BASE</p>
       <a href="https://five-friends-web.vercel.app/" target="_blank" rel="noopener noreferrer" class="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 hover:text-amber-600 transition">
         <span>Powered by</span>
@@ -162,6 +173,23 @@
 
     <!-- ==================== PÁGINA 1: DASHBOARD RESUMEN GENERAL ==================== -->
     <section id="page-dashboard" class="page-section active space-y-4">
+      
+      <!-- Banner Destacado de Liderazgo -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-4 text-white shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-slate-700/50">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-500 text-slate-900">Dirección Comercial</span>
+            <span class="text-xs text-amber-300 font-semibold">Célula 3 CDMX 1 (41930)</span>
+          </div>
+          <h2 class="text-base sm:text-lg font-black text-white mt-1">Líder: Carlos Alberto Domínguez Chavez</h2>
+          <p class="text-xs text-slate-300">Gestión, coaching comercial y estrategia integral del equipo de 7 asesores activos.</p>
+        </div>
+        <div class="text-left sm:text-right shrink-0 bg-white/10 sm:bg-transparent p-2 sm:p-0 rounded-xl">
+          <span class="text-[10px] text-amber-300 font-bold uppercase block">Generación Acumulada</span>
+          <span class="text-base sm:text-lg font-black text-amber-400">$10,371,920.39 YTD</span>
+        </div>
+      </div>
+
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
           <span class="text-[10px] font-bold text-slate-400 uppercase">Utilidad Célula</span>
@@ -186,11 +214,11 @@
       </div>
 
       <!-- Acceso Directo Destacado a la Evolución de Célula -->
-      <div onclick="navigate('cell-analytics')" class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-xl p-4 text-white shadow-xs cursor-pointer flex items-center justify-between hover:opacity-95 transition">
+      <div onclick="navigate('cell-analytics')" class="bg-white rounded-xl p-4 border border-amber-200 shadow-xs cursor-pointer flex items-center justify-between hover:bg-amber-50/50 transition">
         <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Visualización Estratégica</span>
-          <h3 class="text-sm sm:text-base font-bold">Ver Gráfica, Generación y Compromiso de Clientes Nuevos</h3>
-          <p class="text-xs text-slate-300">Generación ($2.13M en sep), 60 CN a septiembre y semáforo mensual.</p>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600">Visualización Estratégica</span>
+          <h3 class="text-sm sm:text-base font-bold text-slate-800">Ver Gráfica, Generación y Compromiso de Clientes Nuevos</h3>
+          <p class="text-xs text-slate-500">Supervisión del líder Carlos Domínguez: $2.13M en sep, 60 CN a septiembre y semáforo mensual.</p>
         </div>
         <span class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shrink-0 transition">
           Ver Análisis ➔
@@ -210,7 +238,10 @@
 
       <!-- Tabla Ranking -->
       <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-        <h3 class="text-xs font-bold uppercase text-slate-700 mb-2">Ranking Equipo Comercial Célula 3 CDMX 1</h3>
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-xs font-bold uppercase text-slate-700">Ranking Equipo Comercial Célula 3 CDMX 1</h3>
+          <span class="text-[10px] font-bold text-slate-500">Líder: Carlos Alberto Domínguez Chavez</span>
+        </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead class="bg-slate-50 text-slate-500 font-bold uppercase text-[10px]">
@@ -236,6 +267,17 @@
     <!-- ==================== PÁGINA: ANÁLISIS COMPLETO DE CÉLULA ==================== -->
     <section id="page-cell-analytics" class="page-section space-y-4">
       
+      <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <span class="text-[10px] uppercase font-bold text-amber-600 block">Monitoreo y Desempeño Operativo</span>
+          <h3 class="text-sm font-bold text-slate-800">Célula 3 CDMX 1 • Conducción Comercial</h3>
+        </div>
+        <div class="text-left sm:text-right">
+          <span class="text-[10px] font-semibold text-slate-400 block">Encargado de Célula:</span>
+          <span class="text-xs font-extrabold text-slate-800">Líder: Carlos Alberto Domínguez Chavez</span>
+        </div>
+      </div>
+
       <!-- KPIs Consolidados de la Célula -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
@@ -376,8 +418,11 @@
       <!-- Tarjeta Principal del Asesor -->
       <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
         <div class="bg-gradient-to-r from-slate-900 to-amber-950 p-4 text-white">
-          <span id="profAdvisorCode" class="text-amber-400 font-mono text-[10px] font-bold tracking-widest uppercase">ID: 1297</span>
-          <h2 id="profAdvisorName" class="text-base sm:text-lg font-black tracking-tight">Mitzi Estefanía Negrete Bribiesca</h2>
+          <div class="flex items-center justify-between">
+            <span id="profAdvisorCode" class="text-amber-400 font-mono text-[10px] font-bold tracking-widest uppercase">ID: 1297</span>
+            <span class="text-[10px] text-slate-300 font-medium">Supervisión: <strong class="text-amber-300">Líder: Carlos Alberto Domínguez Chavez</strong></span>
+          </div>
+          <h2 id="profAdvisorName" class="text-base sm:text-lg font-black tracking-tight mt-0.5">Mitzi Estefanía Negrete Bribiesca</h2>
           <p class="text-xs text-slate-300 mt-0.5">Asesor Comercial • Célula 3 CDMX 1 (41930)</p>
         </div>
 
@@ -494,7 +539,7 @@
       </div>
 
       <!-- Tabla desglose mensual -->
-      <div class="bg-white rounded-xl border border-slate-200 p-3 shadow-xs overflow-x-auto">
+      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
         <h4 class="text-[11px] font-bold uppercase text-slate-500 mb-2">Desglose Mensual (MXN)</h4>
         <table class="w-full text-xs text-left">
           <thead class="bg-slate-50 text-[10px] font-bold text-slate-600 uppercase">
@@ -517,13 +562,16 @@
       </div>
     </section>
 
-    <!-- ==================== PÁGINA 4: EVALUACIÓN CUALITATIVA DIRECTIVA (BLOQUEADA / NO EDITABLE) ==================== -->
+    <!-- ==================== PÁGINA 4: EVALUACIÓN CUALITATIVA DIRECTIVA ==================== -->
     <section id="page-qualitative" class="page-section space-y-3">
-      <div class="flex items-center justify-between">
+      <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-xs flex items-center justify-between">
         <div>
           <h3 class="text-xs font-bold uppercase text-slate-800">Evaluación Cualitativa Directiva</h3>
-          <span class="text-[10px] text-slate-400">Análisis oficial, compromisos de desempeño y plan táctico de ejecución institucional.</span>
+          <span class="text-[10px] text-slate-400">Análisis oficial y compromisos tácticos de desempeño institucional.</span>
         </div>
+        <span class="text-[10px] font-black text-amber-800 bg-amber-50 px-2 py-1 rounded border border-amber-200">
+          Líder: Carlos Alberto Domínguez Chavez
+        </span>
       </div>
 
       <div class="space-y-3">
@@ -559,9 +607,10 @@
       </div>
     </section>
 
-    <!-- PIE DE PÁGINA CON BRANDING "POWERED BY FIVE FRIENDS" -->
+    <!-- PIE DE PÁGINA CON BRANDING Y LIDERAZGO -->
     <footer class="mt-8 pt-4 pb-2 border-t border-slate-200 text-center">
-      <p class="text-xs font-medium text-slate-500">Banco BASE • Célula 3 CDMX 1 (41930)</p>
+      <p class="text-xs font-bold text-slate-700">Líder: Carlos Alberto Domínguez Chavez</p>
+      <p class="text-[11px] font-medium text-slate-500 mt-0.5">Banco BASE • Célula 3 CDMX 1 (41930)</p>
       <div class="mt-2 inline-flex items-center gap-1.5 text-xs text-slate-500">
         <span>Powered by</span>
         <a 
@@ -751,7 +800,7 @@
         activeClients: 13,
         newClients2026: [0, 0, 1, 1, 1, 3, 1, 0, 2], // Exactamente 9 CN
         totalNewClients: 9,
-        pacingRequirement: "Compromiso de clientes nuevos: al menos 3 CN al mes para llegar a 18 anuales.",
+        pacingRequirement: "Compromiso de clientes nuevos: al menos 4 CN al mes en Q4 para rescatar ritmo.",
         total2025: 33602.35,
         avgMonthly2025: 8400.59,
         share2025Emp: "4.39%",
@@ -762,7 +811,7 @@
         history2026: { ene: 14404.89, feb: 6645.59, mar: 10358.90, abr: 11076.49, may: 9085.59, jun: 10274.05, jul: 65307.21, ago: 51883.32, sep: 122784.64, total: 301820.68 },
         defaultQual: {
           strengths: "Tendencia de aceleración en el último trimestre, marcando top generación en septiembre con $122.7k, 13 clientes activos y 9 aperturas en 2026.",
-          opportunities: "Lleva 14.5 meses en la célula y su cuota representa solo el 2.91% del total; es urgente que deje atrás el escalón de los $30k-$50k mensuales.\nDebe acelerar el ritmo a 3 aperturas por mes en Q4 para rescatar la meta de prospección y cerrar el año con al menos 18 cuentas.\nDetectar necesidades de crédito y líneas FX Loan para multiplicar el volumen con sus clientes actuales.",
+          opportunities: "Lleva 14.5 meses en la célula y su cuota representa solo el 2.91% del total; es urgente que deje atrás el escalón de los $30k-$50k mensuales.\nDebe acelerar el ritmo a 4 aperturas por mes en Q4 para rescatar la meta de prospección y cerrar el año con al menos 21 cuentas.\nDetectar necesidades de crédito y líneas FX Loan para multiplicar el volumen con sus clientes actuales.",
           plan: "Consolidar un piso de generación de al menos $150k mensuales en Q4 para cerrar 2026 con un fuerte repunte YTD.\nVisitas conjuntas con el líder a 8 empresas medianas del sector retail e importación para asegurar transaccionalidad recurrente."
         }
       },
@@ -787,7 +836,7 @@
         history2026: { ene: 0, feb: 0, mar: 0, abr: 16395.00, may: 3450.70, jun: 4564.60, jul: 3689.81, ago: 28628.80, sep: 13130.00, total: 69858.91 },
         defaultQual: {
           strengths: "Cierre activo en septiembre con $13.1k y primeros 3 clientes activos vinculados en operaciones de comercio exterior.",
-          opportunities: "Nivel de captación en zona crítica: solo 3 aperturas en 5.5 meses está completamente fuera de los estándares de Banco BASE (la meta institucional exige 2 por mes; debería llevar al menos 11).\nAcompañamiento junto con el lider de la celula a las visitas de los asesores generadas en la semana, para afianzar dudas y generar seguridad para sus visitas con sus prospectos y clientes.\nReestructuración obligatoria de la jornada laboral: destinar al menos 4 horas diarias a prospección en frío, bases de datos empresariales y llamadas efectivas.",
+          opportunities: "Nivel de generación en zona crítica: solo 3 aperturas en 5.5 meses está completamente fuera de los estándares de Banco BASE (la meta institucional exige 2 por mes; debería llevar al menos 11).\nAcompañamiento junto con el lider de la celula a las visitas de los asesores generadas en la semana, para afianzar dudas y generar seguridad para sus visitas con sus prospectos y clientes.\nReestructuración obligatoria de la jornada laboral: destinar al menos 4 horas diarias a prospección en frío, bases de datos empresariales y llamadas efectivas.",
           plan: "Compromiso irrenunciable para Q4: Captar al menos 2 clientes nuevos por mes en octubre, noviembre y diciembre para cerrar su año de inducción con 9 aperturas.\nMeta financiera: Alcanzar los $150k YTD duplicando la facturación mensual con acompañamiento del líder en todas sus citas comerciales de prospección."
         }
       }
@@ -1151,6 +1200,7 @@
       const msg = 
 `🏦 *BANCO BASE - RESUMEN EJECUTIVO Y DIRECTIVO*
 📍 *Célula:* Célula 3 CDMX 1 (41930)
+👔 *Líder:* Carlos Alberto Domínguez Chavez
 👤 *Asesor:* ${adv.name}
 🏆 *Posición:* #${adv.rank} de la Célula
 📅 *Antigüedad:* ${adv.joinInfo}
