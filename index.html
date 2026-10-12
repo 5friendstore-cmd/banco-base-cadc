@@ -432,7 +432,7 @@
             <h3 class="text-sm font-bold text-slate-800">Célula 3 CDMX 1 • Conducción Comercial</h3>
           </div>
           <div class="flex flex-wrap items-center gap-2">
-            <!-- BOTÓN DESCARGAR ONE PAGE DE CÉLULA -->
+            <!-- BOTÓN DESCARGAR ONE PAGE DE CÉLULA (CON AMBAS GRÁFICAS) -->
             <button 
               onclick="descargarOnePagePresentacion('celula')" 
               class="bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-extrabold text-[11px] px-3 py-1.5 rounded-lg shadow-xs transition flex items-center gap-1.5"
@@ -590,7 +590,7 @@
       <!-- ==================== PÁGINA 2: FICHA DEL ASESOR ==================== -->
       <section id="page-advisor" class="page-section space-y-3">
         
-        <!-- BOTÓN DESCARGAR ONE PAGE DEL ASESOR -->
+        <!-- BOTÓN DESCARGAR ONE PAGE DEL ASESOR (CON AMBAS GRÁFICAS) -->
         <div class="flex items-center justify-between bg-amber-50/80 p-2.5 rounded-xl border border-amber-200">
           <div class="flex items-center gap-2">
             <span class="text-xs font-bold text-amber-900">Presentación Ejecutiva One Page:</span>
@@ -856,7 +856,7 @@
     </nav>
   </div>
 
-  <!-- JAVASCRIPT CON DATA, LOGIN Y DESCARGAS DE ONE PAGE -->
+  <!-- JAVASCRIPT CON DATA, LOGIN Y DESCARGAS DE ONE PAGE CON DOBLE GRÁFICA -->
   <script>
     function formatCurrency(val) {
       if (!val || val === 0) return '$0';
@@ -1098,123 +1098,235 @@
     let generalDonutChartInstance = null;
     let cellMonthlyChartInstance = null;
 
-    // ==================== GENERADOR AUTOMÁTICO DE PRESENTACIÓN ONE PAGE ====================
+    // ==================== GENERADOR DE BARRAS HTML PARA LÁMINA ONE PAGE ====================
+    function generarMiniGraficaHTML(etiquetas, datos, esMoneda, colorHex, titulo, alturaMax) {
+      const maxVal = Math.max(...datos, 1);
+      let barrasHtml = '';
+      
+      datos.forEach((val, i) => {
+        const pct = Math.max(8, Math.round((val / maxVal) * 100));
+        const valFormateado = esMoneda ? formatCurrency(val) : `${val} CN`;
+        const mes = etiquetas[i];
+        const esPico = i === 8;
+        
+        barrasHtml += `
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:${alturaMax}px;">
+            <span style="font-size:7px; font-weight:bold; color:${esPico ? '#D97706' : '#64748B'}; margin-bottom:2px;">${valFormateado}</span>
+            <div style="width:70%; height:${pct}%; background:${esPico ? '#D97706' : colorHex}; border-radius:3px 3px 0 0;"></div>
+            <span style="font-size:8px; font-weight:${esPico ? 'bold' : 'normal'}; color:#334155; margin-top:3px;">${mes}</span>
+          </div>
+        `;
+      });
+
+      return `
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-size:10px; text-transform:uppercase; color:#0F172A;">${titulo}</strong>
+            <span style="font-size:9px; font-weight:bold; color:#D97706;">Ene - Sep 2026</span>
+          </div>
+          <div style="display:flex; gap:6px; align-items:flex-end; border-bottom:1px solid #cbd5e1; padding-bottom:2px;">
+            ${barrasHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    // ==================== DESCARGA / VISUALIZACIÓN DE PRESENTACIÓN ONE PAGE ====================
     function descargarOnePagePresentacion(tipo) {
+      const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'];
       let tituloDoc = "";
       let htmlContenido = "";
 
       if (tipo === 'celula') {
         tituloDoc = "One Page - Célula 3 CDMX 1 Banco BASE";
+        
+        // Gráfica 1: Generciómn Total Célula
+        const grafGeneracion = generarMiniGraficaHTML(
+          meses, 
+          CELL_HISTORY_2026.values, 
+          true, 
+          '#F59E0B', 
+          '1. Gráfica de Generciómn Total Mensual (Célula 3)', 
+          65
+        );
+
+        // Gráfica 2: Clientes Nuevos Célula
+        const grafClientes = generarMiniGraficaHTML(
+          meses, 
+          CELL_HISTORY_2026.clientBehavior, 
+          false, 
+          '#1E293B', 
+          '2. Gráfica de Clientes Nuevos Mensuales (CN Célula 3)', 
+          55
+        );
+
         htmlContenido = `
-          <div style="background:#0F172A; color:#ffffff; padding:18px 24px; border-radius:12px; margin-bottom:16px;">
-            <span style="color:#F59E0B; font-size:11px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">BANCO BASE • CÉLULA 3 CDMX 1 (41930)</span>
-            <h1 style="font-size:22px; margin:4px 0 2px 0; font-weight:900;">Resumen Ejecutivo de la Célula (One Page)</h1>
-            <p style="font-size:12px; color:#cbd5e1; margin:0;">Líder: Carlos Alberto Domínguez Chavez | Cierre: Septiembre 2026</p>
-          </div>
-
-          <div style="display:flex; gap:12px; margin-bottom:16px;">
-            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:10px; text-align:center;">
-              <span style="font-size:10px; color:#64748b; font-weight:bold; text-transform:uppercase;">Generciómn Total YTD</span>
-              <strong style="font-size:18px; color:#D97706; display:block; margin-top:2px;">10.38MDP</strong>
-            </div>
-            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:10px; text-align:center;">
-              <span style="font-size:10px; color:#64748b; font-weight:bold; text-transform:uppercase;">Récord Septiembre</span>
-              <strong style="font-size:18px; color:#0F172A; display:block; margin-top:2px;">2.14MDP</strong>
-            </div>
-            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:10px; text-align:center;">
-              <span style="font-size:10px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Activos</span>
-              <strong style="font-size:18px; color:#0F172A; display:block; margin-top:2px;">95</strong>
-            </div>
-            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:10px; text-align:center;">
-              <span style="font-size:10px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Nuevos</span>
-              <strong style="font-size:18px; color:#059669; display:block; margin-top:2px;">60 CN</strong>
+          <div style="background:#0F172A; color:#ffffff; padding:14px 20px; border-radius:12px; margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span style="color:#F59E0B; font-size:10px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">BANCO BASE • CÉLULA 3 CDMX 1 (41930)</span>
+                <h1 style="font-size:18px; margin:2px 0; font-weight:900;">Resumen Ejecutivo de la Célula (One Page)</h1>
+                <p style="font-size:11px; color:#cbd5e1; margin:0;">Líder: Carlos Alberto Domínguez Chavez | Cierre Oficial: Septiembre 2026</p>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-size:9px; color:#94A3B8; text-transform:uppercase; font-weight:bold;">Total Acumulado</span>
+                <strong style="font-size:18px; color:#F59E0B; display:block;">10.38MDP</strong>
+              </div>
             </div>
           </div>
 
-          <table style="width:100%; border-collapse:collapse; font-size:11px; margin-bottom:16px; font-family:monospace;">
+          <div style="display:flex; gap:10px; margin-bottom:12px;">
+            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
+              <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Generciómn Total YTD</span>
+              <strong style="font-size:15px; color:#D97706; display:block;">10.38MDP</strong>
+            </div>
+            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
+              <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Récord Septiembre</span>
+              <strong style="font-size:15px; color:#0F172A; display:block;">2.14MDP</strong>
+            </div>
+            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
+              <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Activos</span>
+              <strong style="font-size:15px; color:#0F172A; display:block;">95</strong>
+            </div>
+            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
+              <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Nuevos</span>
+              <strong style="font-size:15px; color:#059669; display:block;">60 CN</strong>
+            </div>
+          </div>
+
+          <!-- DOS GRÁFICAS INDEPENDIENTES DE CÉLULA -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>${grafGeneracion}</div>
+            <div>${grafClientes}</div>
+          </div>
+
+          <table style="width:100%; border-collapse:collapse; font-size:10px; margin-bottom:12px; font-family:monospace;">
             <thead>
               <tr style="background:#0F172A; color:#ffffff; text-align:left;">
-                <th style="padding:8px;"># Asesor</th>
-                <th style="padding:8px; text-align:right;">Total YTD</th>
-                <th style="padding:8px; text-align:right;">% Célula</th>
-                <th style="padding:8px; text-align:right;">Prom./Mes</th>
-                <th style="padding:8px; text-align:center;">Activos</th>
-                <th style="padding:8px; text-align:center; color:#F59E0B;">CN</th>
+                <th style="padding:6px 8px;"># Asesor</th>
+                <th style="padding:6px 8px; text-align:right;">Total YTD</th>
+                <th style="padding:6px 8px; text-align:right;">% Célula</th>
+                <th style="padding:6px 8px; text-align:right;">Prom./Mes</th>
+                <th style="padding:6px 8px; text-align:center;">Activos</th>
+                <th style="padding:6px 8px; text-align:center; color:#F59E0B;">CN</th>
               </tr>
             </thead>
             <tbody>
               ${TEAM_DATA.map((a, i) => `
                 <tr style="border-bottom:1px solid #e2e8f0; background:${i % 2 === 0 ? '#ffffff' : '#f8fafc'};">
-                  <td style="padding:6px 8px; font-family:sans-serif; font-weight:bold;">#${a.rank}${a.shortName}</td>
-                  <td style="padding:6px 8px; text-align:right; font-weight:bold; color:#D97706;">${formatCurrency(a.total2026)}</td>
-                  <td style="padding:6px 8px; text-align:right;">${a.share2026Emp}</td>
-                  <td style="padding:6px 8px; text-align:right;">${formatCurrency(a.avgMonthly2026)}</td>
-                  <td style="padding:6px 8px; text-align:center; font-weight:bold;">${a.activeClients}</td>
-                  <td style="padding:6px 8px; text-align:center; font-weight:bold; color:#D97706;">${a.totalNewClients}</td>
+                  <td style="padding:5px 8px; font-family:sans-serif; font-weight:bold;">#${a.rank}${a.shortName}</td>
+                  <td style="padding:5px 8px; text-align:right; font-weight:bold; color:#D97706;">${formatCurrency(a.total2026)}</td>
+                  <td style="padding:5px 8px; text-align:right;">${a.share2026Emp}</td>
+                  <td style="padding:5px 8px; text-align:right;">${formatCurrency(a.avgMonthly2026)}</td>
+                  <td style="padding:5px 8px; text-align:center; font-weight:bold;">${a.activeClients}</td>
+                  <td style="padding:5px 8px; text-align:center; font-weight:bold; color:#D97706;">${a.totalNewClients}</td>
                 </tr>
               `).join('')}
             </tbody>
           </table>
 
-          <div style="background:#FEF3C7; border:1px solid #F59E0B; padding:10px 14px; border-radius:8px; font-size:11px; color:#0F172A;">
-            <strong>Compromiso aspiracional Q4:</strong> Superar 14.5MDP YTD al cierre de diciembre | Piso mínimo de 1.8MDP mensuales | Meta conjunta de 15 CN al mes.
+          <div style="background:#FEF3C7; border:1px solid #F59E0B; padding:8px 12px; border-radius:8px; font-size:10px; color:#0F172A;">
+            <strong>Compromiso aspiracional Q4:</strong> Superar 14.5MDP YTD al cierre de diciembre | Piso mensual de 1.8MDP | Meta conjunta de 15 CN al mes.
           </div>
         `;
       } else {
         const adv = TEAM_DATA[currentAdvisorIndex];
         tituloDoc = `One Page - ${adv.shortName} Banco BASE`;
+
+        const datosGeneracionAdv = [
+          adv.history2026.ene, adv.history2026.feb, adv.history2026.mar,
+          adv.history2026.abr, adv.history2026.may, adv.history2026.jun,
+          adv.history2026.jul, adv.history2026.ago, adv.history2026.sep
+        ];
+        const datosClientesAdv = adv.newClients2026;
+
+        // Gráfica 1: Generciómn Total Asesor
+        const grafGeneracionAdv = generarMiniGraficaHTML(
+          meses, 
+          datosGeneracionAdv, 
+          true, 
+          '#F59E0B', 
+          `1. Gráfica de Generciómn Total (${adv.shortName})`, 
+          55
+        );
+
+        // Gráfica 2: Clientes Nuevos Asesor
+        const grafClientesAdv = generarMiniGraficaHTML(
+          meses, 
+          datosClientesAdv, 
+          false, 
+          '#1E293B', 
+          `2. Gráfica de Clientes Nuevos (${adv.shortName})`, 
+          45
+        );
+
         htmlContenido = `
-          <div style="background:#0F172A; color:#ffffff; padding:18px 24px; border-radius:12px; margin-bottom:16px;">
-            <span style="color:#F59E0B; font-size:11px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">BANCO BASE • CÉLULA 3 CDMX 1 • ASESOR #${adv.rank}</span>
-            <h1 style="font-size:22px; margin:4px 0 2px 0; font-weight:900;">${adv.name}</h1>
-            <p style="font-size:12px; color:#cbd5e1; margin:0;">ID: ${adv.id} | Líder: Carlos Alberto Domínguez Chavez | ${adv.joinInfo}</p>
-          </div>
-
-          <div style="display:flex; gap:12px; margin-bottom:16px;">
-            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:10px; text-align:center;">
-              <span style="font-size:10px; color:#64748b; font-weight:bold; text-transform:uppercase;">Generciómn Total YTD</span>
-              <strong style="font-size:18px; color:#D97706; display:block; margin-top:2px;">${formatCurrency(adv.total2026)}</strong>
-              <small style="font-size:10px; color:#64748b;">${adv.share2026Emp} de Célula</small>
-            </div>
-            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:10px; text-align:center;">
-              <span style="font-size:10px; color:#64748b; font-weight:bold; text-transform:uppercase;">Promedio Mensual</span>
-              <strong style="font-size:18px; color:#0F172A; display:block; margin-top:2px;">${formatCurrency(adv.avgMonthly2026)}</strong>
-              <small style="font-size:10px; color:#64748b;">Sep: ${formatCurrency(adv.history2026.sep)}</small>
-            </div>
-            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:10px; text-align:center;">
-              <span style="font-size:10px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Activos</span>
-              <strong style="font-size:18px; color:#0F172A; display:block; margin-top:2px;">${adv.activeClients}</strong>
-              <small style="font-size:10px; color:#64748b;">Cartera Vigente</small>
-            </div>
-            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:10px; text-align:center;">
-              <span style="font-size:10px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Nuevos</span>
-              <strong style="font-size:18px; color:#059669; display:block; margin-top:2px;">${adv.totalNewClients} CN</strong>
-              <small style="font-size:10px; color:#64748b;">${((adv.totalNewClients/24)*100).toFixed(1)}% meta</small>
+          <div style="background:#0F172A; color:#ffffff; padding:14px 20px; border-radius:12px; margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span style="color:#F59E0B; font-size:10px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">BANCO BASE • CÉLULA 3 CDMX 1 • ASESOR #${adv.rank}</span>
+                <h1 style="font-size:18px; margin:2px 0; font-weight:900;">${adv.name}</h1>
+                <p style="font-size:11px; color:#cbd5e1; margin:0;">ID: ${adv.id} | Líder: Carlos Alberto Domínguez Chavez | ${adv.joinInfo}</p>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-size:9px; color:#94A3B8; text-transform:uppercase; font-weight:bold;">Total 2026</span>
+                <strong style="font-size:18px; color:#F59E0B; display:block;">${formatCurrency(adv.total2026)}</strong>
+              </div>
             </div>
           </div>
 
-          <div style="background:#fffbeb; border:1px solid #fde68a; padding:12px 16px; border-radius:10px; margin-bottom:10px; font-size:12px;">
-            <strong style="color:#b45309; display:block; margin-bottom:4px;">⭐ Fortalezas Comerciales:</strong>
-            <p style="margin:0; color:#334155; line-height:1.5;">${adv.defaultQual.strengths}</p>
+          <div style="display:flex; gap:10px; margin-bottom:12px;">
+            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
+              <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Total YTD</span>
+              <strong style="font-size:15px; color:#D97706; display:block;">${formatCurrency(adv.total2026)}</strong>
+              <small style="font-size:9px; color:#64748b;">${adv.share2026Emp} Cuota</small>
+            </div>
+            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
+              <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Promedio Mes</span>
+              <strong style="font-size:15px; color:#0F172A; display:block;">${formatCurrency(adv.avgMonthly2026)}</strong>
+              <small style="font-size:9px; color:#64748b;">Sep: ${formatCurrency(adv.history2026.sep)}</small>
+            </div>
+            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
+              <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Activos</span>
+              <strong style="font-size:15px; color:#0F172A; display:block;">${adv.activeClients}</strong>
+              <small style="font-size:9px; color:#64748b;">Cartera</small>
+            </div>
+            <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
+              <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Nuevos</span>
+              <strong style="font-size:15px; color:#059669; display:block;">${adv.totalNewClients} CN</strong>
+              <small style="font-size:9px; color:#64748b;">${((adv.totalNewClients/24)*100).toFixed(1)}% meta</small>
+            </div>
           </div>
 
-          <div style="background:#f0f9ff; border:1px solid #bae6fd; padding:12px 16px; border-radius:10px; margin-bottom:10px; font-size:12px;">
-            <strong style="color:#0369a1; display:block; margin-bottom:4px;">🎯 Áreas de Oportunidad y Mejora:</strong>
-            <p style="margin:0; color:#334155; line-height:1.5; white-space:pre-line;">${adv.defaultQual.opportunities}</p>
+          <!-- DOS GRÁFICAS INDEPENDIENTES DEL ASESOR -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>${grafGeneracionAdv}</div>
+            <div>${grafClientesAdv}</div>
           </div>
 
-          <div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:12px 16px; border-radius:10px; margin-bottom:14px; font-size:12px;">
-            <strong style="color:#047857; display:block; margin-bottom:4px;">🚀 Plan de Acción & Metas Q4:</strong>
-            <p style="margin:0; color:#334155; line-height:1.5; white-space:pre-line;">${adv.defaultQual.plan}</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
+            <div style="background:#fffbeb; border:1px solid #fde68a; padding:8px 10px; border-radius:8px; font-size:10px;">
+              <strong style="color:#b45309; display:block; margin-bottom:2px;">⭐ Fortalezas:</strong>
+              <p style="margin:0; color:#334155; line-height:1.4;">${adv.defaultQual.strengths}</p>
+            </div>
+
+            <div style="background:#f0f9ff; border:1px solid #bae6fd; padding:8px 10px; border-radius:8px; font-size:10px;">
+              <strong style="color:#0369a1; display:block; margin-bottom:2px;">🎯 Oportunidades:</strong>
+              <p style="margin:0; color:#334155; line-height:1.4; white-space:pre-line;">${adv.defaultQual.opportunities}</p>
+            </div>
+
+            <div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:8px 10px; border-radius:8px; font-size:10px;">
+              <strong style="color:#047857; display:block; margin-bottom:2px;">🚀 Meta Q4:</strong>
+              <p style="margin:0; color:#334155; line-height:1.4; white-space:pre-line;">${adv.defaultQual.plan}</p>
+            </div>
           </div>
 
-          <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:8px 12px; border-radius:8px; font-size:11px; color:#64748b; text-align:center;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:6px; font-size:9px; color:#64748b; text-align:center;">
             <strong>Compromiso aspiracional:</strong> ${adv.pacingRequirement}
           </div>
         `;
       }
 
-      // Generar descarga para Presentaciones de Google / Impresión de Lámina
       const ventana = window.open('', '_blank');
       ventana.document.write(`
         <!DOCTYPE html>
@@ -1222,13 +1334,13 @@
         <head>
           <title>${tituloDoc}</title>
           <style>
-            @page { size: landscape; margin: 10mm; }
-            body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; padding: 20px; background:#ffffff; color:#0f172a; }
+            @page { size: landscape; margin: 8mm; }
+            body { font-family: 'Inter', -apple-system, sans-serif; margin: 0; padding: 14px; background:#ffffff; color:#0f172a; }
             @media print { body { padding: 0; } }
           </style>
         </head>
         <body>
-          <div style="max-width: 900px; margin: 0 auto;">
+          <div style="max-width: 960px; margin: 0 auto;">
             ${htmlContenido}
           </div>
           <script>
