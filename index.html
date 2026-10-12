@@ -856,7 +856,7 @@
     </nav>
   </div>
 
-  <!-- JAVASCRIPT CON DATA, LOGIN Y DESCARGAS DE ONE PAGE CON DOBLE GRÁFICA -->
+  <!-- JAVASCRIPT CON DATA, LOGIN Y DESCARGAS -->
   <script>
     function formatCurrency(val) {
       if (!val || val === 0) return '$0';
@@ -1109,10 +1109,14 @@
         const mes = etiquetas[i];
         const esPico = i === 8;
         
+        // Color dinámico para la barra de clientes si es cero
+        const barraColor = (!esMoneda && val === 0) ? '#DC2626' : (esPico ? '#D97706' : colorHex);
+        const textoColor = (!esMoneda && val === 0) ? '#DC2626' : (esPico ? '#D97706' : '#64748B');
+
         barrasHtml += `
           <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:${alturaMax}px;">
-            <span style="font-size:7px; font-weight:bold; color:${esPico ? '#D97706' : '#64748B'}; margin-bottom:2px;">${valFormateado}</span>
-            <div style="width:70%; height:${pct}%; background:${esPico ? '#D97706' : colorHex}; border-radius:3px 3px 0 0;"></div>
+            <span style="font-size:7px; font-weight:bold; color:${textoColor}; margin-bottom:2px;">${valFormateado}</span>
+            <div style="width:70%; height:${pct}%; background:${barraColor}; border-radius:3px 3px 0 0;"></div>
             <span style="font-size:8px; font-weight:${esPico ? 'bold' : 'normal'}; color:#334155; margin-top:3px;">${mes}</span>
           </div>
         `;
@@ -1260,6 +1264,20 @@
           45
         );
 
+        // Filas tricolor semáforo de clientes nuevos para el descargable del asesor
+        const celdasSemaforoAdv = adv.newClients2026.map(val => {
+          let bg = '#10B981';
+          let txt = '#ffffff';
+          if (val === 0) {
+            bg = '#DC2626'; // Rojo si es cero
+            txt = '#ffffff';
+          } else if (val === 1) {
+            bg = '#F59E0B'; // Amarillo si es 1
+            txt = '#0F172A';
+          }
+          return `<td style="padding:6px; text-align:center; font-weight:bold; background:${bg}; color:${txt}; border:1px solid #cbd5e1;">${val}</td>`;
+        }).join('');
+
         htmlContenido = `
           <div style="background:#0F172A; color:#ffffff; padding:14px 20px; border-radius:12px; margin-bottom:12px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1302,6 +1320,36 @@
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
             <div>${grafGeneracionAdv}</div>
             <div>${grafClientesAdv}</div>
+          </div>
+
+          <!-- TABLA SEMÁFORO MENSUAL DE CLIENTES NUEVOS DEL ASESOR -->
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; margin-bottom:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="font-size:10px; text-transform:uppercase; color:#0F172A;">Comportamiento Mensual Clientes Nuevos (CN)</strong>
+              <span style="font-size:9px; font-weight:bold; color:#059669;">Rojo = 0 | Amarillo = 1 | Verde = 2 o más</span>
+            </div>
+            <table style="width:100%; border-collapse:collapse; font-size:10px; font-family:monospace;">
+              <thead>
+                <tr style="background:#f1f5f9; color:#475569;">
+                  <th style="padding:4px; border:1px solid #cbd5e1;">Ene</th>
+                  <th style="padding:4px; border:1px solid #cbd5e1;">Feb</th>
+                  <th style="padding:4px; border:1px solid #cbd5e1;">Mar</th>
+                  <th style="padding:4px; border:1px solid #cbd5e1;">Abr</th>
+                  <th style="padding:4px; border:1px solid #cbd5e1;">May</th>
+                  <th style="padding:4px; border:1px solid #cbd5e1;">Jun</th>
+                  <th style="padding:4px; border:1px solid #cbd5e1;">Jul</th>
+                  <th style="padding:4px; border:1px solid #cbd5e1;">Ago</th>
+                  <th style="padding:4px; border:1px solid #cbd5e1;">Sep</th>
+                  <th style="padding:4px; background:#FEF3C7; color:#92400E; border:1px solid #cbd5e1;">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  ${celdasSemaforoAdv}
+                  <td style="padding:6px; text-align:center; font-weight:900; background:#FEF3C7; color:#92400E; border:1px solid #cbd5e1;">${adv.totalNewClients}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
