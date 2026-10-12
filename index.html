@@ -11,7 +11,7 @@
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -43,624 +43,750 @@
     }
     .page-section {
       display: none;
-      animation: fadeIn 0.2s ease-in-out;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease-out, transform 0.25s ease-out;
     }
     .page-section.active {
       display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
+    .interactive-card {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .interactive-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased min-h-screen pb-24 sm:pb-12">
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen">
 
-  <!-- BARRA SUPERIOR FIJA CON LOGO OFICIAL, LÍDER Y MENÚ -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-    <div class="max-w-5xl mx-auto px-4 py-2 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <button onclick="toggleSidebar(true)" class="p-2 -ml-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none" aria-label="Abrir Menú">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
+  <!-- ==================== 7. PORTAL DE ACCESO PRIVADO (LOGIN GATE) ==================== -->
+  <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-sm overflow-hidden p-6 sm:p-7 transform transition-all duration-300 scale-100">
+      <div class="text-center mb-6">
         <img 
           src="https://www.bancobase.com/assets/img/logo/BANCOBASE_full.svg" 
           alt="Banco BASE" 
-          class="h-7 sm:h-8 w-auto object-contain"
+          class="h-8 w-auto mx-auto object-contain mb-3"
         />
-      </div>
-      <div class="text-right">
-        <div class="flex items-center justify-end gap-1.5">
-          <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400">Líder:</span>
-          <span class="text-[10px] sm:text-xs font-black text-slate-800">Carlos Alberto Domínguez Chavez</span>
-        </div>
-        <span class="text-[10px] sm:text-[11px] font-extrabold text-amber-600 block leading-tight">Célula 3 CDMX 1 (41930)</span>
-      </div>
-    </div>
-
-    <!-- PESTAÑAS PARA ESCRITORIO / TABLET -->
-    <nav class="hidden sm:flex max-w-5xl mx-auto px-4 gap-6 text-xs text-slate-500 font-medium border-t border-slate-100">
-      <button onclick="navigate('dashboard')" id="tab-dashboard" class="py-2.5 nav-tab-active">Resumen General</button>
-      <button onclick="navigate('cell-analytics')" id="tab-cell-analytics" class="py-2.5 hover:text-slate-900 transition">Análisis de Célula</button>
-      <button onclick="navigate('advisor')" id="tab-advisor" class="py-2.5 hover:text-slate-900 transition">Perfil Asesor</button>
-      <button onclick="navigate('charts')" id="tab-charts" class="py-2.5 hover:text-slate-900 transition">Gráficas Asesor</button>
-      <button onclick="navigate('qualitative')" id="tab-qualitative" class="py-2.5 hover:text-slate-900 transition">Retroalimentación</button>
-    </nav>
-  </header>
-
-  <!-- MENÚ LATERAL DESPLEGABLE (DRAWER) -->
-  <div id="drawerBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden transition-opacity"></div>
-  <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 shadow-2xl transform -translate-x-full transition-transform duration-200 flex flex-col justify-between">
-    <div>
-      <div class="p-4 border-b border-slate-100 flex items-center justify-between">
-        <img src="https://www.bancobase.com/assets/img/logo/BANCOBASE_full.svg" alt="Banco BASE" class="h-6 w-auto" />
-        <button onclick="toggleSidebar(false)" class="p-1 rounded-lg text-slate-400 hover:text-slate-700">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Tarjeta de Liderazgo en el Menú -->
-      <div class="mx-3 mt-3 p-3 bg-gradient-to-r from-slate-900 to-amber-950 text-white rounded-xl shadow-xs">
-        <span class="text-[9px] uppercase tracking-widest text-amber-400 font-bold block">Dirección de Célula</span>
-        <h4 class="text-xs font-extrabold text-white mt-0.5">Carlos Alberto Domínguez Chavez</h4>
-        <span class="text-[10px] text-slate-300 block">Líder • Célula 3 CDMX 1 (41930)</span>
-      </div>
-
-      <div class="p-3">
-        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-2">Vistas Principales</span>
-        <div class="space-y-1">
-          <button onclick="navigate('dashboard'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
-            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-            Resumen General de Célula
-          </button>
-          <button onclick="navigate('cell-analytics'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
-            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-            Análisis y Clientes de Célula
-          </button>
-          <button onclick="navigate('advisor'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
-            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-            Ficha Individual de Asesor
-          </button>
-          <button onclick="navigate('charts'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
-            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-            Gráficas y Tendencia Asesor
-          </button>
-          <button onclick="navigate('qualitative'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
-            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-            Evaluación Cualitativa (Notas)
-          </button>
-        </div>
-
-        <div class="mt-4 pt-3 border-t border-slate-100">
-          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-2">Equipo Comercial (7 Asesores)</span>
-          <div id="drawerAdvisorList" class="space-y-0.5 max-h-56 overflow-y-auto pr-1 text-xs"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer Drawer -->
-    <div class="p-3 bg-slate-50 border-t border-slate-100 text-center">
-      <p class="text-[10px] font-bold text-slate-700">Líder: Carlos Alberto Domínguez Chavez</p>
-      <p class="text-[10px] text-slate-400">Célula 3 CDMX 1 (41930) • Banco BASE</p>
-      <a href="https://five-friends-web.vercel.app/" target="_blank" rel="noopener noreferrer" class="mt-1 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 hover:text-amber-600 transition">
-        <span>Powered by</span>
-        <span class="font-extrabold text-slate-800 hover:underline">Five Friends</span>
-      </a>
-    </div>
-  </aside>
-
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="max-w-5xl mx-auto px-3 sm:px-4 py-4">
-
-    <!-- SELECTOR DE ASESOR SIEMPRE VISIBLE EN VISTAS DE ASESOR -->
-    <div id="advisorSelectorBanner" class="bg-white rounded-xl shadow-xs border border-slate-200 p-2.5 mb-4 flex items-center justify-between gap-2">
-      <div class="flex items-center gap-2 overflow-hidden">
-        <div class="w-8 h-8 rounded-lg bg-amber-500 text-white font-black flex items-center justify-center text-xs shrink-0" id="currentAdvisorRankBadge">#1</div>
-        <div class="truncate">
-          <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Asesor Activo</span>
-          <select id="mainAdvisorSelect" onchange="selectAdvisor(parseInt(this.value))" class="text-xs sm:text-sm font-bold text-slate-800 bg-transparent outline-none cursor-pointer"></select>
-        </div>
-      </div>
-      <button onclick="shareWhatsApp()" class="shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1 shadow-xs transition">
-        <span>Compartir</span>
-        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-      </button>
-    </div>
-
-    <!-- ==================== PÁGINA 1: DASHBOARD RESUMEN GENERAL ==================== -->
-    <section id="page-dashboard" class="page-section active space-y-4">
-      
-      <!-- Banner Destacado de Liderazgo -->
-      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-4 text-white shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-slate-700/50">
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-500 text-slate-900">Dirección Comercial</span>
-            <span class="text-xs text-amber-300 font-semibold">Célula 3 CDMX 1 (41930)</span>
-          </div>
-          <h2 class="text-base sm:text-lg font-black text-white mt-1">Líder: Carlos Alberto Domínguez Chavez</h2>
-          <p class="text-xs text-slate-300">Gestión, coaching comercial y estrategia integral del equipo de 7 asesores activos.</p>
-        </div>
-        <div class="text-left sm:text-right shrink-0 bg-white/10 sm:bg-transparent p-2 sm:p-0 rounded-xl">
-          <span class="text-[10px] text-amber-300 font-bold uppercase block">Generación Acumulada</span>
-          <span class="text-base sm:text-lg font-black text-amber-400">$10,371,920.39 YTD</span>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Utilidad Célula</span>
-          <span class="text-sm sm:text-base font-extrabold text-amber-600 block mt-0.5">$10,371,920.39</span>
-          <span class="text-[10px] text-emerald-600 font-semibold">2026 Ene-Sep</span>
-        </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Cierre Septiembre</span>
-          <span class="text-sm sm:text-base font-extrabold text-emerald-600 block mt-0.5">$2,139,201.75</span>
-          <span class="text-[10px] text-slate-400">Récord anual</span>
-        </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Clientes Activos</span>
-          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">95 Clientes</span>
-          <span class="text-[10px] text-amber-600 font-semibold">Reporte oficial Salesforce</span>
-        </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] font-bold text-slate-400 uppercase">Clientes Nuevos 2026</span>
-          <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">60 CN</span>
-          <span class="text-[10px] text-slate-400">Generación cambiaria</span>
-        </div>
-      </div>
-
-      <!-- Acceso Directo Destacado a la Evolución de Célula -->
-      <div onclick="navigate('cell-analytics')" class="bg-white rounded-xl p-4 border border-amber-200 shadow-xs cursor-pointer flex items-center justify-between hover:bg-amber-50/50 transition">
-        <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600">Visualización Estratégica</span>
-          <h3 class="text-sm sm:text-base font-bold text-slate-800">Ver Gráfica, Generación y Compromiso de Clientes Nuevos</h3>
-          <p class="text-xs text-slate-500">Supervisión del líder Carlos Domínguez: $2.13M en sep, 60 CN a septiembre y semáforo mensual.</p>
-        </div>
-        <span class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shrink-0 transition">
-          Ver Análisis ➔
+        <h2 class="text-base font-extrabold text-slate-900 tracking-tight">Portal Confidencial</h2>
+        <span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 inline-block mt-1">
+          Célula 3 CDMX 1 (41930)
         </span>
       </div>
 
-      <!-- Gráfica de distribución de la célula -->
-      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-        <div class="flex items-center justify-between mb-2">
-          <h3 class="text-xs font-bold uppercase text-slate-700">Distribución de Utilidad Célula 3 CDMX 1 (2026 YTD)</h3>
-          <span class="text-[10px] text-slate-400">Toca para abrir asesor</span>
+      <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label for="loginUser" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+            Usuario
+          </label>
+          <input 
+            type="email" 
+            id="loginUser" 
+            required 
+            class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
+          />
         </div>
-        <div class="h-52 relative flex items-center justify-center">
-          <canvas id="generalDonutChart"></canvas>
+
+        <div>
+          <label for="loginPass" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+            Contraseña
+          </label>
+          <input 
+            type="password" 
+            id="loginPass" 
+            required 
+            class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
+          />
+        </div>
+
+        <div id="loginError" class="text-xs font-bold text-rose-600 hidden text-center pt-1">
+          Credenciales incorrectas. Verifique usuario o contraseña.
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl shadow-md transition duration-150 mt-2"
+        >
+          Iniciar Sesión
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+        <p class="text-[10px] text-slate-400">Información confidencial para uso exclusivo del líder y dirección.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== APLICACIÓN PRINCIPAL (OCULTA HASTA AUTENTICARSE) ==================== -->
+  <div id="mainApp" class="hidden">
+    
+    <!-- BARRA SUPERIOR FIJA CON LOGO OFICIAL, LÍDER Y MENÚ -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+      <div class="max-w-5xl mx-auto px-4 py-2 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <button onclick="toggleSidebar(true)" class="p-2 -ml-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none transition" aria-label="Abrir Menú">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <img 
+            src="https://www.bancobase.com/assets/img/logo/BANCOBASE_full.svg" 
+            alt="Banco BASE" 
+            class="h-7 sm:h-8 w-auto object-contain"
+          />
+        </div>
+        <div class="text-right">
+          <div class="flex items-center justify-end gap-1.5">
+            <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400">Líder:</span>
+            <span class="text-[10px] sm:text-xs font-black text-slate-800">Carlos Alberto Domínguez Chavez</span>
+          </div>
+          <span class="text-[10px] sm:text-[11px] font-extrabold text-amber-600 block leading-tight">Célula 3 CDMX 1 (41930)</span>
         </div>
       </div>
 
-      <!-- Tabla Ranking -->
-      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-        <div class="flex items-center justify-between mb-2">
-          <h3 class="text-xs font-bold uppercase text-slate-700">Ranking Equipo Comercial Célula 3 CDMX 1</h3>
-          <span class="text-[10px] font-bold text-slate-500">Líder: Carlos Alberto Domínguez Chavez</span>
+      <!-- PESTAÑAS PARA ESCRITORIO / TABLET -->
+      <nav class="hidden sm:flex max-w-5xl mx-auto px-4 gap-6 text-xs text-slate-500 font-medium border-t border-slate-100">
+        <button onclick="navigate('dashboard')" id="tab-dashboard" class="py-2.5 nav-tab-active transition">Resumen General</button>
+        <button onclick="navigate('cell-analytics')" id="tab-cell-analytics" class="py-2.5 hover:text-slate-900 transition">Análisis de Célula</button>
+        <button onclick="navigate('advisor')" id="tab-advisor" class="py-2.5 hover:text-slate-900 transition">Perfil Asesor</button>
+        <button onclick="navigate('charts')" id="tab-charts" class="py-2.5 hover:text-slate-900 transition">Gráficas Asesor</button>
+        <button onclick="navigate('qualitative')" id="tab-qualitative" class="py-2.5 hover:text-slate-900 transition">Retroalimentación</button>
+      </nav>
+    </header>
+
+    <!-- MENÚ LATERAL DESPLEGABLE (DRAWER) -->
+    <div id="drawerBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden transition-opacity duration-200"></div>
+    <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 shadow-2xl transform -translate-x-full transition-transform duration-250 flex flex-col justify-between">
+      <div>
+        <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+          <img src="https://www.bancobase.com/assets/img/logo/BANCOBASE_full.svg" alt="Banco BASE" class="h-6 w-auto" />
+          <button onclick="toggleSidebar(false)" class="p-1 rounded-lg text-slate-400 hover:text-slate-700 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead class="bg-slate-50 text-slate-500 font-bold uppercase text-[10px]">
+
+        <!-- Tarjeta de Liderazgo en el Menú -->
+        <div class="mx-3 mt-3 p-3 bg-gradient-to-r from-slate-900 to-amber-950 text-white rounded-xl shadow-xs">
+          <span class="text-[9px] uppercase tracking-widest text-amber-400 font-bold block">Dirección de Célula</span>
+          <h4 class="text-xs font-extrabold text-white mt-0.5">Carlos Alberto Domínguez Chavez</h4>
+          <span class="text-[10px] text-slate-300 block">Líder • Célula 3 CDMX 1 (41930)</span>
+        </div>
+
+        <div class="p-3">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-2">Vistas Principales</span>
+          <div class="space-y-1">
+            <button onclick="navigate('dashboard'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+              Resumen General de Célula
+            </button>
+            <button onclick="navigate('cell-analytics'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+              Análisis y Clientes de Célula
+            </button>
+            <button onclick="navigate('advisor'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              Ficha Individual de Asesor
+            </button>
+            <button onclick="navigate('charts'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+              Gráficas y Tendencia Asesor
+            </button>
+            <button onclick="navigate('qualitative'); toggleSidebar(false)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition text-left">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+              Evaluación Cualitativa (Notas)
+            </button>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 block mb-2">Equipo Comercial (7 Asesores)</span>
+            <div id="drawerAdvisorList" class="space-y-0.5 max-h-56 overflow-y-auto pr-1 text-xs"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Drawer -->
+      <div class="p-3 bg-slate-50 border-t border-slate-100 text-center space-y-2">
+        <button onclick="handleLogout()" class="w-full py-1.5 px-3 rounded-lg text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition flex items-center justify-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          Cerrar Sesión
+        </button>
+        <div>
+          <p class="text-[10px] font-bold text-slate-700">Líder: Carlos Alberto Domínguez Chavez</p>
+          <p class="text-[10px] text-slate-400">Célula 3 CDMX 1 (41930) • Banco BASE</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-5xl mx-auto px-3 sm:px-4 py-4 pb-24 sm:pb-12">
+
+      <!-- SELECTOR DE ASESOR SIEMPRE VISIBLE EN VISTAS DE ASESOR -->
+      <div id="advisorSelectorBanner" class="bg-white rounded-xl shadow-xs border border-slate-200 p-2.5 mb-4 flex items-center justify-between gap-2 transition duration-200">
+        <div class="flex items-center gap-2 overflow-hidden">
+          <div class="w-8 h-8 rounded-lg bg-amber-500 text-white font-black flex items-center justify-center text-xs shrink-0" id="currentAdvisorRankBadge">#1</div>
+          <div class="truncate">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Asesor Activo</span>
+            <select id="mainAdvisorSelect" onchange="selectAdvisor(parseInt(this.value))" class="text-xs sm:text-sm font-bold text-slate-800 bg-transparent outline-none cursor-pointer"></select>
+          </div>
+        </div>
+        <button onclick="shareWhatsApp()" class="shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1 shadow-xs transition duration-150 active:scale-95">
+          <span>Compartir</span>
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+        </button>
+      </div>
+
+      <!-- ==================== PÁGINA 1: DASHBOARD RESUMEN GENERAL ==================== -->
+      <section id="page-dashboard" class="page-section active space-y-4">
+        
+        <!-- Banner Destacado de Liderazgo -->
+        <div class="interactive-card bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 rounded-2xl p-4 text-white shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-slate-700/50">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-amber-500 text-slate-900">Dirección Comercial</span>
+              <span class="text-xs text-amber-300 font-semibold">Célula 3 CDMX 1 (41930)</span>
+            </div>
+            <h2 class="text-base sm:text-lg font-black text-white mt-1">Líder: Carlos Alberto Domínguez Chavez</h2>
+            <p class="text-xs text-slate-300">Gestión, coaching comercial y estrategia integral del equipo de 7 asesores activos.</p>
+          </div>
+          <div class="text-left sm:text-right shrink-0 bg-white/10 sm:bg-transparent p-2 sm:p-0 rounded-xl">
+            <span class="text-[10px] text-amber-300 font-bold uppercase block">Generciómn Total Acumulada</span>
+            <span class="text-base sm:text-lg font-black text-amber-400">10.38MDP YTD</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div class="interactive-card bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Utilidad Célula</span>
+            <span class="text-sm sm:text-base font-extrabold text-amber-600 block mt-0.5">10.38MDP</span>
+            <span class="text-[10px] text-emerald-600 font-semibold">2026 Ene-Sep</span>
+          </div>
+          <div class="interactive-card bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Cierre Septiembre</span>
+            <span class="text-sm sm:text-base font-extrabold text-emerald-600 block mt-0.5">2.14MDP</span>
+            <span class="text-[10px] text-slate-400">Récord anual</span>
+          </div>
+          <div class="interactive-card bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Clientes Activos</span>
+            <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">95 Clientes</span>
+            <span class="text-[10px] text-amber-600 font-semibold">Reporte oficial Salesforce</span>
+          </div>
+          <div class="interactive-card bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] font-bold text-slate-400 uppercase">Clientes Nuevos 2026</span>
+            <span class="text-sm sm:text-base font-extrabold text-slate-800 block mt-0.5">60 CN</span>
+            <span class="text-[10px] text-slate-400">Generaciómn Total cambiaria</span>
+          </div>
+        </div>
+
+        <!-- Acceso Directo Destacado a la Evolución de Célula -->
+        <div onclick="navigate('cell-analytics')" class="interactive-card bg-white rounded-xl p-4 border border-amber-200 shadow-xs cursor-pointer flex items-center justify-between hover:bg-amber-50/50">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600">Visualización Estratégica</span>
+            <h3 class="text-sm sm:text-base font-bold text-slate-800">Ver Gráfica, Generciómn Total y Compromiso aspiracional de Clientes</h3>
+            <p class="text-xs text-slate-500">Supervisión del líder Carlos Domínguez: 2.14MDP en sep, 60 CN a septiembre y semáforo mensual.</p>
+          </div>
+          <span class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shrink-0 transition">
+            Ver Análisis ➔
+          </span>
+        </div>
+
+        <!-- Gráfica de distribución de la célula -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold uppercase text-slate-700">Distribución de Utilidad Célula 3 CDMX 1 (2026 YTD)</h3>
+            <span class="text-[10px] text-slate-400">Toca para abrir asesor</span>
+          </div>
+          <div class="h-52 relative flex items-center justify-center">
+            <canvas id="generalDonutChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Tabla Ranking -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold uppercase text-slate-700">Ranking Equipo Comercial Célula 3 CDMX 1</h3>
+            <span class="text-[10px] font-bold text-slate-500">Líder: Carlos Alberto Domínguez Chavez</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 text-slate-500 font-bold uppercase text-[10px]">
+                <tr>
+                  <th class="p-2">#</th>
+                  <th class="p-2">Asesor</th>
+                  <th class="p-2">Ingreso</th>
+                  <th class="p-2 text-center">Clientes Activos</th>
+                  <th class="p-2 text-center">Clientes Nuevos</th>
+                  <th class="p-2 text-right">Prom. Mes 26</th>
+                  <th class="p-2 text-right">Septiembre</th>
+                  <th class="p-2 text-right">2026 YTD</th>
+                  <th class="p-2 text-right">% Célula</th>
+                  <th class="p-2 text-center">Ver</th>
+                </tr>
+              </thead>
+              <tbody id="rankingDashboardBody" class="divide-y divide-slate-100 text-[11px] font-mono"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== PÁGINA: ANÁLISIS COMPLETO DE CÉLULA ==================== -->
+      <section id="page-cell-analytics" class="page-section space-y-4">
+        
+        <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-amber-600 block">Monitoreo y Desempeño Operativo</span>
+            <h3 class="text-sm font-bold text-slate-800">Célula 3 CDMX 1 • Conducción Comercial</h3>
+          </div>
+          <div class="text-left sm:text-right">
+            <span class="text-[10px] font-semibold text-slate-400 block">Encargado de Célula:</span>
+            <span class="text-xs font-extrabold text-slate-800">Líder: Carlos Alberto Domínguez Chavez</span>
+          </div>
+        </div>
+
+        <!-- KPIs Consolidados de la Célula -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div class="interactive-card bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Top Generciómn Total</span>
+            <span class="text-sm sm:text-base font-black text-amber-600 block mt-0.5">2.14MDP</span>
+            <span class="text-[10px] font-semibold text-emerald-600">Septiembre 2026 (Récord anual)</span>
+          </div>
+          <div class="interactive-card bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Ritmo vs Agosto</span>
+            <span class="text-sm sm:text-base font-black text-emerald-600 block mt-0.5">▲ +38.4%</span>
+            <span class="text-[10px] text-slate-400">+594k de incremento</span>
+          </div>
+          <div class="interactive-card bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Clientes Nuevos a Septiembre 2026</span>
+            <span class="text-sm sm:text-base font-black text-emerald-600 block mt-0.5">60 CN</span>
+            <span class="text-[10px] text-slate-400">35.7% de meta anual (168)</span>
+          </div>
+          <div class="interactive-card bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block">Clientes Activos</span>
+            <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">95 Clientes</span>
+            <span class="text-[10px] text-slate-400">Activos en Cambios</span>
+          </div>
+        </div>
+
+        <!-- 4. Gráfica de Barritas con Doble Comportamiento: Generciómn Total (MDP) vs Clientes Nuevos (CN) -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-1">
+            <div>
+              <h3 class="text-xs font-bold uppercase text-slate-800 flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                Evolución Mensual: Generciómn Total y Clientes (2026)
+              </h3>
+              <span class="text-[10px] text-slate-400">Barras Doradas: Utilidad en MDP | Barras Azules: Comportamiento de Clientes Nuevos</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                60 Clientes Nuevos
+              </span>
+              <span class="text-[10px] font-extrabold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                Total: 10.38MDP
+              </span>
+            </div>
+          </div>
+          <div class="h-64 sm:h-72 relative">
+            <canvas id="cellMonthlyChart"></canvas>
+          </div>
+        </div>
+
+        <!-- 5. TABLA: RESULTADO POR MES DE CLIENTES NUEVOS EN CÉLULA CON COMPROMISO ASPIRACIONAL -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h3 class="text-xs font-bold uppercase text-slate-800 flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                Clientes Nuevos por Mes en Célula (2026) y Compromiso aspiracional Q4
+              </h3>
+              <span class="text-[10px] text-slate-400">Semáforo: Rojo = 0 | Amarillo = 1 | Verde = 2 o más CN</span>
+            </div>
+            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              Meta anual: 24 nuevos por asesor
+            </span>
+          </div>
+          <table class="w-full text-xs text-left border border-slate-200">
+            <thead class="bg-slate-50 text-[10px] font-bold text-slate-700 uppercase border-b border-slate-200">
               <tr>
-                <th class="p-2">#</th>
-                <th class="p-2">Asesor</th>
-                <th class="p-2">Ingreso</th>
-                <th class="p-2 text-center">Clientes Activos</th>
-                <th class="p-2 text-center">Clientes Nuevos</th>
-                <th class="p-2 text-right">Prom. Mes 26</th>
-                <th class="p-2 text-right">Septiembre</th>
-                <th class="p-2 text-right">2026 YTD</th>
-                <th class="p-2 text-right">% Célula</th>
-                <th class="p-2 text-center">Ver</th>
+                <th class="p-2 border-r border-slate-200">Asesor</th>
+                <th class="p-2 text-center border-r border-slate-200">Ene</th>
+                <th class="p-2 text-center border-r border-slate-200">Feb</th>
+                <th class="p-2 text-center border-r border-slate-200">Mar</th>
+                <th class="p-2 text-center border-r border-slate-200">Abr</th>
+                <th class="p-2 text-center border-r border-slate-200">May</th>
+                <th class="p-2 text-center border-r border-slate-200">Jun</th>
+                <th class="p-2 text-center border-r border-slate-200">Jul</th>
+                <th class="p-2 text-center border-r border-slate-200">Ago</th>
+                <th class="p-2 text-center border-r border-slate-200">Sep</th>
+                <th class="p-2 text-center border-r border-slate-200 bg-amber-50 font-black text-amber-900">Total CN</th>
+                <th class="p-2 text-center border-r border-slate-200 bg-slate-100 font-bold text-slate-700">% Avance (24)</th>
+                <th class="p-2 text-center bg-amber-100/70 font-extrabold text-amber-900">Compromiso aspiracional Mensual Q4</th>
               </tr>
             </thead>
-            <tbody id="rankingDashboardBody" class="divide-y divide-slate-100 text-[11px] font-mono"></tbody>
+            <tbody id="cellNewClientsTableBody" class="font-mono text-[11px] divide-y divide-slate-200"></tbody>
+            <tfoot class="bg-slate-100 font-mono text-[11px] font-bold border-t-2 border-slate-300">
+              <tr>
+                <td class="p-2 font-sans font-bold text-slate-800 border-r border-slate-200">Total Célula Mes</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">4</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">4</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">5</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">6</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">6</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">8</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">10</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">9</td>
+                <td class="p-2 text-center text-emerald-700 border-r border-slate-200">8</td>
+                <td class="p-2 text-center border-r border-slate-200 bg-amber-100/70 font-black text-amber-900">60</td>
+                <td class="p-2 text-center border-r border-slate-200 bg-slate-200 text-slate-800">35.7%</td>
+                <td class="p-2 text-center bg-amber-200/60 font-sans font-black text-amber-950">Cumplir todos sus objetivos</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
-      </div>
-    </section>
 
-    <!-- ==================== PÁGINA: ANÁLISIS COMPLETO DE CÉLULA ==================== -->
-    <section id="page-cell-analytics" class="page-section space-y-4">
-      
-      <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-        <div>
-          <span class="text-[10px] uppercase font-bold text-amber-600 block">Monitoreo y Desempeño Operativo</span>
-          <h3 class="text-sm font-bold text-slate-800">Célula 3 CDMX 1 • Conducción Comercial</h3>
+        <!-- Tabla Desglose Histórico de Generciómn Total de la Célula -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
+          <h4 class="text-xs font-bold uppercase text-slate-700 mb-2">Desglose de Generciómn Total Mensual de la Célula</h4>
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-[10px] font-bold text-slate-600 uppercase">
+              <tr>
+                <th class="p-2">Concepto</th>
+                <th class="p-2 text-right">Ene</th>
+                <th class="p-2 text-right">Feb</th>
+                <th class="p-2 text-right">Mar</th>
+                <th class="p-2 text-right">Abr</th>
+                <th class="p-2 text-right">May</th>
+                <th class="p-2 text-right">Jun</th>
+                <th class="p-2 text-right">Jul</th>
+                <th class="p-2 text-right">Ago</th>
+                <th class="p-2 text-right bg-amber-100/60 font-black text-amber-900">Sep</th>
+                <th class="p-2 text-right bg-amber-50 font-black text-amber-800">Total 2026 YTD</th>
+              </tr>
+            </thead>
+            <tbody class="font-mono text-[11px] divide-y divide-slate-100">
+              <tr>
+                <td class="p-2 font-bold text-slate-800 font-sans">Total Célula 3 CDMX 1</td>
+                <td class="p-2 text-right">822k</td>
+                <td class="p-2 text-right">336k</td>
+                <td class="p-2 text-right">1.19MDP</td>
+                <td class="p-2 text-right">1.48MDP</td>
+                <td class="p-2 text-right">493k</td>
+                <td class="p-2 text-right">1.13MDP</td>
+                <td class="p-2 text-right">1.25MDP</td>
+                <td class="p-2 text-right">1.55MDP</td>
+                <td class="p-2 text-right font-black text-amber-900 bg-amber-50">2.14MDP</td>
+                <td class="p-2 text-right bg-amber-50 font-black text-amber-700">10.38MDP</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="text-left sm:text-right">
-          <span class="text-[10px] font-semibold text-slate-400 block">Encargado de Célula:</span>
-          <span class="text-xs font-extrabold text-slate-800">Líder: Carlos Alberto Domínguez Chavez</span>
-        </div>
-      </div>
 
-      <!-- KPIs Consolidados de la Célula -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] uppercase font-bold text-slate-400 block">Top Generación</span>
-          <span class="text-sm sm:text-base font-black text-amber-600 block mt-0.5">$2,139,201.75</span>
-          <span class="text-[10px] font-semibold text-emerald-600">Septiembre 2026 (Récord anual)</span>
-        </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] uppercase font-bold text-slate-400 block">Ritmo vs Agosto</span>
-          <span class="text-sm sm:text-base font-black text-emerald-600 block mt-0.5">▲ +38.4%</span>
-          <span class="text-[10px] text-slate-400">+$593.9k de incremento</span>
-        </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] uppercase font-bold text-slate-400 block">Clientes Nuevos a Septiembre 2026</span>
-          <span class="text-sm sm:text-base font-black text-emerald-600 block mt-0.5">60 CN</span>
-          <span class="text-[10px] text-slate-400">35.7% de meta anual (168)</span>
-        </div>
-        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
-          <span class="text-[10px] uppercase font-bold text-slate-400 block">Clientes Activos</span>
-          <span class="text-sm sm:text-base font-black text-slate-800 block mt-0.5">95 Clientes</span>
-          <span class="text-[10px] text-slate-400">Activos en Cambios</span>
-        </div>
-      </div>
+      </section>
 
-      <!-- Gráfica de Barritas y Tendencia de la Célula -->
-      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-        <div class="flex items-center justify-between mb-2">
-          <div>
-            <h3 class="text-xs font-bold uppercase text-slate-800 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-              Evolución Mensual de Generación (2026)
-            </h3>
-            <span class="text-[10px] text-slate-400">Utilidad consolidada de la Célula 3 CDMX 1 mes a mes (Ene - Sep)</span>
-          </div>
-          <span class="text-[11px] font-extrabold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-            Total: $10.37M
-          </span>
-        </div>
-        <div class="h-64 sm:h-72 relative">
-          <canvas id="cellMonthlyChart"></canvas>
-        </div>
-      </div>
-
-      <!-- TABLA: RESULTADO POR MES DE CLIENTES NUEVOS EN CÉLULA (SEMÁFORO) -->
-      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
-        <div class="flex items-center justify-between mb-2">
-          <div>
-            <h3 class="text-xs font-bold uppercase text-slate-800 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-              Clientes Nuevos por Mes en Célula (2026) y Compromiso Q4
-            </h3>
-            <span class="text-[10px] text-slate-400">Semáforo: Rojo = 0 | Amarillo = 1 | Verde = 2 o más CN</span>
-          </div>
-          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-            Meta anual: 24 nuevos por asesor
-          </span>
-        </div>
-        <table class="w-full text-xs text-left border border-slate-200">
-          <thead class="bg-slate-50 text-[10px] font-bold text-slate-700 uppercase border-b border-slate-200">
-            <tr>
-              <th class="p-2 border-r border-slate-200">Asesor</th>
-              <th class="p-2 text-center border-r border-slate-200">Ene</th>
-              <th class="p-2 text-center border-r border-slate-200">Feb</th>
-              <th class="p-2 text-center border-r border-slate-200">Mar</th>
-              <th class="p-2 text-center border-r border-slate-200">Abr</th>
-              <th class="p-2 text-center border-r border-slate-200">May</th>
-              <th class="p-2 text-center border-r border-slate-200">Jun</th>
-              <th class="p-2 text-center border-r border-slate-200">Jul</th>
-              <th class="p-2 text-center border-r border-slate-200">Ago</th>
-              <th class="p-2 text-center border-r border-slate-200">Sep</th>
-              <th class="p-2 text-center border-r border-slate-200 bg-amber-50 font-black text-amber-900">Total CN</th>
-              <th class="p-2 text-center border-r border-slate-200 bg-slate-100 font-bold text-slate-700">% Avance (24)</th>
-              <th class="p-2 text-center bg-amber-100/70 font-extrabold text-amber-900">Compromiso Mensual Q4</th>
-            </tr>
-          </thead>
-          <tbody id="cellNewClientsTableBody" class="font-mono text-[11px] divide-y divide-slate-200"></tbody>
-          <tfoot class="bg-slate-100 font-mono text-[11px] font-bold border-t-2 border-slate-300">
-            <tr>
-              <td class="p-2 font-sans font-bold text-slate-800 border-r border-slate-200">Total Célula Mes</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">4</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">4</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">5</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">6</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">6</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">8</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">10</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">9</td>
-              <td class="p-2 text-center text-emerald-700 border-r border-slate-200">8</td>
-              <td class="p-2 text-center border-r border-slate-200 bg-amber-100/70 font-black text-amber-900">60</td>
-              <td class="p-2 text-center border-r border-slate-200 bg-slate-200 text-slate-800">35.7%</td>
-              <td class="p-2 text-center bg-amber-200/60 font-sans font-black text-amber-950">Cumplir todos sus objetivos</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <!-- Tabla Desglose Histórico de Generación de la Célula -->
-      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
-        <h4 class="text-xs font-bold uppercase text-slate-700 mb-2">Desglose de Generación Mensual de la Célula (MXN)</h4>
-        <table class="w-full text-xs text-left">
-          <thead class="bg-slate-50 text-[10px] font-bold text-slate-600 uppercase">
-            <tr>
-              <th class="p-2">Concepto</th>
-              <th class="p-2 text-right">Ene</th>
-              <th class="p-2 text-right">Feb</th>
-              <th class="p-2 text-right">Mar</th>
-              <th class="p-2 text-right">Abr</th>
-              <th class="p-2 text-right">May</th>
-              <th class="p-2 text-right">Jun</th>
-              <th class="p-2 text-right">Jul</th>
-              <th class="p-2 text-right">Ago</th>
-              <th class="p-2 text-right bg-amber-100/60 font-black text-amber-900">Sep</th>
-              <th class="p-2 text-right bg-amber-50 font-black text-amber-800">Total 2026 YTD</th>
-            </tr>
-          </thead>
-          <tbody class="font-mono text-[11px] divide-y divide-slate-100">
-            <tr>
-              <td class="p-2 font-bold text-slate-800 font-sans">Total Célula 3 CDMX 1</td>
-              <td class="p-2 text-right">$821,428.70</td>
-              <td class="p-2 text-right">$335,559.85</td>
-              <td class="p-2 text-right">$1,186,861.41</td>
-              <td class="p-2 text-right">$1,473,011.72</td>
-              <td class="p-2 text-right">$492,719.94</td>
-              <td class="p-2 text-right">$1,129,037.41</td>
-              <td class="p-2 text-right">$1,249,026.73</td>
-              <td class="p-2 text-right">$1,545,272.88</td>
-              <td class="p-2 text-right font-black text-amber-900 bg-amber-50">$2,139,201.75</td>
-              <td class="p-2 text-right bg-amber-50 font-black text-amber-700">$10,371,920.39</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </section>
-
-    <!-- ==================== PÁGINA 2: FICHA DEL ASESOR ==================== -->
-    <section id="page-advisor" class="page-section space-y-3">
-      <!-- Tarjeta Principal del Asesor -->
-      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
-        <div class="bg-gradient-to-r from-slate-900 to-amber-950 p-4 text-white">
-          <div class="flex items-center justify-between">
+      <!-- ==================== PÁGINA 2: FICHA DEL ASESOR ==================== -->
+      <section id="page-advisor" class="page-section space-y-3">
+        <!-- 6. Tarjeta Principal del Asesor (Sin redundancia del líder) -->
+        <div class="interactive-card bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
+          <div class="bg-gradient-to-r from-slate-900 to-amber-950 p-4 text-white">
             <span id="profAdvisorCode" class="text-amber-400 font-mono text-[10px] font-bold tracking-widest uppercase">ID: 1297</span>
-            <span class="text-[10px] text-slate-300 font-medium">Supervisión: <strong class="text-amber-300">Líder: Carlos Alberto Domínguez Chavez</strong></span>
+            <h2 id="profAdvisorName" class="text-base sm:text-lg font-black tracking-tight mt-0.5">Mitzi Estefanía Negrete Bribiesca</h2>
+            <p class="text-xs text-slate-300 mt-0.5">Asesor Comercial • Célula 3 CDMX 1 (41930)</p>
           </div>
-          <h2 id="profAdvisorName" class="text-base sm:text-lg font-black tracking-tight mt-0.5">Mitzi Estefanía Negrete Bribiesca</h2>
-          <p class="text-xs text-slate-300 mt-0.5">Asesor Comercial • Célula 3 CDMX 1 (41930)</p>
+
+          <!-- DATOS OPERATIVOS CON ANTIGÜEDAD Y CLIENTES ACTIVOS -->
+          <div class="grid grid-cols-2 divide-x divide-slate-200 bg-amber-50/50 border-b border-slate-200 p-2.5 text-center">
+            <div>
+              <span class="text-[10px] uppercase font-bold text-slate-500 block">Ingreso a Célula / Antigüedad</span>
+              <span id="profJoinDate" class="text-xs font-bold text-amber-900 px-1 py-0.5 block">01 de Agosto de 2025 (14 meses)</span>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase font-bold text-slate-500 block">Clientes Activos</span>
+              <span id="profActiveClients" class="text-xs font-black text-amber-900 px-1 py-0.5 block">14 Clientes</span>
+            </div>
+          </div>
+
+          <!-- 3. MÉTRICAS CUANTITATIVAS EN FORMATO MDP / K -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-slate-100 bg-slate-50 text-center">
+            <div class="p-3">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Total 2026 YTD</span>
+              <span id="profTotal2026" class="text-base font-black text-amber-600 block mt-0.5">4.92MDP</span>
+              <span id="profShare2026" class="text-[10px] text-slate-500 font-semibold block">47.39% de Célula</span>
+            </div>
+            <div class="p-3">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Prom. Mensual 2026</span>
+              <span id="profAvg2026" class="text-base font-black text-slate-800 block mt-0.5">547k</span>
+              <span class="text-[10px] text-emerald-600 font-semibold">Media 9 meses</span>
+            </div>
+            <div class="p-3">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Generciómn Total Septiembre</span>
+              <span id="profSept" class="text-base font-black text-slate-800 block mt-0.5">740k</span>
+              <span id="profSeptMoM" class="text-[10px] font-semibold text-emerald-600">▲ +38.8% vs Ago</span>
+            </div>
+            <div class="p-3">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Prom. Mes 2025 (Cierre)</span>
+              <span id="profAvg2025" class="text-base font-black text-slate-700 block mt-0.5">148k</span>
+              <span id="profTotal2025" class="text-[10px] text-slate-400 block">592k total</span>
+            </div>
+          </div>
         </div>
 
-        <!-- DATOS OPERATIVOS CON ANTIGÜEDAD Y CLIENTES ACTIVOS -->
-        <div class="grid grid-cols-2 divide-x divide-slate-200 bg-amber-50/50 border-b border-slate-200 p-2.5 text-center">
-          <div>
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Ingreso a Célula / Antigüedad</span>
-            <span id="profJoinDate" class="text-xs font-bold text-amber-900 px-1 py-0.5 block">01 de Agosto de 2025 (14 meses)</span>
+        <!-- DESGLOSE DE CLIENTES NUEVOS DEL ASESOR -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3 shadow-xs overflow-x-auto">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h4 class="text-[11px] font-bold uppercase text-slate-700 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Generciómn Total de Clientes Nuevos 2026
+              </h4>
+              <span class="text-[10px] text-slate-400">Objetivo institucional: 24 clientes nuevos / año (2 al mes)</span>
+            </div>
+            <div class="text-right">
+              <span id="profNewClientsTotalBadge" class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                Total: 7 nuevos
+              </span>
+              <span id="profNewClientsGoalBadge" class="text-[10px] font-bold text-slate-600 ml-1 bg-slate-100 px-2 py-0.5 rounded">
+                29.2% de meta
+              </span>
+            </div>
           </div>
-          <div>
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Clientes Activos</span>
-            <span id="profActiveClients" class="text-xs font-black text-amber-900 px-1 py-0.5 block">14 Clientes</span>
-          </div>
-        </div>
-
-        <!-- MÉTRICAS CUANTITATIVAS EXPANDIDAS CON PROMEDIOS MENSUALES Y CUMPLIMIENTO -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-slate-100 bg-slate-50 text-center">
-          <div class="p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block">Total 2026 YTD</span>
-            <span id="profTotal2026" class="text-base font-black text-amber-600 block mt-0.5">$4,915,178.19</span>
-            <span id="profShare2026" class="text-[10px] text-slate-500 font-semibold block">47.39% de Célula</span>
-          </div>
-          <div class="p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block">Prom. Mensual 2026</span>
-            <span id="profAvg2026" class="text-base font-black text-slate-800 block mt-0.5">$546,130.91</span>
-            <span class="text-[10px] text-emerald-600 font-semibold">Media 9 meses</span>
-          </div>
-          <div class="p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block">Generación Septiembre</span>
-            <span id="profSept" class="text-base font-black text-slate-800 block mt-0.5">$739,992.10</span>
-            <span id="profSeptMoM" class="text-[10px] font-semibold text-emerald-600">▲ +38.8% vs Ago</span>
-          </div>
-          <div class="p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block">Prom. Mes 2025 (Cierre)</span>
-            <span id="profAvg2025" class="text-base font-black text-slate-700 block mt-0.5">$147,804.11</span>
-            <span id="profTotal2025" class="text-[10px] text-slate-400 block">$591,216.45 total</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- DESGLOSE DE CLIENTES NUEVOS DEL ASESOR (MENSUAL + CUMPLIMIENTO) -->
-      <div class="bg-white rounded-xl border border-slate-200 p-3 shadow-xs overflow-x-auto">
-        <div class="flex items-center justify-between mb-2">
-          <div>
-            <h4 class="text-[11px] font-bold uppercase text-slate-700 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              Generación de Clientes Nuevos 2026
-            </h4>
-            <span class="text-[10px] text-slate-400">Objetivo institucional: 24 clientes nuevos / año (2 al mes)</span>
-          </div>
-          <div class="text-right">
-            <span id="profNewClientsTotalBadge" class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-              Total: 7 nuevos
+          <table class="w-full text-xs text-center border border-slate-200">
+            <thead class="bg-slate-50 text-[10px] font-bold text-slate-600 uppercase border-b border-slate-200">
+              <tr>
+                <th class="p-1.5 border-r border-slate-200">Ene</th>
+                <th class="p-1.5 border-r border-slate-200">Feb</th>
+                <th class="p-1.5 border-r border-slate-200">Mar</th>
+                <th class="p-1.5 border-r border-slate-200">Abr</th>
+                <th class="p-1.5 border-r border-slate-200">May</th>
+                <th class="p-1.5 border-r border-slate-200">Jun</th>
+                <th class="p-1.5 border-r border-slate-200">Jul</th>
+                <th class="p-1.5 border-r border-slate-200">Ago</th>
+                <th class="p-1.5 border-r border-slate-200">Sep</th>
+                <th class="p-1.5 bg-amber-50 font-black text-amber-900 border-r border-slate-200">Total</th>
+                <th class="p-1.5 bg-slate-100 font-bold text-slate-700">Faltante Anual</th>
+              </tr>
+            </thead>
+            <tbody id="profNewClientsRow" class="font-mono text-[11px] font-bold"></tbody>
+          </table>
+          <!-- Indicador de compromiso directo en el asesor -->
+          <div class="mt-2 p-2 bg-amber-50 rounded-lg border border-amber-200 flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-900" id="profNewClientsPacingNote">
+              Compromiso aspiracional: al menos 4 CN al mes en Q4 para acercarse a la meta anual.
             </span>
-            <span id="profNewClientsGoalBadge" class="text-[10px] font-bold text-slate-600 ml-1 bg-slate-100 px-2 py-0.5 rounded">
-              29.2% de meta
+            <span class="text-[10px] font-semibold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-200">
+              Compromiso Célula
             </span>
           </div>
         </div>
-        <table class="w-full text-xs text-center border border-slate-200">
-          <thead class="bg-slate-50 text-[10px] font-bold text-slate-600 uppercase border-b border-slate-200">
-            <tr>
-              <th class="p-1.5 border-r border-slate-200">Ene</th>
-              <th class="p-1.5 border-r border-slate-200">Feb</th>
-              <th class="p-1.5 border-r border-slate-200">Mar</th>
-              <th class="p-1.5 border-r border-slate-200">Abr</th>
-              <th class="p-1.5 border-r border-slate-200">May</th>
-              <th class="p-1.5 border-r border-slate-200">Jun</th>
-              <th class="p-1.5 border-r border-slate-200">Jul</th>
-              <th class="p-1.5 border-r border-slate-200">Ago</th>
-              <th class="p-1.5 border-r border-slate-200">Sep</th>
-              <th class="p-1.5 bg-amber-50 font-black text-amber-900 border-r border-slate-200">Total</th>
-              <th class="p-1.5 bg-slate-100 font-bold text-slate-700">Faltante Anual</th>
-            </tr>
-          </thead>
-          <tbody id="profNewClientsRow" class="font-mono text-[11px] font-bold"></tbody>
-        </table>
-        <!-- Indicador de compromiso directo en el asesor -->
-        <div class="mt-2 p-2 bg-amber-50 rounded-lg border border-amber-200 flex items-center justify-between text-xs">
-          <span class="font-bold text-amber-900" id="profNewClientsPacingNote">
-            Compromiso de clientes nuevos: al menos 4 CN al mes en Q4 para acercarse a la meta anual.
-          </span>
-          <span class="text-[10px] font-semibold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-200">
-            Compromiso Célula
-          </span>
+
+        <!-- Accesos Rápidos -->
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="navigate('charts')" class="interactive-card bg-white p-3 rounded-xl border border-slate-200 text-left hover:border-amber-400 transition shadow-xs">
+            <span class="text-amber-500 font-bold block text-sm">📈 Ver Gráfica Mensual</span>
+            <span class="text-[10px] text-slate-400">Evolución mes con mes</span>
+          </button>
+          <button onclick="navigate('qualitative')" class="interactive-card bg-white p-3 rounded-xl border border-slate-200 text-left hover:border-amber-400 transition shadow-xs">
+            <span class="text-amber-500 font-bold block text-sm">📝 Ver Evaluación Directiva</span>
+            <span class="text-[10px] text-slate-400">Estrategia y metas Q4</span>
+          </button>
         </div>
-      </div>
+      </section>
 
-      <!-- Accesos Rápidos -->
-      <div class="grid grid-cols-2 gap-2">
-        <button onclick="navigate('charts')" class="bg-white p-3 rounded-xl border border-slate-200 text-left hover:border-amber-400 transition shadow-xs">
-          <span class="text-amber-500 font-bold block text-sm">📈 Ver Gráfica Mensual</span>
-          <span class="text-[10px] text-slate-400">Evolución mes con mes</span>
-        </button>
-        <button onclick="navigate('qualitative')" class="bg-white p-3 rounded-xl border border-slate-200 text-left hover:border-amber-400 transition shadow-xs">
-          <span class="text-amber-500 font-bold block text-sm">📝 Ver Evaluación Directiva</span>
-          <span class="text-[10px] text-slate-400">Estrategia y metas Q4</span>
-        </button>
-      </div>
-    </section>
+      <!-- ==================== PÁGINA 3: GRÁFICAS Y EVOLUCIÓN ASESOR ==================== -->
+      <section id="page-charts" class="page-section space-y-3">
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h3 class="text-xs font-bold uppercase text-slate-700" id="chartAdvisorTitle">Evolución 2026 - Mitzi Negrete</h3>
+              <span class="text-[10px] text-slate-400">Comportamiento mensual de generciómn total</span>
+            </div>
+          </div>
+          <div class="h-64 sm:h-72 relative">
+            <canvas id="monthlyDetailChart"></canvas>
+          </div>
+        </div>
 
-    <!-- ==================== PÁGINA 3: GRÁFICAS Y EVOLUCIÓN ASESOR ==================== -->
-    <section id="page-charts" class="page-section space-y-3">
-      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs">
-        <div class="flex items-center justify-between mb-2">
+        <!-- Tabla desglose mensual -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
+          <h4 class="text-[11px] font-bold uppercase text-slate-500 mb-2">Desglose Mensual</h4>
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-[10px] font-bold text-slate-600 uppercase">
+              <tr>
+                <th class="p-1.5">Año</th>
+                <th class="p-1.5 text-right">Ene</th>
+                <th class="p-1.5 text-right">Feb</th>
+                <th class="p-1.5 text-right">Mar</th>
+                <th class="p-1.5 text-right">Abr</th>
+                <th class="p-1.5 text-right">May</th>
+                <th class="p-1.5 text-right">Jun</th>
+                <th class="p-1.5 text-right">Jul</th>
+                <th class="p-1.5 text-right">Ago</th>
+                <th class="p-1.5 text-right font-medium text-slate-900">Sep</th>
+                <th class="p-1.5 text-right bg-amber-50 text-amber-900 font-extrabold">Total YTD</th>
+              </tr>
+            </thead>
+            <tbody id="detailTableBody" class="font-mono text-[11px] divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ==================== PÁGINA 4: EVALUACIÓN CUALITATIVA DIRECTIVA ==================== -->
+      <section id="page-qualitative" class="page-section space-y-3">
+        <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-xs flex items-center justify-between">
           <div>
-            <h3 class="text-xs font-bold uppercase text-slate-700" id="chartAdvisorTitle">Evolución 2026 - Mitzi Negrete</h3>
-            <span class="text-[10px] text-slate-400">Comportamiento mensual de generación</span>
+            <h3 class="text-xs font-bold uppercase text-slate-800">Evaluación Cualitativa Directiva</h3>
+            <span class="text-[10px] text-slate-400">Análisis oficial, compromisos de desempeño y plan táctico de ejecución institucional.</span>
           </div>
-        </div>
-        <div class="h-64 sm:h-72 relative">
-          <canvas id="monthlyDetailChart"></canvas>
-        </div>
-      </div>
-
-      <!-- Tabla desglose mensual -->
-      <div class="bg-white rounded-xl border border-slate-200 p-3.5 shadow-xs overflow-x-auto">
-        <h4 class="text-[11px] font-bold uppercase text-slate-500 mb-2">Desglose Mensual (MXN)</h4>
-        <table class="w-full text-xs text-left">
-          <thead class="bg-slate-50 text-[10px] font-bold text-slate-600 uppercase">
-            <tr>
-              <th class="p-1.5">Año</th>
-              <th class="p-1.5 text-right">Ene</th>
-              <th class="p-1.5 text-right">Feb</th>
-              <th class="p-1.5 text-right">Mar</th>
-              <th class="p-1.5 text-right">Abr</th>
-              <th class="p-1.5 text-right">May</th>
-              <th class="p-1.5 text-right">Jun</th>
-              <th class="p-1.5 text-right">Jul</th>
-              <th class="p-1.5 text-right">Ago</th>
-              <th class="p-1.5 text-right font-medium text-slate-900">Sep</th>
-              <th class="p-1.5 text-right bg-amber-50 text-amber-900 font-extrabold">Total YTD</th>
-            </tr>
-          </thead>
-          <tbody id="detailTableBody" class="font-mono text-[11px] divide-y divide-slate-100"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- ==================== PÁGINA 4: EVALUACIÓN CUALITATIVA DIRECTIVA ==================== -->
-    <section id="page-qualitative" class="page-section space-y-3">
-      <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-xs flex items-center justify-between">
-        <div>
-          <h3 class="text-xs font-bold uppercase text-slate-800">Evaluación Cualitativa Directiva</h3>
-          <span class="text-[10px] text-slate-400">Análisis oficial y compromisos tácticos de desempeño institucional.</span>
-        </div>
-        <span class="text-[10px] font-black text-amber-800 bg-amber-50 px-2 py-1 rounded border border-amber-200">
-          Líder: Carlos Alberto Domínguez Chavez
-        </span>
-      </div>
-
-      <div class="space-y-3">
-        <!-- Fortalezas -->
-        <div class="bg-white rounded-xl border border-amber-200 p-3.5 shadow-xs">
-          <span class="text-xs font-bold text-amber-800 flex items-center gap-1.5 mb-2">
-            <span>⭐</span> Fortalezas Comerciales
+          <span class="text-[10px] font-black text-amber-800 bg-amber-50 px-2 py-1 rounded border border-amber-200">
+            Líder: Carlos Alberto Domínguez Chavez
           </span>
-          <div id="qualStrengths" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-amber-50/50 border border-amber-100/80 min-h-[85px] whitespace-pre-line select-text">
-            Cargando...
-          </div>
         </div>
 
-        <!-- Áreas de oportunidad -->
-        <div class="bg-white rounded-xl border border-sky-200 p-3.5 shadow-xs">
-          <span class="text-xs font-bold text-sky-800 flex items-center gap-1.5 mb-2">
-            <span>🎯</span> Áreas de Oportunidad y Mejora
-          </span>
-          <div id="qualOpportunities" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-sky-50/50 border border-sky-100/80 min-h-[110px] whitespace-pre-line select-text">
-            Cargando...
+        <div class="space-y-3">
+          <!-- Fortalezas -->
+          <div class="interactive-card bg-white rounded-xl border border-amber-200 p-3.5 shadow-xs">
+            <span class="text-xs font-bold text-amber-800 flex items-center gap-1.5 mb-2">
+              <span>⭐</span> Fortalezas Comerciales
+            </span>
+            <div id="qualStrengths" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-amber-50/50 border border-amber-100/80 min-h-[85px] whitespace-pre-line select-text">
+              Cargando...
+            </div>
+          </div>
+
+          <!-- Áreas de oportunidad -->
+          <div class="interactive-card bg-white rounded-xl border border-sky-200 p-3.5 shadow-xs">
+            <span class="text-xs font-bold text-sky-800 flex items-center gap-1.5 mb-2">
+              <span>🎯</span> Áreas de Oportunidad y Mejora
+            </span>
+            <div id="qualOpportunities" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-sky-50/50 border border-sky-100/80 min-h-[110px] whitespace-pre-line select-text">
+              Cargando...
+            </div>
+          </div>
+
+          <!-- Metas Q4 -->
+          <div class="interactive-card bg-white rounded-xl border border-emerald-200 p-3.5 shadow-xs">
+            <span class="text-xs font-bold text-emerald-800 flex items-center gap-1.5 mb-2">
+              <span>🚀</span> Plan de Acción & Meta de Cierre Q4
+            </span>
+            <div id="qualPlan" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-emerald-50/50 border border-emerald-100/80 min-h-[110px] whitespace-pre-line select-text">
+              Cargando...
+            </div>
           </div>
         </div>
+      </section>
 
-        <!-- Metas Q4 -->
-        <div class="bg-white rounded-xl border border-emerald-200 p-3.5 shadow-xs">
-          <span class="text-xs font-bold text-emerald-800 flex items-center gap-1.5 mb-2">
-            <span>🚀</span> Plan de Acción & Meta de Cierre Q4
-          </span>
-          <div id="qualPlan" class="text-xs text-slate-700 leading-relaxed p-3 rounded-lg bg-emerald-50/50 border border-emerald-100/80 min-h-[110px] whitespace-pre-line select-text">
-            Cargando...
-          </div>
+      <!-- PIE DE PÁGINA CON BRANDING Y LIDERAZGO -->
+      <footer class="mt-8 pt-4 pb-2 border-t border-slate-200 text-center">
+        <p class="text-xs font-bold text-slate-700">Líder: Carlos Alberto Domínguez Chavez</p>
+        <p class="text-[11px] font-medium text-slate-500 mt-0.5">Banco BASE • Célula 3 CDMX 1 (41930)</p>
+        <div class="mt-2 inline-flex items-center gap-1.5 text-xs text-slate-500">
+          <span>Powered by</span>
+          <a 
+            href="https://five-friends-web.vercel.app/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="font-extrabold text-amber-600 hover:text-amber-700 transition inline-flex items-center gap-1 group underline decoration-amber-300 hover:decoration-amber-600"
+          >
+            <span>Five Friends</span>
+            <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          </a>
         </div>
-      </div>
-    </section>
+      </footer>
 
-    <!-- PIE DE PÁGINA CON BRANDING Y LIDERAZGO -->
-    <footer class="mt-8 pt-4 pb-2 border-t border-slate-200 text-center">
-      <p class="text-xs font-bold text-slate-700">Líder: Carlos Alberto Domínguez Chavez</p>
-      <p class="text-[11px] font-medium text-slate-500 mt-0.5">Banco BASE • Célula 3 CDMX 1 (41930)</p>
-      <div class="mt-2 inline-flex items-center gap-1.5 text-xs text-slate-500">
-        <span>Powered by</span>
-        <a 
-          href="https://five-friends-web.vercel.app/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="font-extrabold text-amber-600 hover:text-amber-700 transition inline-flex items-center gap-1 group underline decoration-amber-300 hover:decoration-amber-600"
-        >
-          <span>Five Friends</span>
-          <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-          </svg>
-        </a>
-      </div>
-    </footer>
+    </main>
 
-  </main>
+    <!-- BARRA DE NAVEGACIÓN INFERIOR PARA TELÉFONOS MÓVILES -->
+    <nav class="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-30 flex justify-around py-2 px-1 shadow-lg text-[10px]">
+      <button onclick="navigate('dashboard')" id="btnNav-dashboard" class="flex flex-col items-center gap-1 mobile-tab-active transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+        <span>General</span>
+      </button>
+      <button onclick="navigate('cell-analytics')" id="btnNav-cell-analytics" class="flex flex-col items-center gap-1 text-slate-400 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+        <span>Célula</span>
+      </button>
+      <button onclick="navigate('advisor')" id="btnNav-advisor" class="flex flex-col items-center gap-1 text-slate-400 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        <span>Asesor</span>
+      </button>
+      <button onclick="navigate('charts')" id="btnNav-charts" class="flex flex-col items-center gap-1 text-slate-400 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        <span>Gráficas</span>
+      </button>
+      <button onclick="navigate('qualitative')" id="btnNav-qualitative" class="flex flex-col items-center gap-1 text-slate-400 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+        <span>Notas</span>
+      </button>
+    </nav>
+  </div>
 
-  <!-- BARRA DE NAVEGACIÓN INFERIOR PARA TELÉFONOS MÓVILES -->
-  <nav class="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-30 flex justify-around py-2 px-1 shadow-lg text-[10px]">
-    <button onclick="navigate('dashboard')" id="btnNav-dashboard" class="flex flex-col items-center gap-1 mobile-tab-active">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-      <span>General</span>
-    </button>
-    <button onclick="navigate('cell-analytics')" id="btnNav-cell-analytics" class="flex flex-col items-center gap-1 text-slate-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-      <span>Célula</span>
-    </button>
-    <button onclick="navigate('advisor')" id="btnNav-advisor" class="flex flex-col items-center gap-1 text-slate-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-      <span>Asesor</span>
-    </button>
-    <button onclick="navigate('charts')" id="btnNav-charts" class="flex flex-col items-center gap-1 text-slate-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-      <span>Gráficas</span>
-    </button>
-    <button onclick="navigate('qualitative')" id="btnNav-qualitative" class="flex flex-col items-center gap-1 text-slate-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-      <span>Notas</span>
-    </button>
-  </nav>
-
-  <!-- JAVASCRIPT CON DATA Y ANÁLISIS CUALITATIVO PROFUNDO -->
+  <!-- JAVASCRIPT CON DATA, LOGIN Y CONTROLADORES -->
   <script>
+    // 3. FUNCIÓN DE FORMATEO MATEMÁTICO: REDONDEO HACIA ARRIBA (MDP / K)
+    function formatCurrency(val) {
+      if (!val || val === 0) return '$0';
+      if (val >= 1000000) {
+        // Redondeo hacia arriba a 2 decimales para millones
+        const mdp = Math.ceil((val / 1000000) * 100) / 100;
+        return `${mdp.toFixed(2)}MDP`;
+      } else {
+        // Redondeo hacia arriba a entero para miles
+        const k = Math.ceil(val / 1000);
+        return `${k}k`;
+      }
+    }
+
+    // 7. SISTEMA DE AUTENTICACIÓN
+    const AUTH_KEY = 'banco_base_auth_session';
+    const VALID_USER = 'cardomcha@hotmail.com';
+    const VALID_PASS = 'CarlosBase1223@';
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUser').value.trim();
+      const pass = document.getElementById('loginPass').value.trim();
+      const err = document.getElementById('loginError');
+
+      if (user === VALID_USER && pass === VALID_PASS) {
+        localStorage.setItem(AUTH_KEY, 'true');
+        err.classList.add('hidden');
+        showApp();
+      } else {
+        err.classList.remove('hidden');
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem(AUTH_KEY);
+      location.reload();
+    }
+
+    function showApp() {
+      const overlay = document.getElementById('loginOverlay');
+      const app = document.getElementById('mainApp');
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+        app.classList.remove('hidden');
+        initDashboard();
+      }, 250);
+    }
+
+    // HISTÓRICO CONSOLIDADO DE CÉLULA (GENERCIÓMN TOTAL Y COMPORTAMIENTO DE CLIENTES)
     const CELL_HISTORY_2026 = {
       labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
       values: [
         821428.70, 335559.85, 1186861.41, 1473011.72, 492719.94,
         1129037.41, 1249026.73, 1545272.88, 2139201.75
       ],
+      // 4. Comportamiento mensual de clientes nuevos de toda la célula
+      clientBehavior: [4, 4, 5, 6, 6, 8, 10, 9, 8],
       totalYTD: 10371920.39
     };
 
@@ -675,7 +801,7 @@
         activeClients: 14,
         newClients2026: [1, 1, 0, 0, 1, 1, 0, 2, 1],
         totalNewClients: 7,
-        pacingRequirement: "Compromiso de clientes nuevos: al menos 4 CN al mes en Q4 para acercarse a la meta anual.",
+        pacingRequirement: "Compromiso aspiracional: al menos 4 CN al mes en Q4 para acercarse a la meta anual.",
         total2025: 591216.45,
         avgMonthly2025: 147804.11,
         share2025Emp: "77.27%",
@@ -685,9 +811,9 @@
         share2026Emp: "47.39%",
         history2026: { ene: 682440.27, feb: 162901.56, mar: 1133728.80, abr: 876107.82, may: 192661.68, jun: 260210.56, jul: 333842.61, ago: 533292.80, sep: 739992.10, total: 4915178.19 },
         defaultQual: {
-          strengths: "Líder de generación (47.39% de cuota) con 14 clientes activos y 7 aperturas en 2026. Top Performance de septiembre ($739.9k). Extraordinario dominio transaccional en divisas.",
+          strengths: "Líder de generciómn total (47.39% de cuota) con 14 clientes activos y 7 aperturas en 2026. top en septiembre (740k). Extraordinario dominio transaccional en divisas.",
           opportunities: "Asegurar esquemas estructurados de forward y derivados para blindar margen en Q4.\nCuidar el Cross Sell en temas de financiamiento y vinculación de captación.\nTrabajar constantemente en ser receptiva en la generación de clientes nuevos y poder alcanzar los 24 clientes promedio en su primer año de gestión (14 meses activos en la célula).",
-          plan: "Superar la meta anual de $7.0M YTD reforzando empresas medianas y corporativas.\nAcompañamiento por parte del líder a citas de referidos importantes así como de prospectos ATLAS.\nVisitas a expos vigentes del 4T 26 de CDMX."
+          plan: "Superar la meta anual de 7.0MDP YTD reforzando empresas medianas y corporativas.\nAcompañamiento por parte del líder a citas de referidos importantes así como de prospectos ATLAS.\nVisitas a expos vigentes del 4T 26 de CDMX."
         }
       },
       {
@@ -700,7 +826,7 @@
         activeClients: 17,
         newClients2026: [1, 1, 2, 0, 1, 0, 2, 1, 2],
         totalNewClients: 10,
-        pacingRequirement: "Compromiso de clientes nuevos: al menos 4 CN al mes en Q4 para compensar rezago.",
+        pacingRequirement: "Compromiso aspiracional: al menos 4 CN al mes en Q4 para compensar rezago.",
         total2025: 116747.16,
         avgMonthly2025: 29186.79,
         share2025Emp: "15.26%",
@@ -710,9 +836,9 @@
         share2026Emp: "14.69%",
         history2026: { ene: 110293.23, feb: 141540.12, mar: 14914.79, abr: 294814.92, may: 75682.91, jun: 217800.68, jul: 236683.74, ago: 190669.44, sep: 240937.67, total: 1523337.49 },
         defaultQual: {
-          strengths: "Buen dinamismo comercial: 10 nuevos clientes captados en 2026 y 17 clientes activos. Cierra septiembre en $240.9k con buena estabilidad.",
-          opportunities: "Incrementar su generación en divisas vs septiembre 26 al menos un 30%.\nIncremento de clientes nuevos al menos 4 clientes nuevos al mes.\nOfrecimiento a su cartera vigente del producto de derivados, detectando la necesidad de los mismos.",
-          plan: "Alcanzar $2.5M YTD al cierre de diciembre consolidando generación en la cartera.\nEstablecer un barrido semanal con el líder a sus 17 clientes para ofrecerles líneas de crédito y derivados cambiarios dependiendo de sus necesidades."
+          strengths: "Buen dinamismo comercial: 10 nuevos clientes captados en 2026 y 17 clientes activos. Cierra septiembre en 241k con buena estabilidad.",
+          opportunities: "Incrementar su generciómn total en divisas vs septiembre 26 al menos un 30%.\nIncremento de clientes nuevos al menos 4 clientes nuevos al mes.\nOfrecimiento a su cartera vigente del producto de derivados, detectando la necesidad de los mismos.",
+          plan: "Alcanzar 2.5MDP YTD al cierre de diciembre consolidando generaciómn total en la cartera.\nEstablecer un barrido semanal con el líder a sus 17 clientes para ofrecerles líneas de crédito y derivados cambiarios dependiendo de sus necesidades."
         }
       },
       {
@@ -725,7 +851,7 @@
         activeClients: 12,
         newClients2026: [1, 0, 1, 1, 1, 1, 2, 2, 0],
         totalNewClients: 9,
-        pacingRequirement: "Compromiso de clientes nuevos: al menos 3 CN al mes en Q4 para cerrar con 18 aperturas.",
+        pacingRequirement: "Compromiso aspiracional: al menos 3 CN al mes en Q4 para cerrar con 18 aperturas.",
         total2025: 12244.48,
         avgMonthly2025: 4081.49,
         share2025Emp: "1.60%",
@@ -735,9 +861,9 @@
         share2026Emp: "13.57%",
         history2026: { ene: 14231.27, feb: 12281.39, mar: 20161.79, abr: 119942.15, may: 54060.86, jun: 134098.88, jul: 352982.83, ago: 375599.06, sep: 324377.03, total: 1407735.26 },
         defaultQual: {
-          strengths: "Extraordinario tercer trimestre con promedio superior a $350k mensuales, 12 clientes activos y 9 aperturas en el año. Gran agresividad de cierre en clientes.",
+          strengths: "Extraordinario tercer trimestre con promedio superior a 350k mensuales, 12 clientes activos y 9 aperturas en el año. Gran agresividad de cierre en clientes.",
           opportunities: "Cumplió un año en la célula (12 meses) y está en 9 aperturas vs la meta de 24; debe ajustar su disciplina diaria de prospección para sumar al menos 3 clientes al mes en Q4.\nAmpliar la penetración con el Cross Sell de su cartera vigente activa.",
-          plan: "Alcanzar $2.5M YTD al cierre de 2026 manteniendo una generación mensual no menor a $400,000.\nRevisión semanal con el líder de su embudo de 20 prospectos calificados en el sector comercial para cumplir su cierre de mes."
+          plan: "Alcanzar 2.5MDP YTD al cierre de 2026 manteniendo una generciómn total mensual no menor a 400k.\nRevisión semanal con el líder de su embudo de 20 prospectos calificados en el sector comercial para cumplir su cierre de mes."
         }
       },
       {
@@ -750,7 +876,7 @@
         activeClients: 22,
         newClients2026: [0, 0, 0, 2, 1, 1, 1, 2, 0], // Exactamente 8 CN
         totalNewClients: 8,
-        pacingRequirement: "Compromiso de clientes nuevos: mínimo 3 CN al mes para cerrar con 17 aperturas.",
+        pacingRequirement: "Compromiso aspiracional: mínimo 3 CN al mes para cerrar con 17 aperturas.",
         total2025: 0.00,
         avgMonthly2025: 0.00,
         share2025Emp: "0.00%",
@@ -760,9 +886,9 @@
         share2026Emp: "12.60%",
         history2026: { ene: 0, feb: 0, mar: 0, abr: 146595.73, may: 154399.67, jun: 220772.51, jul: 182954.43, ago: 188987.77, sep: 413531.21, total: 1307241.32 },
         defaultQual: {
-          strengths: "Asesor con el mayor número de clientes activos en cambios (22). Incremento sobresaliente en septiembre de generación alcanzando 413.5K y 8 clientes nuevos en 6 meses de gestion.",
-          opportunities: "Monetizar profundamente su cartera: tener 22 clientes activos exige que la generación mensual se mantenga por encima de los $350k constantes mediante FX Loan y financiamiento en operaciones cambiarias. No relajar la generación de clientes nuevos: al tener solo 6 meses en la posición debe sostener un ritmo mínimo de 3 clientes nuevos al mes para acercarse a el objetivo de 24 en su año debut.",
-          plan: "Alcanzar $2.4M YTD al cierre de 2026 disputando el segundo lugar de la célula.\nAgendar revisiones técnicas de tesorería con sus principales clientes activos, acompañada por la mesa de derivados para cerrar coberturas de cierre de año fiscal."
+          strengths: "Asesor con el mayor número de clientes activos en cambios (22). Incremento sobresaliente en septiembre de generciómn total alcanzando 413.5K y 8 clientes nuevos en 6 meses de gestion.",
+          opportunities: "Monetizar profundamente su cartera: tener 22 clientes activos exige que la generciómn total mensual se mantenga por encima de los 350k constantes mediante FX Loan y financiamiento en operaciones cambiarias. No relajar la generaciómn total de clientes nuevos: al tener solo 6 meses en la posición debe sostener un ritmo mínimo de 3 clientes nuevos al mes para acercarse a el objetivo de 24 en su año debut.",
+          plan: "Alcanzar 2.4MDP YTD al cierre de 2026 disputando el segundo lugar de la célula.\nAgendar revisiones técnicas de tesorería con sus principales clientes activos, acompañada por la mesa de derivados para cerrar coberturas de cierre de año fiscal."
         }
       },
       {
@@ -775,7 +901,7 @@
         activeClients: 14,
         newClients2026: [1, 2, 1, 0, 1, 2, 3, 2, 2],
         totalNewClients: 14,
-        pacingRequirement: "Compromiso de clientes nuevos: mantener 3 CN por mes para cerrar con 23 aperturas.",
+        pacingRequirement: "Compromiso aspiracional: mantener 3 CN por mes para cerrar con 23 aperturas.",
         total2025: 4124.44,
         avgMonthly2025: 1374.81,
         share2025Emp: "0.54%",
@@ -785,9 +911,9 @@
         share2026Emp: "8.09%",
         history2026: { ene: 59.04, feb: 12191.19, mar: 7697.14, abr: 8079.62, may: 3378.53, jun: 281316.13, jul: 73566.10, ago: 168111.69, sep: 284449.10, total: 838848.54 },
         defaultQual: {
-          strengths: "Máxima generadora de clientes nuevos en la célula con 14 aperturas en 2026 y 14 clientes activos. Potente generación en septiembre con $284.4k demostrando gran instinto de prospección.",
+          strengths: "Máxima generadora de clientes nuevos en la célula con 14 aperturas en 2026 y 14 clientes activos. Potente generaciómn total en septiembre con 285k demostrando gran instinto de prospección.",
           opportunities: "Eliminar de raíz la volatilidad bimestral; la cartera abierta debe tener recurrencia obligatoria de operaciones semanales.\nCon 11.5 meses en la célula, es la que está mejor perfilada para rozar la meta de 24 clientes si sostiene 3 aperturas por mes en Q4.\nElevar el margen por cliente vendiendo coberturas y lineas de financiamiento FX Loan.",
-          plan: "Superar el piso de $1.7M YTD al cierre de diciembre garantizando que la generación mensual no sea menor a $280k.\nReuniones de seguimiento mensual con sus 14 clientes para pactar operaciones recurrentes y blindar el flujo de fin de año."
+          plan: "Superar el piso de 1.7MDP YTD al cierre de diciembre garantizando que la generaciómn total mensual no sea menor a 280k.\nReuniones de seguimiento mensual con sus 14 clientes para pactar operaciones recurrentes y blindar el flujo de fin de año."
         }
       },
       {
@@ -800,7 +926,7 @@
         activeClients: 13,
         newClients2026: [0, 0, 1, 1, 1, 3, 1, 0, 2], // Exactamente 9 CN
         totalNewClients: 9,
-        pacingRequirement: "Compromiso de clientes nuevos: al menos 4 CN al mes en Q4 para rescatar ritmo.",
+        pacingRequirement: "Compromiso aspiracional: al menos 4 CN al mes en Q4 para rescatar ritmo.",
         total2025: 33602.35,
         avgMonthly2025: 8400.59,
         share2025Emp: "4.39%",
@@ -810,9 +936,9 @@
         share2026Emp: "2.91%",
         history2026: { ene: 14404.89, feb: 6645.59, mar: 10358.90, abr: 11076.49, may: 9085.59, jun: 10274.05, jul: 65307.21, ago: 51883.32, sep: 122784.64, total: 301820.68 },
         defaultQual: {
-          strengths: "Tendencia de aceleración en el último trimestre, marcando top generación en septiembre con $122.7k, 13 clientes activos y 9 aperturas en 2026.",
-          opportunities: "Lleva 14.5 meses en la célula y su cuota representa solo el 2.91% del total; es urgente que deje atrás el escalón de los $30k-$50k mensuales.\nDebe acelerar el ritmo a 4 aperturas por mes en Q4 para rescatar la meta de prospección y cerrar el año con al menos 21 cuentas.\nDetectar necesidades de crédito y líneas FX Loan para multiplicar el volumen con sus clientes actuales.",
-          plan: "Consolidar un piso de generación de al menos $150k mensuales en Q4 para cerrar 2026 con un fuerte repunte YTD.\nVisitas conjuntas con el líder a 8 empresas medianas del sector retail e importación para asegurar transaccionalidad recurrente."
+          strengths: "Tendencia de aceleración en el último trimestre, marcando top generaciómn total en septiembre con 123k, 13 clientes activos y 9 aperturas en 2026.",
+          opportunities: "Lleva 14.5 meses en la célula y su cuota representa solo el 2.91% del total; es urgente que deje atrás el escalón de los 30k-50k mensuales.\nDebe acelerar el ritmo a 4 aperturas por mes en Q4 para rescatar la meta de prospección y cerrar el año con al menos 21 cuentas.\nDetectar necesidades de crédito y líneas FX Loan para multiplicar el volumen con sus clientes actuales.",
+          plan: "Consolidar un piso de generciómn total de al menos 150k mensuales en Q4 para cerrar 2026 con un fuerte repunte YTD.\nVisitas conjuntas con el líder a 8 empresas medianas del sector retail e importación para asegurar transaccionalidad recurrente."
         }
       },
       {
@@ -825,7 +951,7 @@
         activeClients: 3,
         newClients2026: [0, 0, 0, 2, 0, 0, 1, 0, 0],
         totalNewClients: 3,
-        pacingRequirement: "Compromiso de clientes nuevos: al menos 2 a 3 CN al mes para salir de zona crítica.",
+        pacingRequirement: "Compromiso aspiracional: al menos 2 a 3 CN al mes para salir de zona crítica.",
         total2025: 0.00,
         avgMonthly2025: 0.00,
         share2025Emp: "0.00%",
@@ -835,9 +961,9 @@
         share2026Emp: "0.67%",
         history2026: { ene: 0, feb: 0, mar: 0, abr: 16395.00, may: 3450.70, jun: 4564.60, jul: 3689.81, ago: 28628.80, sep: 13130.00, total: 69858.91 },
         defaultQual: {
-          strengths: "Cierre activo en septiembre con $13.1k y primeros 3 clientes activos vinculados en operaciones de comercio exterior.",
-          opportunities: "Nivel de generación en zona crítica: solo 3 aperturas en 5.5 meses está completamente fuera de los estándares de Banco BASE (la meta institucional exige 2 por mes; debería llevar al menos 11).\nAcompañamiento junto con el lider de la celula a las visitas de los asesores generadas en la semana, para afianzar dudas y generar seguridad para sus visitas con sus prospectos y clientes.\nReestructuración obligatoria de la jornada laboral: destinar al menos 4 horas diarias a prospección en frío, bases de datos empresariales y llamadas efectivas.",
-          plan: "Compromiso irrenunciable para Q4: Captar al menos 2 clientes nuevos por mes en octubre, noviembre y diciembre para cerrar su año de inducción con 9 aperturas.\nMeta financiera: Alcanzar los $150k YTD duplicando la facturación mensual con acompañamiento del líder en todas sus citas comerciales de prospección."
+          strengths: "Cierre activo en septiembre con 14k y primeros 3 clientes activos vinculados en operaciones de comercio exterior.",
+          opportunities: "Nivel de generaciómn total en zona crítica: solo 3 aperturas en 5.5 meses está completamente fuera de los estándares de Banco BASE (la meta institucional exige 2 por mes; debería llevar al menos 11).\nAcompañamiento junto con el lider de la celula a las visitas de los asesores generadas en la semana, para afianzar dudas y generar seguridad para sus visitas con sus prospectos y clientes.\nReestructuración obligatoria de la jornada laboral: destinar al menos 4 horas diarias a prospección en frío, bases de datos empresariales y llamadas efectivas.",
+          plan: "Compromiso aspiracional irrenunciable para Q4: Captar al menos 2 clientes nuevos por mes en octubre, noviembre y diciembre para cerrar su año de inducción con 9 aperturas.\nMeta financiera: Alcanzar los 150k YTD duplicando la facturación mensual con acompañamiento del líder en todas sus citas comerciales de prospección."
         }
       }
     ];
@@ -848,17 +974,18 @@
     let generalDonutChartInstance = null;
     let cellMonthlyChartInstance = null;
 
-    function formatCurrency(val) {
-      return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(val);
-    }
-
-    // NAVEGACIÓN
+    // 8. NAVEGACIÓN Y TRANSICIONES SUAVES
     function navigate(viewId) {
       currentView = viewId;
 
-      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.page-section').forEach(sec => {
+        sec.classList.remove('active');
+      });
+
       const activeSec = document.getElementById(`page-${viewId}`);
-      if (activeSec) activeSec.classList.add('active');
+      if (activeSec) {
+        activeSec.classList.add('active');
+      }
 
       const banner = document.getElementById('advisorSelectorBanner');
       if (viewId === 'dashboard' || viewId === 'cell-analytics') {
@@ -871,23 +998,22 @@
         const desktopTab = document.getElementById(`tab-${tab}`);
         const mobileTab = document.getElementById(`btnNav-${tab}`);
         if (desktopTab) {
-          if (tab === viewId) desktopTab.className = 'py-2.5 nav-tab-active';
+          if (tab === viewId) desktopTab.className = 'py-2.5 nav-tab-active transition';
           else desktopTab.className = 'py-2.5 hover:text-slate-900 transition text-slate-500';
         }
         if (mobileTab) {
-          if (tab === viewId) mobileTab.className = 'flex flex-col items-center gap-1 mobile-tab-active';
-          else mobileTab.className = 'flex flex-col items-center gap-1 text-slate-400';
+          if (tab === viewId) mobileTab.className = 'flex flex-col items-center gap-1 mobile-tab-active transition';
+          else mobileTab.className = 'flex flex-col items-center gap-1 text-slate-400 transition';
         }
       });
 
-      if (viewId === 'charts') setTimeout(renderDetailChart, 50);
-      if (viewId === 'dashboard') setTimeout(renderGeneralDonutChart, 50);
-      if (viewId === 'cell-analytics') setTimeout(renderCellMonthlyChart, 50);
+      if (viewId === 'charts') setTimeout(renderDetailChart, 60);
+      if (viewId === 'dashboard') setTimeout(renderGeneralDonutChart, 60);
+      if (viewId === 'cell-analytics') setTimeout(renderCellMonthlyChart, 60);
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // DRAWER
     function toggleSidebar(open) {
       const drawer = document.getElementById('sidebarDrawer');
       const backdrop = document.getElementById('drawerBackdrop');
@@ -908,7 +1034,7 @@
       document.getElementById('mainAdvisorSelect').value = index;
       document.getElementById('currentAdvisorRankBadge').textContent = `#${adv.rank}`;
 
-      // Ficha
+      // Ficha con formato numérico MDP / k
       document.getElementById('profAdvisorCode').textContent = `ID: ${adv.id}`;
       document.getElementById('profAdvisorName').textContent = adv.name;
       document.getElementById('profJoinDate').textContent = adv.joinInfo;
@@ -931,7 +1057,6 @@
         momEl.textContent = sep > 0 ? 'Activo' : 'Sin mov.';
       }
 
-      // Fila de clientes nuevos
       renderAdvisorNewClientsRow(adv);
       renderDetailTable(adv);
       loadQualData(adv);
@@ -1000,6 +1125,7 @@
       `;
     }
 
+    // 4. GRÁFICA DE CÉLULA CON DOBLE COMPORTAMIENTO: GENERCIÓMN TOTAL (MDP) VS CLIENTES NUEVOS (CN)
     function renderCellMonthlyChart() {
       const ctx = document.getElementById('cellMonthlyChart').getContext('2d');
       if (cellMonthlyChartInstance) cellMonthlyChartInstance.destroy();
@@ -1010,22 +1136,33 @@
           datasets: [
             {
               type: 'line',
-              label: 'Tendencia Célula',
+              label: 'Tendencia Generciómn Total',
               data: CELL_HISTORY_2026.values,
               borderColor: '#0F172A',
               borderWidth: 2.5,
               pointBackgroundColor: '#F59E0B',
               pointBorderColor: '#0F172A',
               pointRadius: 4.5,
-              tension: 0.25
+              tension: 0.25,
+              yAxisID: 'y'
             },
             {
               type: 'bar',
-              label: 'Utilidad Célula MXN',
+              label: 'Generciómn Total (MDP)',
               data: CELL_HISTORY_2026.values,
               backgroundColor: 'rgba(217, 119, 6, 0.85)',
               hoverBackgroundColor: 'rgba(180, 83, 9, 1)',
-              borderRadius: 6
+              borderRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              type: 'bar',
+              label: 'Comportamiento Clientes (CN)',
+              data: CELL_HISTORY_2026.clientBehavior,
+              backgroundColor: 'rgba(30, 41, 59, 0.85)',
+              hoverBackgroundColor: 'rgba(15, 23, 42, 1)',
+              borderRadius: 6,
+              yAxisID: 'y1'
             }
           ]
         },
@@ -1033,21 +1170,43 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { display: false },
+            legend: {
+              display: true,
+              position: 'top',
+              labels: { boxWidth: 10, font: { size: 10 } }
+            },
             tooltip: {
               callbacks: {
-                label: (ctx) => ` Generación Célula: ${formatCurrency(ctx.parsed.y)}`
+                label: (ctx) => {
+                  if (ctx.dataset.yAxisID === 'y1') {
+                    return ` Clientes Nuevos: ${ctx.parsed.y} CN`;
+                  }
+                  return ` Generciómn Total: ${formatCurrency(ctx.parsed.y)}`;
+                }
               }
             }
           },
           scales: {
             y: {
+              type: 'linear',
+              position: 'left',
               beginAtZero: true,
               ticks: {
                 font: { size: 10 },
-                callback: (val) => val >= 1000000 ? `$${(val/1000000).toFixed(1)}M` : `$${(val/1000).toFixed(0)}k`
+                callback: (val) => formatCurrency(val)
               },
               grid: { color: '#F1F5F9' }
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              beginAtZero: true,
+              grid: { drawOnChartArea: false },
+              ticks: {
+                font: { size: 10 },
+                stepSize: 2,
+                callback: (val) => `${val} CN`
+              }
             },
             x: {
               ticks: { font: { size: 10 } },
@@ -1086,7 +1245,7 @@
             },
             {
               type: 'bar',
-              label: 'Generación MXN',
+              label: 'Generciómn Total',
               data: data2026,
               backgroundColor: 'rgba(245, 158, 11, 0.85)',
               borderRadius: 6
@@ -1100,7 +1259,7 @@
             legend: { display: false },
             tooltip: {
               callbacks: {
-                label: (ctx) => ` ${formatCurrency(ctx.parsed.y)}`
+                label: (ctx) => ` Generciómn Total: ${formatCurrency(ctx.parsed.y)}`
               }
             }
           },
@@ -1109,7 +1268,7 @@
               beginAtZero: true,
               ticks: {
                 font: { size: 10 },
-                callback: (val) => val >= 1000000 ? `$${(val/1000000).toFixed(1)}M` : `$${(val/1000).toFixed(0)}k`
+                callback: (val) => formatCurrency(val)
               },
               grid: { color: '#F1F5F9' }
             },
@@ -1144,7 +1303,12 @@
           maintainAspectRatio: false,
           cutout: '65%',
           plugins: {
-            legend: { position: 'right', labels: { boxWidth: 10, font: { size: 9 } } }
+            legend: { position: 'right', labels: { boxWidth: 10, font: { size: 9 } } },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.label}: ${formatCurrency(ctx.parsed)}`
+              }
+            }
           },
           onClick: (evt, elements) => {
             if (elements.length > 0) {
@@ -1206,7 +1370,7 @@
 📅 *Antigüedad:* ${adv.joinInfo}
 👥 *Clientes Activos:* ${adv.activeClients}
 🎯 *Nuevos 2026:* ${adv.totalNewClients} CN (Meta: 24)
-⚡ *Compromiso Q4:* ${adv.pacingRequirement}
+⚡ *Compromiso aspiracional Q4:* ${adv.pacingRequirement}
 
 📊 *Métricas Financieras:*
 • Utilidad Célula YTD: ${formatCurrency(adv.total2026)}
@@ -1229,10 +1393,14 @@ _Portal Célula 3 CDMX 1 - Banco BASE_`;
       window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    function initDashboard() {
       const mainSelect = document.getElementById('mainAdvisorSelect');
       const drawerList = document.getElementById('drawerAdvisorList');
       const dashTable = document.getElementById('rankingDashboardBody');
+
+      mainSelect.innerHTML = '';
+      drawerList.innerHTML = '';
+      dashTable.innerHTML = '';
 
       TEAM_DATA.forEach((adv, idx) => {
         const opt = document.createElement('option');
@@ -1241,7 +1409,7 @@ _Portal Célula 3 CDMX 1 - Banco BASE_`;
         mainSelect.appendChild(opt);
 
         const drawerBtn = document.createElement('button');
-        drawerBtn.className = 'w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 flex items-center justify-between text-xs';
+        drawerBtn.className = 'w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 flex items-center justify-between text-xs transition';
         drawerBtn.innerHTML = `<span>${adv.shortName}</span><span class="font-bold text-amber-600">${adv.share2026Emp}</span>`;
         drawerBtn.onclick = () => {
           selectAdvisor(idx);
@@ -1251,7 +1419,7 @@ _Portal Célula 3 CDMX 1 - Banco BASE_`;
         drawerList.appendChild(drawerBtn);
 
         const tr = document.createElement('tr');
-        tr.className = 'hover:bg-amber-50/50 cursor-pointer';
+        tr.className = 'hover:bg-amber-50/50 cursor-pointer transition';
         tr.onclick = () => {
           selectAdvisor(idx);
           navigate('advisor');
@@ -1274,6 +1442,14 @@ _Portal Célula 3 CDMX 1 - Banco BASE_`;
       renderCellNewClientsTable();
       selectAdvisor(0);
       navigate('dashboard');
+    }
+
+    // VERIFICACIÓN INICIAL DE SESIÓN
+    window.addEventListener('DOMContentLoaded', () => {
+      const isAuth = localStorage.getItem(AUTH_KEY);
+      if (isAuth === 'true') {
+        showApp();
+      }
     });
   </script>
 </body>
