@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Banco BASE - Célula 3 CDMX 1 (41930)</title>
+  <title>Célula 3 CDMX 1 (41930) - Portal Operativo</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js CDN -->
@@ -67,13 +67,11 @@
   <div id="loginOverlay" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-sm overflow-hidden p-6 sm:p-7 transform transition-all duration-300 scale-100">
       <div class="text-center mb-6">
-        <img 
-          src="https://www.bancobase.com/assets/img/logo/BANCOBASE_full.svg" 
-          alt="Banco BASE" 
-          class="h-8 w-auto mx-auto object-contain mb-3"
-        />
+        <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-white font-black text-xl shadow-md mb-3">
+          C3
+        </div>
         <h2 class="text-base font-extrabold text-slate-900 tracking-tight">Portal Confidencial</h2>
-        <span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 inline-block mt-1">
+        <span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 inline-block mt-1">
           Célula 3 CDMX 1 (41930)
         </span>
       </div>
@@ -116,7 +114,7 @@
       </form>
 
       <div class="mt-6 pt-4 border-t border-slate-100 text-center">
-        <p class="text-[10px] text-slate-400">Información confidencial para uso exclusivo del líder y dirección.</p>
+        <p class="text-[10px] text-slate-400">Información confidencial para uso exclusivo del líder y dirección de Célula 3.</p>
       </div>
     </div>
   </div>
@@ -126,18 +124,19 @@
     
     <!-- BARRA SUPERIOR FIJA -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-      <div class="max-w-5xl mx-auto px-4 py-2 flex items-center justify-between">
+      <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <button onclick="toggleSidebar(true)" class="p-2 -ml-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none transition cursor-pointer" aria-label="Abrir Menú">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
-          <img 
-            src="https://www.bancobase.com/assets/img/logo/BANCOBASE_full.svg" 
-            alt="Banco BASE" 
-            class="h-7 sm:h-8 w-auto object-contain"
-          />
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-white font-black text-xs shadow-xs">
+              C3
+            </div>
+            <span class="text-xs sm:text-sm font-black text-slate-900 tracking-tight">Célula 3</span>
+          </div>
         </div>
         <div class="text-right">
           <div class="flex items-center justify-end gap-1.5">
@@ -164,7 +163,12 @@
     <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 shadow-2xl transform -translate-x-full transition-transform duration-250 flex flex-col justify-between">
       <div>
         <div class="p-4 border-b border-slate-100 flex items-center justify-between">
-          <img src="https://www.bancobase.com/assets/img/logo/BANCOBASE_full.svg" alt="Banco BASE" class="h-6 w-auto" />
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-white font-black text-xs">
+              C3
+            </div>
+            <span class="text-sm font-black text-slate-900">Célula 3 CDMX 1</span>
+          </div>
           <button onclick="toggleSidebar(false)" class="p-1 rounded-lg text-slate-400 hover:text-slate-700 transition cursor-pointer">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -223,7 +227,7 @@
         </button>
         <div>
           <p class="text-[10px] font-bold text-slate-700">Líder: Carlos Alberto Domínguez Chavez</p>
-          <p class="text-[10px] text-slate-400">Célula 3 CDMX 1 (41930) • Banco BASE</p>
+          <p class="text-[10px] text-slate-400">Célula 3 CDMX 1 (41930)</p>
         </div>
       </div>
     </aside>
@@ -810,7 +814,7 @@
       <!-- PIE DE PÁGINA CON BRANDING Y LIDERAZGO -->
       <footer class="mt-8 pt-4 pb-2 border-t border-slate-200 text-center">
         <p class="text-xs font-bold text-slate-700">Líder: Carlos Alberto Domínguez Chavez</p>
-        <p class="text-[11px] font-medium text-slate-500 mt-0.5">Banco BASE • Célula 3 CDMX 1 (41930)</p>
+        <p class="text-[11px] font-medium text-slate-500 mt-0.5">Célula 3 CDMX 1 (41930)</p>
         <div class="mt-2 inline-flex items-center gap-1.5 text-xs text-slate-500">
           <span>Powered by</span>
           <a 
@@ -858,7 +862,7 @@
     </nav>
   </div>
 
-  <!-- JAVASCRIPT CON DATA, LOGIN Y DESCARGA DIRECTA ANTI-BLOQUEO -->
+  <!-- JAVASCRIPT CON DATA, LOGIN Y DESCARGAS -->
   <script>
     function formatCurrency(val) {
       if (!val || val === 0) return '$0';
@@ -1099,316 +1103,6 @@
     let detailChartInstance = null;
     let generalDonutChartInstance = null;
     let cellMonthlyChartInstance = null;
-
-    // ==================== GENERADOR DE BARRAS HTML PARA LÁMINA ONE PAGE ====================
-    function generarMiniGraficaHTML(etiquetas, datos, esMoneda, colorHex, titulo, alturaMax) {
-      const maxVal = Math.max(...datos, 1);
-      let barrasHtml = '';
-      
-      datos.forEach((val, i) => {
-        const pct = Math.max(8, Math.round((val / maxVal) * 100));
-        const valFormateado = esMoneda ? formatCurrency(val) : `${val} CN`;
-        const mes = etiquetas[i];
-        const esPico = i === 8;
-        
-        // Color dinámico para la barra de clientes si es cero
-        const barraColor = (!esMoneda && val === 0) ? '#DC2626' : (esPico ? '#D97706' : colorHex);
-        const textoColor = (!esMoneda && val === 0) ? '#DC2626' : (esPico ? '#D97706' : '#64748B');
-
-        barrasHtml += `
-          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:${alturaMax}px;">
-            <span style="font-size:7px; font-weight:bold; color:${textoColor}; margin-bottom:2px;">${valFormateado}</span>
-            <div style="width:70%; height:${pct}%; background:${barraColor}; border-radius:3px 3px 0 0;"></div>
-            <span style="font-size:8px; font-weight:${esPico ? 'bold' : 'normal'}; color:#334155; margin-top:3px;">${mes}</span>
-          </div>
-        `;
-      });
-
-      return `
-        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; margin-bottom:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <strong style="font-size:10px; text-transform:uppercase; color:#0F172A;">${titulo}</strong>
-            <span style="font-size:9px; font-weight:bold; color:#D97706;">Ene - Sep 2026</span>
-          </div>
-          <div style="display:flex; gap:6px; align-items:flex-end; border-bottom:1px solid #cbd5e1; padding-bottom:2px;">
-            ${barrasHtml}
-          </div>
-        </div>
-      `;
-    }
-
-    // ==================== DESCARGA DIRECTA DE ARCHIVO ONE PAGE ANTI-BLOQUEOS ====================
-    function descargarOnePagePresentacion(tipo) {
-      try {
-        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'];
-        let tituloDoc = "";
-        let nombreArchivo = "";
-        let htmlContenido = "";
-
-        if (tipo === 'celula') {
-          tituloDoc = "One Page - Célula 3 CDMX 1 Banco BASE";
-          nombreArchivo = "One_Page_Celula_3_CDMX_1_Banco_BASE.html";
-          
-          const grafGeneracion = generarMiniGraficaHTML(
-            meses, 
-            CELL_HISTORY_2026.values, 
-            true, 
-            '#F59E0B', 
-            '1. Gráfica de Generación Total Mensual (Célula 3)', 
-            65
-          );
-
-          const grafClientes = generarMiniGraficaHTML(
-            meses, 
-            CELL_HISTORY_2026.clientBehavior, 
-            false, 
-            '#1E293B', 
-            '2. Gráfica de Clientes Nuevos Mensuales (CN Célula 3)', 
-            55
-          );
-
-          htmlContenido = `
-            <div style="background:#0F172A; color:#ffffff; padding:14px 20px; border-radius:12px; margin-bottom:12px;">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                  <span style="color:#F59E0B; font-size:10px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">BANCO BASE • CÉLULA 3 CDMX 1 (41930)</span>
-                  <h1 style="font-size:18px; margin:2px 0; font-weight:900;">Resumen Ejecutivo de la Célula (One Page)</h1>
-                  <p style="font-size:11px; color:#cbd5e1; margin:0;">Líder: Carlos Alberto Domínguez Chavez | Cierre Oficial: Septiembre 2026</p>
-                </div>
-                <div style="text-align:right;">
-                  <span style="font-size:9px; color:#94A3B8; text-transform:uppercase; font-weight:bold;">Total Acumulado</span>
-                  <strong style="font-size:18px; color:#F59E0B; display:block;">10.38MDP</strong>
-                </div>
-              </div>
-            </div>
-
-            <div style="display:flex; gap:10px; margin-bottom:12px;">
-              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
-                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Generación Total YTD</span>
-                <strong style="font-size:15px; color:#D97706; display:block;">10.38MDP</strong>
-              </div>
-              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
-                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Récord Septiembre</span>
-                <strong style="font-size:15px; color:#0F172A; display:block;">2.14MDP</strong>
-              </div>
-              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
-                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Activos</span>
-                <strong style="font-size:15px; color:#0F172A; display:block;">95</strong>
-              </div>
-              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
-                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Nuevos</span>
-                <strong style="font-size:15px; color:#059669; display:block;">60 CN</strong>
-              </div>
-            </div>
-
-            <!-- DOS GRÁFICAS INDEPENDIENTES DE CÉLULA -->
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-              <div>${grafGeneracion}</div>
-              <div>${grafClientes}</div>
-            </div>
-
-            <table style="width:100%; border-collapse:collapse; font-size:10px; margin-bottom:12px; font-family:monospace;">
-              <thead>
-                <tr style="background:#0F172A; color:#ffffff; text-align:left;">
-                  <th style="padding:6px 8px;"># Asesor</th>
-                  <th style="padding:6px 8px; text-align:right;">Total YTD</th>
-                  <th style="padding:6px 8px; text-align:right;">% Célula</th>
-                  <th style="padding:6px 8px; text-align:right;">Prom./Mes</th>
-                  <th style="padding:6px 8px; text-align:center;">Activos</th>
-                  <th style="padding:6px 8px; text-align:center; color:#F59E0B;">CN</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${TEAM_DATA.map((a, i) => `
-                  <tr style="border-bottom:1px solid #e2e8f0; background:${i % 2 === 0 ? '#ffffff' : '#f8fafc'};">
-                    <td style="padding:5px 8px; font-family:sans-serif; font-weight:bold;">#${a.rank}${a.shortName}</td>
-                    <td style="padding:5px 8px; text-align:right; font-weight:bold; color:#D97706;">${formatCurrency(a.total2026)}</td>
-                    <td style="padding:5px 8px; text-align:right;">${a.share2026Emp}</td>
-                    <td style="padding:5px 8px; text-align:right;">${formatCurrency(a.avgMonthly2026)}</td>
-                    <td style="padding:5px 8px; text-align:center; font-weight:bold;">${a.activeClients}</td>
-                    <td style="padding:5px 8px; text-align:center; font-weight:bold; color:#D97706;">${a.totalNewClients}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-
-            <div style="background:#FEF3C7; border:1px solid #F59E0B; padding:8px 12px; border-radius:8px; font-size:10px; color:#0F172A;">
-              <strong>Compromiso aspiracional Q4:</strong> Superar 14.5MDP YTD al cierre de diciembre | Piso mensual de 1.8MDP | Meta conjunta de 15 CN al mes.
-            </div>
-          `;
-        } else {
-          const adv = TEAM_DATA[currentAdvisorIndex];
-          tituloDoc = `One Page - ${adv.shortName} Banco BASE`;
-          nombreArchivo = `One_Page_${adv.shortName.replace(/ /g, '_')}_Banco_BASE.html`;
-
-          const datosGeneracionAdv = [
-            adv.history2026.ene, adv.history2026.feb, adv.history2026.mar,
-            adv.history2026.abr, adv.history2026.may, adv.history2026.jun,
-            adv.history2026.jul, adv.history2026.ago, adv.history2026.sep
-          ];
-          const datosClientesAdv = adv.newClients2026;
-
-          const grafGeneracionAdv = generarMiniGraficaHTML(
-            meses, 
-            datosGeneracionAdv, 
-            true, 
-            '#F59E0B', 
-            `1. Gráfica de Generación Total (${adv.shortName})`, 
-            55
-          );
-
-          const grafClientesAdv = generarMiniGraficaHTML(
-            meses, 
-            datosClientesAdv, 
-            false, 
-            '#1E293B', 
-            `2. Gráfica de Clientes Nuevos (${adv.shortName})`, 
-            45
-          );
-
-          const celdasSemaforoAdv = adv.newClients2026.map(val => {
-            let bg = '#10B981';
-            let txt = '#ffffff';
-            if (val === 0) {
-              bg = '#DC2626'; // Rojo si es cero
-              txt = '#ffffff';
-            } else if (val === 1) {
-              bg = '#F59E0B'; // Amarillo si es 1
-              txt = '#0F172A';
-            }
-            return `<td style="padding:6px; text-align:center; font-weight:bold; background:${bg}; color:${txt}; border:1px solid #cbd5e1;">${val}</td>`;
-          }).join('');
-
-          htmlContenido = `
-            <div style="background:#0F172A; color:#ffffff; padding:14px 20px; border-radius:12px; margin-bottom:12px;">
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                  <span style="color:#F59E0B; font-size:10px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">BANCO BASE • CÉLULA 3 CDMX 1 • ASESOR #${adv.rank}</span>
-                  <h1 style="font-size:18px; margin:2px 0; font-weight:900;">${adv.name}</h1>
-                  <p style="font-size:11px; color:#cbd5e1; margin:0;">ID: ${adv.id} | Líder: Carlos Alberto Domínguez Chavez | ${adv.joinInfo}</p>
-                </div>
-                <div style="text-align:right;">
-                  <span style="font-size:9px; color:#94A3B8; text-transform:uppercase; font-weight:bold;">Total 2026</span>
-                  <strong style="font-size:18px; color:#F59E0B; display:block;">${formatCurrency(adv.total2026)}</strong>
-                </div>
-              </div>
-            </div>
-
-            <div style="display:flex; gap:10px; margin-bottom:12px;">
-              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
-                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Total YTD</span>
-                <strong style="font-size:15px; color:#D97706; display:block;">${formatCurrency(adv.total2026)}</strong>
-                <small style="font-size:9px; color:#64748b;">${adv.share2026Emp} Cuota</small>
-              </div>
-              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
-                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Promedio Mes</span>
-                <strong style="font-size:15px; color:#0F172A; display:block;">${formatCurrency(adv.avgMonthly2026)}</strong>
-                <small style="font-size:9px; color:#64748b;">Sep: ${formatCurrency(adv.history2026.sep)}</small>
-              </div>
-              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
-                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Activos</span>
-                <strong style="font-size:15px; color:#0F172A; display:block;">${adv.activeClients}</strong>
-                <small style="font-size:9px; color:#64748b;">Cartera</small>
-              </div>
-              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
-                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Nuevos</span>
-                <strong style="font-size:15px; color:#059669; display:block;">${adv.totalNewClients} CN</strong>
-                <small style="font-size:9px; color:#64748b;">${((adv.totalNewClients/24)*100).toFixed(1)}% meta</small>
-              </div>
-            </div>
-
-            <!-- DOS GRÁFICAS INDEPENDIENTES DEL ASESOR -->
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-              <div>${grafGeneracionAdv}</div>
-              <div>${grafClientesAdv}</div>
-            </div>
-
-            <!-- TABLA SEMÁFORO MENSUAL DE CLIENTES NUEVOS DEL ASESOR -->
-            <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; margin-bottom:10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <strong style="font-size:10px; text-transform:uppercase; color:#0F172A;">Comportamiento Mensual Clientes Nuevos (CN)</strong>
-                <span style="font-size:9px; font-weight:bold; color:#059669;">Rojo = 0 | Amarillo = 1 | Verde = 2 o más</span>
-              </div>
-              <table style="width:100%; border-collapse:collapse; font-size:10px; font-family:monospace;">
-                <thead>
-                  <tr style="background:#f1f5f9; color:#475569;">
-                    <th style="padding:4px; border:1px solid #cbd5e1;">Ene</th>
-                    <th style="padding:4px; border:1px solid #cbd5e1;">Feb</th>
-                    <th style="padding:4px; border:1px solid #cbd5e1;">Mar</th>
-                    <th style="padding:4px; border:1px solid #cbd5e1;">Abr</th>
-                    <th style="padding:4px; border:1px solid #cbd5e1;">May</th>
-                    <th style="padding:4px; border:1px solid #cbd5e1;">Jun</th>
-                    <th style="padding:4px; border:1px solid #cbd5e1;">Jul</th>
-                    <th style="padding:4px; border:1px solid #cbd5e1;">Ago</th>
-                    <th style="padding:4px; border:1px solid #cbd5e1;">Sep</th>
-                    <th style="padding:4px; background:#FEF3C7; color:#92400E; border:1px solid #cbd5e1;">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    ${celdasSemaforoAdv}
-                    <td style="padding:6px; text-align:center; font-weight:900; background:#FEF3C7; color:#92400E; border:1px solid #cbd5e1;">${adv.totalNewClients}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
-              <div style="background:#fffbeb; border:1px solid #fde68a; padding:8px 10px; border-radius:8px; font-size:10px;">
-                <strong style="color:#b45309; display:block; margin-bottom:2px;">⭐ Fortalezas:</strong>
-                <p style="margin:0; color:#334155; line-height:1.4;">${adv.defaultQual.strengths}</p>
-              </div>
-
-              <div style="background:#f0f9ff; border:1px solid #bae6fd; padding:8px 10px; border-radius:8px; font-size:10px;">
-                <strong style="color:#0369a1; display:block; margin-bottom:2px;">🎯 Oportunidades:</strong>
-                <p style="margin:0; color:#334155; line-height:1.4; white-space:pre-line;">${adv.defaultQual.opportunities}</p>
-              </div>
-
-              <div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:8px 10px; border-radius:8px; font-size:10px;">
-                <strong style="color:#047857; display:block; margin-bottom:2px;">🚀 Meta Q4:</strong>
-                <p style="margin:0; color:#334155; line-height:1.4; white-space:pre-line;">${adv.defaultQual.plan}</p>
-              </div>
-            </div>
-
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:6px; font-size:9px; color:#64748b; text-align:center;">
-              <strong>Compromiso aspiracional:</strong> ${adv.pacingRequirement}
-            </div>
-          `;
-        }
-
-        const documentoCompleto = `<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>${tituloDoc}</title>
-  <style>
-    @page { size: landscape; margin: 8mm; }
-    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 16px; background:#ffffff; color:#0f172a; }
-    @media print { body { padding: 0; } }
-  </style>
-</head>
-<body>
-  <div style="max-width: 960px; margin: 0 auto;">
-    ${htmlContenido}
-  </div>
-</body>
-</html>`;
-
-        // Generar descarga directa con Blob (garantiza funcionamiento sin bloqueos de navegador)
-        const blob = new Blob([documentoCompleto], { type: 'text/html;charset=utf-8' });
-        const enlace = document.createElement('a');
-        enlace.href = URL.createObjectURL(blob);
-        enlace.download = nombreArchivo;
-        document.body.appendChild(enlace);
-        enlace.click();
-        document.body.removeChild(enlace);
-        URL.revokeObjectURL(enlace.href);
-
-      } catch (err) {
-        console.error("Error al procesar la descarga:", err);
-        alert("Ocurrió un error al preparar el documento. Por favor intente de nuevo.");
-      }
-    }
 
     function navigate(viewId) {
       currentView = viewId;
@@ -1865,8 +1559,7 @@
       const p = adv.defaultQual.plan;
 
       const msg = 
-`🏦 *BANCO BASE - RESUMEN EJECUTIVO Y DIRECTIVO*
-📍 *Célula:* Célula 3 CDMX 1 (41930)
+`📍 *Célula:* Célula 3 CDMX 1 (41930)
 👔 *Líder:* Carlos Alberto Domínguez Chavez
 👤 *Asesor:* ${adv.name}
 🏆 *Posición:* #${adv.rank} de la Célula
@@ -1891,7 +1584,7 @@ ${o}
 🚀 *Plan de Acción & Metas Q4:*
 ${p}
 
-_Portal Célula 3 CDMX 1 - Banco BASE_`;
+_Portal Célula 3 CDMX 1_`;
 
       window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
     }
