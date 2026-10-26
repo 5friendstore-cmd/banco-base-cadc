@@ -82,9 +82,10 @@
             Usuario
           </label>
           <input 
-            type="email" 
+            type="text" 
             id="loginUser" 
             required 
+            autocomplete="username"
             class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
           />
         </div>
@@ -97,6 +98,7 @@
             type="password" 
             id="loginPass" 
             required 
+            autocomplete="current-password"
             class="w-full bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition"
           />
         </div>
@@ -875,9 +877,9 @@
       }
     }
 
-    const AUTH_KEY = 'banco_base_auth_session';
-    const VALID_USER = 'cardomcha@hotmail.com';
-    const VALID_PASS = 'CarlosBase1223@';
+    const AUTH_KEY = 'celula3_auth_session_v2';
+    const VALID_USER = 'CarlosD';
+    const VALID_PASS = 'CADC03@2026';
 
     function handleLogin(e) {
       e.preventDefault();
@@ -1398,21 +1400,20 @@
           '</body>\n' +
           '</html>';
 
-        // Descarga por URI directa compatible con todos los navegadores
-        const blob = new Blob([documentoCompleto], { type: 'text/html;charset=utf-8' });
+        // Descarga directa mediante Data URI codificada (soporte universal garantizado)
         const enlace = document.createElement('a');
-        enlace.href = URL.createObjectURL(blob);
-        enlace.download = nombreArchivo;
+        enlace.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(documentoCompleto));
+        enlace.setAttribute('download', nombreArchivo);
+        enlace.style.display = 'none';
         document.body.appendChild(enlace);
         enlace.click();
         setTimeout(function() {
           document.body.removeChild(enlace);
-          URL.revokeObjectURL(enlace.href);
-        }, 150);
+        }, 200);
 
       } catch (err) {
         console.error("Error en descarga:", err);
-        alert("No se pudo iniciar la descarga. Verifique los permisos del navegador.");
+        alert("Ocurrió un error al generar la descarga: " + err.message);
       }
     }
 
