@@ -1104,6 +1104,318 @@
     let generalDonutChartInstance = null;
     let cellMonthlyChartInstance = null;
 
+    // ==================== GENERADOR DE BARRAS HTML PARA LÁMINA ONE PAGE ====================
+    function generarMiniGraficaHTML(etiquetas, datos, esMoneda, colorHex, titulo, alturaMax) {
+      const maxVal = Math.max(...datos, 1);
+      let barrasHtml = '';
+      
+      datos.forEach((val, i) => {
+        const pct = Math.max(8, Math.round((val / maxVal) * 100));
+        const valFormateado = esMoneda ? formatCurrency(val) : (val + ' CN');
+        const mes = etiquetas[i];
+        const esPico = i === 8;
+        
+        // Color dinámico para la barra de clientes si es cero
+        const barraColor = (!esMoneda && val === 0) ? '#DC2626' : (esPico ? '#D97706' : colorHex);
+        const textoColor = (!esMoneda && val === 0) ? '#DC2626' : (esPico ? '#D97706' : '#64748B');
+
+        barrasHtml += `
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:${alturaMax}px;">
+            <span style="font-size:7px; font-weight:bold; color:${textoColor}; margin-bottom:2px;">${valFormateado}</span>
+            <div style="width:70%; height:${pct}%; background:${barraColor}; border-radius:3px 3px 0 0;"></div>
+            <span style="font-size:8px; font-weight:${esPico ? 'bold' : 'normal'}; color:#334155; margin-top:3px;">${mes}</span>
+          </div>
+        `;
+      });
+
+      return `
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="font-size:10px; text-transform:uppercase; color:#0F172A;">${titulo}</strong>
+            <span style="font-size:9px; font-weight:bold; color:#D97706;">Ene - Sep 2026</span>
+          </div>
+          <div style="display:flex; gap:6px; align-items:flex-end; border-bottom:1px solid #cbd5e1; padding-bottom:2px;">
+            ${barrasHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    // ==================== DESCARGA DIRECTA DE ARCHIVO ONE PAGE ANTI-BLOQUEOS ====================
+    function descargarOnePagePresentacion(tipo) {
+      try {
+        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'];
+        let tituloDoc = "";
+        let nombreArchivo = "";
+        let htmlContenido = "";
+
+        if (tipo === 'celula') {
+          tituloDoc = "One Page - Célula 3 CDMX 1";
+          nombreArchivo = "One_Page_Celula_3_CDMX_1.html";
+          
+          const grafGeneracion = generarMiniGraficaHTML(
+            meses, 
+            CELL_HISTORY_2026.values, 
+            true, 
+            '#F59E0B', 
+            '1. Gráfica de Generación Total Mensual (Célula 3)', 
+            65
+          );
+
+          const grafClientes = generarMiniGraficaHTML(
+            meses, 
+            CELL_HISTORY_2026.clientBehavior, 
+            false, 
+            '#1E293B', 
+            '2. Gráfica de Clientes Nuevos Mensuales (CN Célula 3)', 
+            55
+          );
+
+          htmlContenido = `
+            <div style="background:#0F172A; color:#ffffff; padding:14px 20px; border-radius:12px; margin-bottom:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <span style="color:#F59E0B; font-size:10px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">CÉLULA 3 CDMX 1 (41930)</span>
+                  <h1 style="font-size:18px; margin:2px 0; font-weight:900;">Resumen Ejecutivo de la Célula (One Page)</h1>
+                  <p style="font-size:11px; color:#cbd5e1; margin:0;">Líder: Carlos Alberto Domínguez Chavez | Cierre Oficial: Septiembre 2026</p>
+                </div>
+                <div style="text-align:right;">
+                  <span style="font-size:9px; color:#94A3B8; text-transform:uppercase; font-weight:bold;">Total Acumulado</span>
+                  <strong style="font-size:18px; color:#F59E0B; display:block;">10.38MDP</strong>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-bottom:12px;">
+              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
+                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Generación Total YTD</span>
+                <strong style="font-size:15px; color:#D97706; display:block;">10.38MDP</strong>
+              </div>
+              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
+                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Récord Septiembre</span>
+                <strong style="font-size:15px; color:#0F172A; display:block;">2.14MDP</strong>
+              </div>
+              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
+                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Activos</span>
+                <strong style="font-size:15px; color:#0F172A; display:block;">95</strong>
+              </div>
+              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 10px; border-radius:8px; text-align:center;">
+                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Nuevos</span>
+                <strong style="font-size:15px; color:#059669; display:block;">60 CN</strong>
+              </div>
+            </div>
+
+            <!-- DOS GRÁFICAS INDEPENDIENTES DE CÉLULA -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div>${grafGeneracion}</div>
+              <div>${grafClientes}</div>
+            </div>
+
+            <table style="width:100%; border-collapse:collapse; font-size:10px; margin-bottom:12px; font-family:monospace;">
+              <thead>
+                <tr style="background:#0F172A; color:#ffffff; text-align:left;">
+                  <th style="padding:6px 8px;"># Asesor</th>
+                  <th style="padding:6px 8px; text-align:right;">Total YTD</th>
+                  <th style="padding:6px 8px; text-align:right;">% Célula</th>
+                  <th style="padding:6px 8px; text-align:right;">Prom./Mes</th>
+                  <th style="padding:6px 8px; text-align:center;">Activos</th>
+                  <th style="padding:6px 8px; text-align:center; color:#F59E0B;">CN</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${TEAM_DATA.map((a, i) => `
+                  <tr style="border-bottom:1px solid #e2e8f0; background:${i % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                    <td style="padding:5px 8px; font-family:sans-serif; font-weight:bold;">#${a.rank} ${a.shortName}</td>
+                    <td style="padding:5px 8px; text-align:right; font-weight:bold; color:#D97706;">${formatCurrency(a.total2026)}</td>
+                    <td style="padding:5px 8px; text-align:right;">${a.share2026Emp}</td>
+                    <td style="padding:5px 8px; text-align:right;">${formatCurrency(a.avgMonthly2026)}</td>
+                    <td style="padding:5px 8px; text-align:center; font-weight:bold;">${a.activeClients}</td>
+                    <td style="padding:5px 8px; text-align:center; font-weight:bold; color:#D97706;">${a.totalNewClients}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+
+            <div style="background:#FEF3C7; border:1px solid #F59E0B; padding:8px 12px; border-radius:8px; font-size:10px; color:#0F172A;">
+              <strong>Compromiso aspiracional Q4:</strong> Superar 14.5MDP YTD al cierre de diciembre | Piso mensual de 1.8MDP | Meta conjunta de 15 CN al mes.
+            </div>
+          `;
+        } else {
+          const adv = TEAM_DATA[currentAdvisorIndex];
+          tituloDoc = `One Page - ${adv.shortName}`;
+          nombreArchivo = `One_Page_${adv.shortName.replace(/ /g, '_')}.html`;
+
+          const datosGeneracionAdv = [
+            adv.history2026.ene, adv.history2026.feb, adv.history2026.mar,
+            adv.history2026.abr, adv.history2026.may, adv.history2026.jun,
+            adv.history2026.jul, adv.history2026.ago, adv.history2026.sep
+          ];
+          const datosClientesAdv = adv.newClients2026;
+
+          const grafGeneracionAdv = generarMiniGraficaHTML(
+            meses, 
+            datosGeneracionAdv, 
+            true, 
+            '#F59E0B', 
+            `1. Gráfica de Generación Total (${adv.shortName})`, 
+            55
+          );
+
+          const grafClientesAdv = generarMiniGraficaHTML(
+            meses, 
+            datosClientesAdv, 
+            false, 
+            '#1E293B', 
+            `2. Gráfica de Clientes Nuevos (${adv.shortName})`, 
+            45
+          );
+
+          const celdasSemaforoAdv = adv.newClients2026.map(val => {
+            let bg = '#10B981';
+            let txt = '#ffffff';
+            if (val === 0) {
+              bg = '#DC2626'; // Rojo si es cero
+              txt = '#ffffff';
+            } else if (val === 1) {
+              bg = '#F59E0B'; // Amarillo si es 1
+              txt = '#0F172A';
+            }
+            return `<td style="padding:6px; text-align:center; font-weight:bold; background:${bg}; color:${txt}; border:1px solid #cbd5e1;">${val}</td>`;
+          }).join('');
+
+          htmlContenido = `
+            <div style="background:#0F172A; color:#ffffff; padding:14px 20px; border-radius:12px; margin-bottom:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <span style="color:#F59E0B; font-size:10px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">CÉLULA 3 CDMX 1 • ASESOR #${adv.rank}</span>
+                  <h1 style="font-size:18px; margin:2px 0; font-weight:900;">${adv.name}</h1>
+                  <p style="font-size:11px; color:#cbd5e1; margin:0;">ID: ${adv.id} | Líder: Carlos Alberto Domínguez Chavez | ${adv.joinInfo}</p>
+                </div>
+                <div style="text-align:right;">
+                  <span style="font-size:9px; color:#94A3B8; text-transform:uppercase; font-weight:bold;">Total 2026</span>
+                  <strong style="font-size:18px; color:#F59E0B; display:block;">${formatCurrency(adv.total2026)}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-bottom:12px;">
+              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
+                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Total YTD</span>
+                <strong style="font-size:15px; color:#D97706; display:block;">${formatCurrency(adv.total2026)}</strong>
+                <small style="font-size:9px; color:#64748b;">${adv.share2026Emp} Cuota</small>
+              </div>
+              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
+                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Promedio Mes</span>
+                <strong style="font-size:15px; color:#0F172A; display:block;">${formatCurrency(adv.avgMonthly2026)}</strong>
+                <small style="font-size:9px; color:#64748b;">Sep: ${formatCurrency(adv.history2026.sep)}</small>
+              </div>
+              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
+                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Activos</span>
+                <strong style="font-size:15px; color:#0F172A; display:block;">${adv.activeClients}</strong>
+                <small style="font-size:9px; color:#64748b;">Cartera</small>
+              </div>
+              <div style="flex:1; background:#f8fafc; border:1px solid #e2e8f0; padding:8px; border-radius:8px; text-align:center;">
+                <span style="font-size:9px; color:#64748b; font-weight:bold; text-transform:uppercase;">Clientes Nuevos</span>
+                <strong style="font-size:15px; color:#059669; display:block;">${adv.totalNewClients} CN</strong>
+                <small style="font-size:9px; color:#64748b;">${((adv.totalNewClients/24)*100).toFixed(1)}% meta</small>
+              </div>
+            </div>
+
+            <!-- DOS GRÁFICAS INDEPENDIENTES DEL ASESOR -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div>${grafGeneracionAdv}</div>
+              <div>${grafClientesAdv}</div>
+            </div>
+
+            <!-- TABLA SEMÁFORO MENSUAL DE CLIENTES NUEVOS DEL ASESOR -->
+            <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; margin-bottom:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <strong style="font-size:10px; text-transform:uppercase; color:#0F172A;">Comportamiento Mensual Clientes Nuevos (CN)</strong>
+                <span style="font-size:9px; font-weight:bold; color:#059669;">Rojo = 0 | Amarillo = 1 | Verde = 2 o más</span>
+              </div>
+              <table style="width:100%; border-collapse:collapse; font-size:10px; font-family:monospace;">
+                <thead>
+                  <tr style="background:#f1f5f9; color:#475569;">
+                    <th style="padding:4px; border:1px solid #cbd5e1;">Ene</th>
+                    <th style="padding:4px; border:1px solid #cbd5e1;">Feb</th>
+                    <th style="padding:4px; border:1px solid #cbd5e1;">Mar</th>
+                    <th style="padding:4px; border:1px solid #cbd5e1;">Abr</th>
+                    <th style="padding:4px; border:1px solid #cbd5e1;">May</th>
+                    <th style="padding:4px; border:1px solid #cbd5e1;">Jun</th>
+                    <th style="padding:4px; border:1px solid #cbd5e1;">Jul</th>
+                    <th style="padding:4px; border:1px solid #cbd5e1;">Ago</th>
+                    <th style="padding:4px; border:1px solid #cbd5e1;">Sep</th>
+                    <th style="padding:4px; background:#FEF3C7; color:#92400E; border:1px solid #cbd5e1;">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    ${celdasSemaforoAdv}
+                    <td style="padding:6px; text-align:center; font-weight:900; background:#FEF3C7; color:#92400E; border:1px solid #cbd5e1;">${adv.totalNewClients}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
+              <div style="background:#fffbeb; border:1px solid #fde68a; padding:8px 10px; border-radius:8px; font-size:10px;">
+                <strong style="color:#b45309; display:block; margin-bottom:2px;">⭐ Fortalezas:</strong>
+                <p style="margin:0; color:#334155; line-height:1.4;">${adv.defaultQual.strengths}</p>
+              </div>
+
+              <div style="background:#f0f9ff; border:1px solid #bae6fd; padding:8px 10px; border-radius:8px; font-size:10px;">
+                <strong style="color:#0369a1; display:block; margin-bottom:2px;">🎯 Oportunidades:</strong>
+                <p style="margin:0; color:#334155; line-height:1.4; white-space:pre-line;">${adv.defaultQual.opportunities}</p>
+              </div>
+
+              <div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:8px 10px; border-radius:8px; font-size:10px;">
+                <strong style="color:#047857; display:block; margin-bottom:2px;">🚀 Meta Q4:</strong>
+                <p style="margin:0; color:#334155; line-height:1.4; white-space:pre-line;">${adv.defaultQual.plan}</p>
+              </div>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:6px; font-size:9px; color:#64748b; text-align:center;">
+              <strong>Compromiso aspiracional:</strong> ${adv.pacingRequirement}
+            </div>
+          `;
+        }
+
+        const documentoCompleto = '<!DOCTYPE html>\n' +
+          '<html lang="es">\n' +
+          '<head>\n' +
+          '  <meta charset="UTF-8" />\n' +
+          '  <title>' + tituloDoc + '</title>\n' +
+          '  <style>\n' +
+          '    @page { size: landscape; margin: 8mm; }\n' +
+          '    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 16px; background:#ffffff; color:#0f172a; }\n' +
+          '    @media print { body { padding: 0; } }\n' +
+          '  </style>\n' +
+          '</head>\n' +
+          '<body>\n' +
+          '  <div style="max-width: 960px; margin: 0 auto;">\n' +
+          htmlContenido + '\n' +
+          '  </div>\n' +
+          '</body>\n' +
+          '</html>';
+
+        // Descarga por URI directa compatible con todos los navegadores
+        const blob = new Blob([documentoCompleto], { type: 'text/html;charset=utf-8' });
+        const enlace = document.createElement('a');
+        enlace.href = URL.createObjectURL(blob);
+        enlace.download = nombreArchivo;
+        document.body.appendChild(enlace);
+        enlace.click();
+        setTimeout(function() {
+          document.body.removeChild(enlace);
+          URL.revokeObjectURL(enlace.href);
+        }, 150);
+
+      } catch (err) {
+        console.error("Error en descarga:", err);
+        alert("No se pudo iniciar la descarga. Verifique los permisos del navegador.");
+      }
+    }
+
     function navigate(viewId) {
       currentView = viewId;
 
